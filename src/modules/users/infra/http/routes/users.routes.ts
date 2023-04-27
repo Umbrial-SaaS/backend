@@ -1,17 +1,25 @@
 import { Router } from 'express';
+import multer from 'multer';
+import uploadConfig from '@config/upload';
+import ProductsController from '../controllers/UsersController';
 
-import ProductsController from '../controllers/ProductsController';
+import { create, id } from './validations/users.validation';
 
-import { create, update } from './validations/users.validation';
+const upload = multer(uploadConfig.multer);
 
 const usersController = new ProductsController();
 
 const usersRouter = Router();
 
-usersRouter.get('/', usersController.index);
-
 usersRouter.post('/', create, usersController.create);
 
-usersRouter.put('/:id', update, usersController.update);
+usersRouter.get('/:id', id, usersController.show);
+
+usersRouter.put(
+  '/:id',
+  id,
+  upload.single('profile_photo'),
+  usersController.update,
+);
 
 export default usersRouter;

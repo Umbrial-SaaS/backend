@@ -1,4 +1,4 @@
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import {
   Entity,
@@ -6,7 +6,10 @@ import {
   CreateDateColumn,
   PrimaryColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import uploadConfig from '@config/upload';
+import UserCompany from './UserCompany';
 
 @Entity('users')
 class User {
@@ -35,10 +38,28 @@ class User {
   @UpdateDateColumn()
   updated_at: Date;
 
-  // ? Relations
+  @Column()
+  deleted_at?: Date;
 
-  // @OneToMany(() => Error, error => error.product)
-  // errors: Error[];
+  // * Relations
+  @OneToMany(() => UserCompany, userCompanies => userCompanies.user)
+  user_companies: UserCompany[];
+
+  @Expose({ name: 'avatar_url' })
+  getAvatarUrl(): string | null {
+    if (!this.profile_photo) {
+      return process.env.DEFAULT_USER_AVATAR_URL || '';
+    }
+
+    switch (uploadConfig.driver) {
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.profile_photo}`;
+      case 's3':
+        return `https://${uploadConfig.config.aws.bucket}.${process.env.DIGITAL_OCEAN_ENDPOINT}/${this.profile_photo}`;
+      default:
+        return null;
+    }
+  }
 }
 
 export default User;

@@ -40,6 +40,11 @@ export class UsersTable1682609841494 implements MigrationInterface {
             default: 'now()',
           },
           {
+            name: 'deleted_at',
+            type: 'timestamp',
+            isNullable: true,
+          },
+          {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',

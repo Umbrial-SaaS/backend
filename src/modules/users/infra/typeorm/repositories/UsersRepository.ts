@@ -31,9 +31,13 @@ class UsersRepository implements IUsersRepository {
     return breeds;
   }
 
-  public async findById(id: number): Promise<User | undefined> {
+  public async findById(
+    id: string,
+    relations?: string[],
+  ): Promise<User | undefined> {
     return this.ormRepository.findOne({
       where: { id },
+      relations,
     });
   }
 
@@ -53,7 +57,7 @@ class UsersRepository implements IUsersRepository {
     return this.ormRepository.save(data);
   }
 
-  public async delete(id: number): Promise<void> {
+  public async delete(id: string): Promise<void> {
     await this.ormRepository.delete(id);
   }
 }
