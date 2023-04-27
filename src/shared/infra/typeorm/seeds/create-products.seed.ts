@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
 
-import Product from '@modules/products/infra/typeorm/entities/User';
+import Product from '@modules/users/infra/typeorm/entities/User';
 
 import productsList from '../helpers/productsList';
 
