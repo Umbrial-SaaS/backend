@@ -10,6 +10,14 @@ export const create = celebrate({
   },
 });
 
+export const auth = celebrate({
+  [Segments.BODY]: {
+    phone: Joi.string(),
+    email: Joi.string(),
+    password: Joi.string(),
+  },
+});
+
 export const id = celebrate({
   [Segments.PARAMS]: {
     id: Joi.string().uuid().required(),

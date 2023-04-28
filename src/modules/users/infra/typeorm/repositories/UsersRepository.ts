@@ -12,15 +12,17 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = getRepository(User);
   }
 
-  findByPhone(phone: string): Promise<User | undefined> {
+  findByPhone(phone: string, relations?: string[]): Promise<User | undefined> {
     return this.ormRepository.findOne({
       where: { phone },
+      relations,
     });
   }
 
-  findByEmail(email: string): Promise<User | undefined> {
+  findByEmail(email: string, relations?: string[]): Promise<User | undefined> {
     return this.ormRepository.findOne({
       where: { email },
+      relations,
     });
   }
 

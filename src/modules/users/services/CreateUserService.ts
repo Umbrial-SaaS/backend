@@ -3,8 +3,10 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
+import RolesEnum from '@shared/enums/RolesEnum';
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
+import IUserRolesRepository from '../repositories/IUserRolesRepository';
 
 type CreateUserServiceReq = {
   name: string;
@@ -19,6 +21,9 @@ class CreateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
+    @inject('UserRolesRepository')
+    private userRolesRepository: IUserRolesRepository,
   ) {}
 
   public async execute({
@@ -52,6 +57,12 @@ class CreateUserService {
       email,
       password,
       profile_photo,
+      user_roles: [
+        this.userRolesRepository.create({
+          id: crypto.randomUUID(),
+          role_id: RolesEnum.Customer,
+        }),
+      ],
     });
 
     await this.usersRepository.save(user);

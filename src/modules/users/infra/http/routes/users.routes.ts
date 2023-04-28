@@ -1,9 +1,10 @@
 import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
+import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
 import ProductsController from '../controllers/UsersController';
 
-import { create, id } from './validations/users.validation';
+import { create, id, auth } from './validations/users.validation';
 
 const upload = multer(uploadConfig.multer);
 
@@ -15,9 +16,11 @@ usersRouter.post('/', create, usersController.create);
 
 usersRouter.get('/:id', id, usersController.show);
 
+usersRouter.post('/auth', auth, usersController.auth);
+
 usersRouter.put(
-  '/:id',
-  id,
+  '/',
+  ensureAuthenticated,
   upload.single('profile_photo'),
   usersController.update,
 );

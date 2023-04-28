@@ -3,6 +3,8 @@ declare namespace Express {
   export interface Request {
     user: {
       id: string;
+      roles: [];
+      deleted_at: Date | undefined
     };
     io: {
       connectedUsers: { [key: string]: string };

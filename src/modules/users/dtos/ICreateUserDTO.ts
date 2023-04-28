@@ -1,3 +1,5 @@
+import UserRole from '../infra/typeorm/entities/UserRole';
+
 export default interface ICreateUserDTO {
   id: string;
   name: string;
@@ -5,4 +7,5 @@ export default interface ICreateUserDTO {
   email?: string;
   profile_photo?: string;
   password?: string;
+  user_roles: UserRole[];
 }

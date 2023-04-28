@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import uploadConfig from '@config/upload';
 import UserCompany from './UserCompany';
+import UserRole from './UserRole';
 
 @Entity('users')
 class User {
@@ -45,7 +46,10 @@ class User {
   @OneToMany(() => UserCompany, userCompanies => userCompanies.user)
   user_companies: UserCompany[];
 
-  @Expose({ name: 'avatar_url' })
+  @OneToMany(() => UserRole, userRoles => userRoles.user)
+  user_roles: UserRole[];
+
+  @Expose({ name: 'profile_photo' })
   getAvatarUrl(): string | null {
     if (!this.profile_photo) {
       return process.env.DEFAULT_USER_AVATAR_URL || '';
