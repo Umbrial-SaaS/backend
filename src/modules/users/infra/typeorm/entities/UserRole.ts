@@ -26,7 +26,9 @@ class UserRole {
   @JoinColumn({ name: 'role_id' })
   role: Role;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, user => user.user_roles, {
+    cascade: ['insert', 'update'],
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

@@ -21,8 +21,6 @@ class S3StorageProvider implements IStorageProvider {
 
     const ContentType = 'image';
 
-    console.log({ ContentType });
-
     if (!ContentType) {
       throw new Error('File not found');
     }

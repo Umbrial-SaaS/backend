@@ -1,5 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
+import IFindUserDTO from '@modules/users/dtos/IFindUserDTO';
+import clearJson from '@shared/functions/clearJson';
 import IUsersRepository from '../../../repositories/IUsersRepository';
 import ICreateProductDTO from '../../../dtos/ICreateUserDTO';
 
@@ -43,6 +45,15 @@ class UsersRepository implements IUsersRepository {
     });
   }
 
+  public async findBy({
+    email,
+    phone,
+  }: IFindUserDTO): Promise<User | undefined> {
+    return this.ormRepository.findOne({
+      where: clearJson({ email, phone }),
+    });
+  }
+
   public async findByName(name: string): Promise<User | undefined> {
     const user = await this.ormRepository.findOne({
       where: { name },
@@ -57,6 +68,10 @@ class UsersRepository implements IUsersRepository {
 
   public async save(data: User): Promise<User> {
     return this.ormRepository.save(data);
+  }
+
+  public async insert(data: User): Promise<void> {
+    await this.ormRepository.insert(data);
   }
 
   public async delete(id: string): Promise<void> {

@@ -11,6 +11,7 @@ import {
 import uploadConfig from '@config/upload';
 import UserCompany from './UserCompany';
 import UserRole from './UserRole';
+import RefreshToken from './RefreshToken';
 
 @Entity('users')
 class User {
@@ -46,8 +47,13 @@ class User {
   @OneToMany(() => UserCompany, userCompanies => userCompanies.user)
   user_companies: UserCompany[];
 
-  @OneToMany(() => UserRole, userRoles => userRoles.user)
+  @OneToMany(() => UserRole, userRoles => userRoles.user, {
+    cascade: ['insert', 'update'],
+  })
   user_roles: UserRole[];
+
+  @OneToMany(() => RefreshToken, refreshToken => refreshToken.user)
+  refresh_tokens: RefreshToken[];
 
   @Expose({ name: 'profile_photo' })
   getAvatarUrl(): string | null {

@@ -57,16 +57,17 @@ class CreateUserService {
       email,
       password,
       profile_photo,
-      user_roles: [
-        this.userRolesRepository.create({
-          id: crypto.randomUUID(),
-          role_id: RolesEnum.Customer,
-        }),
-      ],
     });
 
-    await this.usersRepository.save(user);
+    const userRole = this.userRolesRepository.create({
+      id: crypto.randomUUID(),
+      role_id: RolesEnum.Customer,
+      user_id: user.id,
+    });
+    await this.usersRepository.insert(user);
+    await this.userRolesRepository.save(userRole);
 
+    user.user_roles = [userRole];
     return user;
   }
 }

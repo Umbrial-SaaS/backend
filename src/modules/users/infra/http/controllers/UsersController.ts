@@ -5,6 +5,7 @@ import { classToClass } from 'class-transformer';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import ShowUserService from '../../../services/ShowUserService';
+import FindUserService from '../../../services/FindUserService';
 import CreateUserService from '../../../services/CreateUserService';
 
 export default class UsersController {
@@ -27,6 +28,19 @@ export default class UsersController {
 
     const user = await showUserService.execute({
       user_id: req.params.id,
+    });
+
+    res.json(classToClass(user));
+  }
+
+  public async find(req: Request, res: Response): Promise<void> {
+    const findUserService = container.resolve(FindUserService);
+
+    const { email, phone } = req.query;
+    console.log({ email, phone });
+    const user = await findUserService.execute({
+      email: email as string,
+      phone: phone as string,
     });
 
     res.json(classToClass(user));

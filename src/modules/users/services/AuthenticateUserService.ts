@@ -1,14 +1,16 @@
 import { injectable, inject } from 'tsyringe';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
+import refreshTokenConfig from '@config/refreshToken';
 import AppError from '@shared/errors/AppError';
-
+import crypto from 'crypto';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 import User from '../infra/typeorm/entities/User';
+import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
 interface IRequest {
   email?: string;
@@ -19,7 +21,7 @@ interface IRequest {
 interface IResponse {
   user: User;
   access_token: string;
-  // refresh_token: string;
+  refresh_token: string;
 }
 
 @injectable()
@@ -31,8 +33,8 @@ class AuthenticateUserService {
     @inject('HashProvider')
     private hashProvider: IHashProvider,
 
-    // @inject('RefreshTokensRepository')
-    // private refreshTokensRepository: IRefreshTokensRepository,
+    @inject('RefreshTokensRepository')
+    private refreshTokensRepository: IRefreshTokensRepository,
 
     @inject('IdGeneratorProvider')
     private idGeneratorProvider: IIdGeneratorProvider,
@@ -53,10 +55,16 @@ class AuthenticateUserService {
     let user: User | undefined;
 
     if (email) {
-      user = await this.usersRepository.findByEmail(email, ['user_roles']);
+      user = await this.usersRepository.findByEmail(email, [
+        'user_roles',
+        'user_roles.role',
+      ]);
     }
     if (phone) {
-      user = await this.usersRepository.findByPhone(phone, ['user_roles']);
+      user = await this.usersRepository.findByPhone(phone, [
+        'user_roles',
+        'user_roles.role',
+      ]);
     }
 
     if (!user) {
@@ -81,7 +89,6 @@ class AuthenticateUserService {
 
     const token = sign(
       {
-        // TODO: Adicionar as Roles
         roles: [],
         deleted_at: user.deleted_at,
       },
@@ -92,19 +99,19 @@ class AuthenticateUserService {
       },
     );
 
-    // const refreshToken = await this.refreshTokensRepository.create({
-    //   id: this.idGeneratorProvider.generate(),
-    //   access_token: token,
-    //   expires_in: refreshTokenConfig.refreshToken.expiresIn,
-    //   is_active: true,
-    //   refresh_token: crypto.randomBytes(32).toString('hex'),
-    //   user_id: user.id,
-    // });
+    const refreshToken = await this.refreshTokensRepository.create({
+      id: this.idGeneratorProvider.generate(),
+      access_token: token,
+      expires_in: refreshTokenConfig.refreshToken.expiresIn,
+      is_active: true,
+      refresh_token: crypto.randomBytes(32).toString('hex'),
+      user_id: user.id,
+    });
 
     return {
       user,
       access_token: token,
-      //    refresh_token: refreshToken.refresh_token,
+      refresh_token: refreshToken.refresh_token,
     };
   }
 }

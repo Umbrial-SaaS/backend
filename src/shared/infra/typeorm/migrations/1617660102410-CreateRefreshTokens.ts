@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
-export class UsersTable1682609841494 implements MigrationInterface {
+export default class CreateRefreshTokens1617660102410
+  implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'users',
+        name: 'refresh_tokens',
         columns: [
           {
             name: 'id',
@@ -12,27 +13,25 @@ export class UsersTable1682609841494 implements MigrationInterface {
             isPrimary: true,
           },
           {
-            name: 'name',
+            name: 'access_token',
             type: 'varchar',
           },
           {
-            name: 'phone',
+            name: 'refresh_token',
             type: 'varchar',
           },
           {
-            name: 'email',
-            type: 'varchar',
-            isNullable: true,
+            name: 'expires_in',
+            type: 'int',
           },
           {
-            name: 'profile_photo',
-            type: 'varchar',
-            isNullable: true,
+            name: 'is_active',
+            type: 'boolean',
+            default: true,
           },
           {
-            name: 'password',
-            type: 'varchar',
-            isNullable: true,
+            name: 'user_id',
+            type: 'uuid',
           },
           {
             name: 'created_at',
@@ -40,14 +39,19 @@ export class UsersTable1682609841494 implements MigrationInterface {
             default: 'now()',
           },
           {
-            name: 'deleted_at',
-            type: 'timestamp',
-            isNullable: true,
-          },
-          {
             name: 'updated_at',
             type: 'timestamp',
             default: 'now()',
+          },
+        ],
+        foreignKeys: [
+          {
+            name: 'UserFK',
+            columnNames: ['user_id'],
+            referencedColumnNames: ['id'],
+            referencedTableName: 'users',
+            onUpdate: 'CASCADE',
+            onDelete: 'CASCADE',
           },
         ],
       }),
@@ -55,6 +59,6 @@ export class UsersTable1682609841494 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('users');
+    await queryRunner.dropTable('refresh_tokens');
   }
 }

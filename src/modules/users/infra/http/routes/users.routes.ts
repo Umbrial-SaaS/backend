@@ -16,6 +16,8 @@ usersRouter.post('/', create, usersController.create);
 
 usersRouter.get('/:id', id, usersController.show);
 
+usersRouter.get('/', usersController.find);
+
 usersRouter.post('/auth', auth, usersController.auth);
 
 usersRouter.put(
