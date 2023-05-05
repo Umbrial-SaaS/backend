@@ -1,4 +1,4 @@
-import UserCompany from '@modules/users/infra/typeorm/entities/UserCompany';
+import UserCompany from '@modules/companies/infra/typeorm/entities/UserCompany';
 import 'reflect-metadata';
 import {
   Entity,

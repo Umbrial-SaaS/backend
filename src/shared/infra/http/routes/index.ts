@@ -1,3 +1,4 @@
+import companiesRouter from '@modules/companies/infra/http/routes/companies.routes';
 import usersRouter from '@modules/users/infra/http/routes/users.routes';
 import { Router, Request, Response } from 'express';
 
@@ -8,5 +9,7 @@ routes.get('/', (request: Request, response: Response) => {
 });
 
 routes.use('/users', usersRouter);
+
+routes.use('/companies', companiesRouter);
 
 export default routes;

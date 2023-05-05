@@ -3,6 +3,7 @@ enum RolesEnum {
   Enterpreuner,
   Collaborator,
   Customer,
+  Recepcionist,
 }
 
 export default RolesEnum;

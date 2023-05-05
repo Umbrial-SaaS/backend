@@ -37,12 +37,12 @@ export default class UsersController {
     const findUserService = container.resolve(FindUserService);
 
     const { email, phone } = req.query;
-    console.log({ email, phone });
     const user = await findUserService.execute({
       email: email as string,
       phone: phone as string,
     });
 
+    console.log({ user });
     res.json(classToClass(user));
   }
 

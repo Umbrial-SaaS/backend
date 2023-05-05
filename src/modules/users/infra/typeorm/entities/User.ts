@@ -9,7 +9,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import uploadConfig from '@config/upload';
-import UserCompany from './UserCompany';
+import UserCompany from '../../../../companies/infra/typeorm/entities/UserCompany';
 import UserRole from './UserRole';
 import RefreshToken from './RefreshToken';
 

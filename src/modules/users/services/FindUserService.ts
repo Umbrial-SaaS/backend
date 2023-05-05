@@ -20,6 +20,7 @@ class FindUserService {
     phone,
     email,
   }: FindUserServiceReq): Promise<User | undefined> {
+    console.table({ phone, email });
     if (!phone && !email) {
       throw new AppError('Filtros necessarios!', 400, 'params_needed');
     }

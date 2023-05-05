@@ -3,7 +3,10 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import crypto from 'crypto';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IUserCompaniesRepository from '@modules/users/repositories/IUserCompaniesRepository';
+import IUserCompaniesRepository from '@modules/companies/repositories/IUserCompaniesRepository';
+import RolesEnum from '@shared/enums/RolesEnum';
+import IUserRolesRepository from '@modules/users/repositories/IUserRolesRepository';
+import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 import User from '../infra/typeorm/entities/Company';
 import ICompaniesRepository from '../repositories/ICompaniesRepository';
 
@@ -25,6 +28,12 @@ class CreateCompanyService {
 
     @inject('UserCompaniesRepository')
     private userCompaniesRepository: IUserCompaniesRepository,
+
+    @inject('UserRolesRepository')
+    private userRolesRepository: IUserRolesRepository,
+
+    @inject('IdGeneratorProvider')
+    private idGeneratorProvider: IIdGeneratorProvider,
   ) {}
 
   public async execute({
@@ -58,6 +67,20 @@ class CreateCompanyService {
       user_id,
       company_id: company.id,
     });
+
+    // TODO: Futuramente, adicionar recepcionistas
+    const userAlreadyEnterpreuner = user.user_roles.find(
+      userRole => userRole.role_id === RolesEnum.Enterpreuner,
+    );
+    if (!userAlreadyEnterpreuner) {
+      await this.userRolesRepository.save(
+        this.userRolesRepository.create({
+          id: this.idGeneratorProvider.generate(),
+          role_id: RolesEnum.Enterpreuner,
+          user_id,
+        }),
+      );
+    }
 
     /* 
 
