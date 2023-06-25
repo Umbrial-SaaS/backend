@@ -10,7 +10,6 @@ tmp/*
 dist/*
 package-lock.json
 yarn.lock
-package-lock.json
 ormconfig.ts
 .env
 pandoris-firebase.json
