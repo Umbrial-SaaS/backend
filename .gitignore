@@ -8,7 +8,6 @@ logs/
 tmp/*
 !tmp/ .gitkeep
 dist/*
-package-lock.json
 yarn.lock
 ormconfig.ts
 .env
