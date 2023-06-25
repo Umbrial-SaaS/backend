@@ -6,12 +6,12 @@ import IStorageProvider from '@shared/container/providers/StorageProvider/models
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 
-type UpdateUserServiceReq = {
+export type UpdateUserServiceReq = {
   user_id: string;
   name?: string;
   phone?: string;
   email?: string;
-  profile_photo?: string;
+  avatar?: string;
   password?: string;
   deleted?: boolean;
 };
@@ -32,7 +32,7 @@ class CreateUserService {
     phone,
     email,
     password,
-    profile_photo,
+    avatar,
     deleted,
   }: UpdateUserServiceReq): Promise<User> {
     const user = await this.usersRepository.findById(user_id);
@@ -69,17 +69,17 @@ class CreateUserService {
       user.name = name;
     }
 
-    if (profile_photo) {
-      if (user.profile_photo) {
-        await this.storageProvider.deleteFile(user.profile_photo);
+    if (avatar) {
+      if (user.avatar) {
+        await this.storageProvider.deleteFile(user.avatar);
       }
-      user.profile_photo = await this.storageProvider.saveFile(profile_photo);
+      user.avatar = await this.storageProvider.saveFile(avatar);
     }
 
     if (!deleted) {
-      user.deleted_at = undefined;
+      user.deletedAt = undefined;
     } else {
-      user.deleted_at = new Date();
+      user.deletedAt = new Date();
     }
 
     await this.usersRepository.save(user);

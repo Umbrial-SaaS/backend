@@ -1,9 +1,8 @@
 enum RolesEnum {
   Admin = 1,
-  Enterpreuner,
-  Collaborator,
+  Seller,
+  Affiliated,
   Customer,
-  Recepcionist,
 }
 
 export default RolesEnum;

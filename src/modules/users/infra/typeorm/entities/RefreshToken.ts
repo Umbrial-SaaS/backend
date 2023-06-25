@@ -11,36 +11,33 @@ import User from './User';
 
 @Entity('refresh_tokens')
 class RefreshToken {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
-  access_token: string;
+  accessToken: string;
 
   @Column()
-  refresh_token: string;
+  refreshToken: string;
 
   @Column()
-  user_id: string;
-
-  @ManyToOne(() => User, user => user.refresh_tokens, {
-    cascade: true,
-    onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  })
-  @JoinColumn({ name: 'user_id' })
-  user: User;
+  userId: string;
 
   @Column()
-  expires_in: number;
+  expiresIn: number;
 
   @Column()
-  is_active: boolean;
+  isActive: boolean;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
+
+  @ManyToOne(() => User, user => user.refreshTokens)
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }
 
 export default RefreshToken;

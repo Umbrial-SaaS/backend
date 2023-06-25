@@ -7,9 +7,10 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import uploadConfig from '@config/upload';
-import UserCompany from '../../../../companies/infra/typeorm/entities/UserCompany';
+import Seller from '@modules/sellers/infra/typeorm/entities/Seller';
 import UserRole from './UserRole';
 import RefreshToken from './RefreshToken';
 
@@ -18,54 +19,63 @@ class User {
   @PrimaryColumn()
   id: string;
 
-  @Column()
-  name: string;
+  @Column({ nullable: true })
+  name?: string;
+
+  @Column({ nullable: true })
+  phone?: string;
+
+  @Column({ nullable: true })
+  bio?: string;
 
   @Column()
-  phone: string;
+  email: string;
 
-  @Column()
-  email?: string;
+  @Column({ nullable: true })
+  googleId?: string;
 
-  @Column()
-  profile_photo?: string;
+  @Column({ nullable: true })
+  facebookId?: string;
 
-  @Column()
+  @Column({ nullable: true })
+  avatar?: string;
+
+  @Column({ nullable: true })
   @Exclude()
   password?: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
-  @Column()
-  deleted_at?: Date;
+  @Column({ nullable: true })
+  deletedAt?: Date;
 
   // * Relations
-  @OneToMany(() => UserCompany, userCompanies => userCompanies.user)
-  user_companies: UserCompany[];
-
   @OneToMany(() => UserRole, userRoles => userRoles.user, {
     cascade: ['insert', 'update'],
   })
-  user_roles: UserRole[];
+  userRoles: UserRole[];
+
+  @OneToOne(() => Seller, seller => seller.user)
+  seller: Seller;
 
   @OneToMany(() => RefreshToken, refreshToken => refreshToken.user)
-  refresh_tokens: RefreshToken[];
+  refreshTokens: RefreshToken[];
 
-  @Expose({ name: 'profile_photo' })
+  @Expose({ name: 'avatar' })
   getAvatarUrl(): string | null {
-    if (!this.profile_photo) {
+    if (!this.avatar) {
       return process.env.DEFAULT_USER_AVATAR_URL || '';
     }
 
     switch (uploadConfig.driver) {
       case 'disk':
-        return `${process.env.APP_API_URL}/files/${this.profile_photo}`;
+        return `${process.env.APP_API_URL}/files/${this.avatar}`;
       case 's3':
-        return `https://${uploadConfig.config.aws.bucket}.${process.env.DIGITAL_OCEAN_ENDPOINT}/${this.profile_photo}`;
+        return `https://${uploadConfig.config.aws.bucket}.${process.env.DIGITAL_OCEAN_ENDPOINT}/${this.avatar}`;
       default:
         return null;
     }

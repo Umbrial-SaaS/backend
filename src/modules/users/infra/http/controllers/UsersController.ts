@@ -1,39 +1,68 @@
-import { Request, Response } from 'express';
+/* eslint-disable import/no-extraneous-dependencies */
 import { container } from 'tsyringe';
 import { classToClass } from 'class-transformer';
 
-import UpdateUserService from '@modules/users/services/UpdateUserService';
-import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
-import ShowUserService from '../../../services/ShowUserService';
-import FindUserService from '../../../services/FindUserService';
-import CreateUserService from '../../../services/CreateUserService';
+import AuthenticateUserService, {
+  AuthenticateUserReq,
+} from '@modules/users/services/AuthenticateUserService';
+import { FastifyRequest, FastifyReply } from 'fastify';
+import { z, number } from 'zod';
+import ShowUserService, {
+  ShowUserServiceReq,
+} from '../../../services/ShowUserService';
+import FindUserService, {
+  FindUserServiceReq,
+} from '../../../services/FindUserService';
+import CreateUserService, {
+  CreateUserServiceReq,
+} from '../../../services/CreateUserService';
 
 export default class UsersController {
-  public async create(req: Request, res: Response): Promise<Response> {
+  public async create(
+    req: FastifyRequest<{ Body: CreateUserServiceReq }>,
+    res: FastifyReply,
+  ): Promise<FastifyReply> {
+    const schema = z.object({
+      name: z.string(),
+      phone: z.string(),
+      email: z.string(),
+      profile_photo: z.string().optional(),
+      password: z.string(),
+      roles: z.array(number()),
+    });
+    const body = schema.parse(req.body);
     const createUserService = container.resolve(CreateUserService);
-    const user = await createUserService.execute(req.body);
+    const user = await createUserService.execute(body);
 
-    return res.status(201).json(classToClass(user));
+    return res.send(classToClass(user));
   }
 
-  public async auth(req: Request, res: Response): Promise<Response> {
+  public async auth(
+    req: FastifyRequest<{ Body: AuthenticateUserReq }>,
+    res: FastifyReply,
+  ): Promise<FastifyReply> {
     const authenticateUserService = container.resolve(AuthenticateUserService);
     const data = await authenticateUserService.execute(req.body);
 
-    return res.status(200).json(classToClass(data));
+    return res.send(classToClass(data));
   }
 
-  public async show(req: Request, res: Response): Promise<void> {
+  public async show(
+    req: FastifyRequest<{ Params: ShowUserServiceReq }>,
+    res: FastifyReply,
+  ): Promise<void> {
     const showUserService = container.resolve(ShowUserService);
-
     const user = await showUserService.execute({
-      user_id: req.params.id,
+      userId: req.params.userId,
     });
 
-    res.json(classToClass(user));
+    return res.send(classToClass(user));
   }
 
-  public async find(req: Request, res: Response): Promise<void> {
+  public async find(
+    req: FastifyRequest<{ Querystring: FindUserServiceReq }>,
+    res: FastifyReply,
+  ): Promise<void> {
     const findUserService = container.resolve(FindUserService);
 
     const { email, phone } = req.query;
@@ -42,28 +71,30 @@ export default class UsersController {
       phone: phone as string,
     });
 
-    console.log({ user });
-    res.json(classToClass(user));
+    res.send(classToClass(user));
   }
 
-  public async update(req: Request, res: Response): Promise<void> {
-    const updateUserService = container.resolve(UpdateUserService);
+  // public async update(
+  //   req: FastifyRequest<{ Body: UpdateUserServiceReq }>,
+  //   res: FastifyReply,
+  // ): Promise<void> {
+  //   const updateUserService = container.resolve(UpdateUserService);
 
-    let filename: string | undefined;
-    if (req.file) {
-      filename = req.file.filename;
-    }
+  //   let filename: string | undefined;
+  //   if (req.file) {
+  //     filename = req.file.filename;
+  //   }
 
-    const user = await updateUserService.execute({
-      user_id: req.user.id,
-      profile_photo: filename,
-      deleted: req.body.deleted,
-      email: req.body.email,
-      name: req.body.name,
-      password: req.body.password,
-      phone: req.body.phone,
-    });
+  //   const user = await updateUserService.execute({
+  //     user_id: req.user.id,
+  //     profile_photo: filename,
+  //     deleted: req.body.deleted,
+  //     email: req.body.email,
+  //     name: req.body.name,
+  //     password: req.body.password,
+  //     phone: req.body.phone,
+  //   });
 
-    res.json(classToClass(user));
-  }
+  //   res.json(classToClass(user));
+  // }
 }

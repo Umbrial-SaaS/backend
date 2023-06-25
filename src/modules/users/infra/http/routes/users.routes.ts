@@ -1,30 +1,32 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Router } from 'express';
 import multer from 'multer';
 import uploadConfig from '@config/upload';
 import ensureAuthenticated from '@shared/infra/http/middlewares/ensureAuthenticated';
-import ProductsController from '../controllers/UsersController';
+import { randomUUID } from 'crypto';
+import { FastifyInstance } from 'fastify';
+import { server } from '@shared/infra/http/server';
+import UsersController from '../controllers/UsersController';
 
 import { create, id, auth } from './validations/users.validation';
 
 const upload = multer(uploadConfig.multer);
 
-const usersController = new ProductsController();
+const usersController = new UsersController();
 
-const usersRouter = Router();
+export default async function userRoutes(app: FastifyInstance) {
+  app.post('/', { preHandler: server.authenticate }, usersController.create);
 
-usersRouter.post('/', create, usersController.create);
+  app.get('/:userId', usersController.show);
 
-usersRouter.get('/:id', id, usersController.show);
+  app.get('/', usersController.find);
 
-usersRouter.get('/', usersController.find);
+  app.post('/auth', usersController.auth);
 
-usersRouter.post('/auth', auth, usersController.auth);
-
-usersRouter.put(
-  '/',
-  ensureAuthenticated,
-  upload.single('profile_photo'),
-  usersController.update,
-);
-
-export default usersRouter;
+  // app.put(
+  //   '/',
+  //   ensureAuthenticated,
+  //   upload.single('profile_photo'),
+  //   usersController.update,
+  // );
+}

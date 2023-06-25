@@ -1,32 +1,44 @@
 /* eslint-disable import/prefer-default-export */
 import 'reflect-metadata';
 import 'dotenv/config';
-
-import express, { request } from 'express';
-import cors from 'cors';
-import 'express-async-errors';
-import http from 'http';
-import routes from './routes';
+// import express from 'express';
+import Fastify from 'fastify';
 
 import '@shared/infra/typeorm';
 import '@shared/container';
-import socketIO from '../socketIO';
-import globalErrorHandling from './middlewares/globalErrorHandling';
+import userRoutes from '@modules/users/infra/http/routes/users.routes';
+import process from 'process';
+import AppError from '@shared/errors/AppError';
+import authPlugin from './auth';
 
-const app = express();
-const server = http.createServer(app);
-const appSocketServer = socketIO(server, request);
+const server = Fastify({});
 
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(routes);
+server.register(authPlugin); // Registrar o plugin de autenticação
 
-app.use(globalErrorHandling);
-
-server.listen(process.env.PORT || 3337, async () => {
-  /* eslint-disable no-console */
-  console.log(`🚀 Server started on port ${process.env.PORT || 3337}!`);
+server.register(userRoutes, {
+  prefix: 'users',
 });
 
-export { appSocketServer };
+server.setErrorHandler((error, req, reply) => {
+  if (error instanceof AppError) {
+    return reply.status(error.statusCode).send({
+      status: 'error',
+      message: error.message,
+      errorName: error.errorName,
+    });
+  }
+
+  return reply.status(500).send({
+    status: 'error',
+    error,
+  });
+});
+
+server.listen({
+  port: Number(process.env.PORT) || 3337,
+});
+console.log(
+  `[SERVIDOR] Servidor iniciado em .${Number(process.env.PORT) || 3337}`,
+);
+
+export { server };

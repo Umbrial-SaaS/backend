@@ -44,19 +44,19 @@ class RefreshTokensRepository implements IRefreshTokensRepository {
 
   public async create({
     id,
-    access_token,
-    expires_in,
-    is_active,
-    refresh_token,
-    user_id,
+    accessToken,
+    expiresIn,
+    isActive,
+    refreshToken,
+    userId,
   }: ICreateRefreshTokenDTO): Promise<AuthenticationToken> {
     const newToken = this.ormRepository.create({
       id,
-      access_token,
-      expires_in,
-      is_active,
-      refresh_token,
-      user_id,
+      accessToken,
+      expiresIn,
+      isActive,
+      refreshToken,
+      userId,
     });
 
     await this.ormRepository.save(newToken);

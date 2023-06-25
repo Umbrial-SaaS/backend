@@ -1,19 +1,20 @@
+/* eslint-disable no-restricted-syntax */
 import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
-import RolesEnum from '@shared/enums/RolesEnum';
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 import IUserRolesRepository from '../repositories/IUserRolesRepository';
 
-type CreateUserServiceReq = {
+export type CreateUserServiceReq = {
   name: string;
   phone: string;
   email?: string;
   profile_photo?: string;
   password?: string;
+  roles: number[];
 };
 
 @injectable()
@@ -32,6 +33,7 @@ class CreateUserService {
     email,
     password,
     profile_photo,
+    roles,
   }: CreateUserServiceReq): Promise<User> {
     const phoneAlreadyUsed = await this.usersRepository.findByPhone(phone);
 
@@ -58,16 +60,18 @@ class CreateUserService {
       password,
       profile_photo,
     });
+    user.userRoles = [];
 
-    const userRole = this.userRolesRepository.create({
-      id: crypto.randomUUID(),
-      role_id: RolesEnum.Customer,
-      user_id: user.id,
-    });
-    await this.usersRepository.insert(user);
-    await this.userRolesRepository.save(userRole);
+    for (const roleId of roles) {
+      const userRole = this.userRolesRepository.create({
+        id: crypto.randomUUID(),
+        roleId,
+        userId: user.id,
+      });
+      user.userRoles.push(userRole);
+    }
 
-    user.user_roles = [userRole];
+    await this.usersRepository.save(user);
     return user;
   }
 }

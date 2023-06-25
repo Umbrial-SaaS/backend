@@ -15,10 +15,13 @@
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "module"
+    "sourceType": "module",
+    "ecmaVersion": 2020
   },
-  "plugins": ["@typescript-eslint", "prettier"],
+  "plugins": [
+    "@typescript-eslint",
+    "prettier"
+  ],
   "rules": {
     "prettier/prettier": "error",
     "no-use-before-define": "off",
@@ -26,17 +29,29 @@
     "class-methods-use-this": "off",
     "no-useless-constructor": "off",
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
     "@typescript-eslint/camelcase": "off",
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
-    "@typescript-eslint/no-unused-vars": ["error", {
-      "argsIgnorePattern": "_"
-    }],
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "off",
+      {
+        "argsIgnorePattern": "_"
+      }
+    ],
     "@typescript-eslint/naming-convention": [
       "error",
       {
         "selector": "interface",
-        "format": ["PascalCase"],
+        "format": [
+          "PascalCase"
+        ],
         "custom": {
           "regex": "^I[A-Z]",
           "match": true
@@ -44,7 +59,9 @@
       }
     ],
     "camelcase": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",

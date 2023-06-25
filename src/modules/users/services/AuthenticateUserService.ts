@@ -12,11 +12,11 @@ import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/typeorm/entities/User';
 import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
-interface IRequest {
+export type AuthenticateUserReq = {
   email?: string;
   phone?: string;
   password?: string;
-}
+};
 
 interface IResponse {
   user: User;
@@ -44,7 +44,7 @@ class AuthenticateUserService {
     email,
     password,
     phone,
-  }: IRequest): Promise<IResponse> {
+  }: AuthenticateUserReq): Promise<IResponse> {
     if (!email && !phone) {
       throw new AppError(
         'Telefone ou Email necessário.',
@@ -56,14 +56,14 @@ class AuthenticateUserService {
 
     if (email) {
       user = await this.usersRepository.findByEmail(email, [
-        'user_roles',
-        'user_roles.role',
+        'userRoles',
+        'userRoles.role',
       ]);
     }
     if (phone) {
       user = await this.usersRepository.findByPhone(phone, [
-        'user_roles',
-        'user_roles.role',
+        'userRoles',
+        'userRoles.role',
       ]);
     }
 
@@ -90,7 +90,7 @@ class AuthenticateUserService {
     const token = sign(
       {
         roles: [],
-        deleted_at: user.deleted_at,
+        deleted_at: user.deletedAt,
       },
       secret,
       {
@@ -101,17 +101,17 @@ class AuthenticateUserService {
 
     const refreshToken = await this.refreshTokensRepository.create({
       id: this.idGeneratorProvider.generate(),
-      access_token: token,
-      expires_in: refreshTokenConfig.refreshToken.expiresIn,
-      is_active: true,
-      refresh_token: crypto.randomBytes(32).toString('hex'),
-      user_id: user.id,
+      accessToken: token,
+      expiresIn: refreshTokenConfig.refreshToken.expiresIn,
+      isActive: true,
+      refreshToken: crypto.randomBytes(32).toString('hex'),
+      userId: user.id,
     });
 
     return {
       user,
       access_token: token,
-      refresh_token: refreshToken.refresh_token,
+      refresh_token: refreshToken.refreshToken,
     };
   }
 }

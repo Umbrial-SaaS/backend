@@ -17,7 +17,6 @@ class UserRolesRepository implements IUserRolesRepository {
   }
 
   public async save(data: UserRole): Promise<UserRole> {
-    console.log({ data });
     return this.ormRepository.save(data);
   }
 

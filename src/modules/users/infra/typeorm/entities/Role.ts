@@ -5,14 +5,14 @@ import UserRole from './UserRole';
 @Entity('roles')
 class Role {
   @PrimaryColumn()
-  id: string;
+  id: number;
 
   @Column()
   name: string;
 
   // * Relations
   @OneToMany(() => UserRole, userRole => userRole.role)
-  user_roles: UserRole[];
+  userRoles: UserRole[];
 }
 
 export default Role;

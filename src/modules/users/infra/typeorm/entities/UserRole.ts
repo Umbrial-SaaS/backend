@@ -16,19 +16,17 @@ class UserRole {
   id: string;
 
   @Column()
-  role_id: number;
+  roleId: number;
 
   @Column()
-  user_id: string;
+  userId: string;
 
   // * Relations
   @ManyToOne(() => Role)
-  @JoinColumn({ name: 'role_id' })
+  @JoinColumn({ name: 'roleId' })
   role: Role;
 
-  @ManyToOne(() => User, user => user.user_roles, {
-    cascade: ['insert', 'update'],
-  })
+  @ManyToOne(() => User, user => user.userRoles)
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

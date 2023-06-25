@@ -1,15 +1,7 @@
 import companiesRouter from '@modules/companies/infra/http/routes/companies.routes';
-import usersRouter from '@modules/users/infra/http/routes/users.routes';
-import { Router, Request, Response } from 'express';
+import usersRoutes from '@modules/users/infra/http/routes/users.routes';
+import { server } from '../server';
 
-const routes = Router();
-
-routes.get('/', (request: Request, response: Response) => {
-  return response.status(200).json({ message: 'ok' });
+server.register(usersRoutes, {
+  prefix: 'users',
 });
-
-routes.use('/users', usersRouter);
-
-routes.use('/companies', companiesRouter);
-
-export default routes;
