@@ -1,6 +1,6 @@
-export default {
+module.exports = {
   "type": "postgres",
-  "url": process.env.DATABASE_URI,
+  "url": process.env.DATABASE_URL,
   "entities": [
     "./src/modules/**/infra/typeorm/entities/*.ts"
   ],

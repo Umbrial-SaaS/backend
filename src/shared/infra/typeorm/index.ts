@@ -7,7 +7,7 @@ async function getConnection() {
     .then(() => {
       console.log('[BANCO DE DADOS 🎲] Conectado com sucesso!');
     })
-    .catch(err => console.log(err));
+    .catch(err => console.error(err));
 }
 
 getConnection();

@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
+import '@config/env';
 import 'reflect-metadata';
-import 'dotenv/config';
+
 // import express from 'express';
 import Fastify from 'fastify';
 
@@ -14,7 +15,6 @@ import authPlugin from './auth';
 const server = Fastify({});
 
 server.register(authPlugin); // Registrar o plugin de autenticação
-
 server.register(userRoutes, {
   prefix: 'users',
 });
