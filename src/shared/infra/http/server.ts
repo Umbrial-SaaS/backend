@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/prefer-default-export */
 import '@config/env';
 import 'reflect-metadata';
@@ -8,15 +9,11 @@ import userRoutes from '@modules/users/infra/http/routes/users.routes';
 import process from 'process';
 import AppError from '@shared/errors/AppError';
 import os from 'os';
-import fastifyCors from 'fastify-cors';
 import authPlugin from './auth';
 
 const server = Fastify({});
+server.register(require('cors')());
 
-server.register(fastifyCors, {
-  origin: '*',
-  methods: ['GET', 'PUT', 'POST', 'DELETE'],
-});
 server.register(authPlugin); // Registrar o plugin de autenticação
 server.register(userRoutes, {
   prefix: 'users',
