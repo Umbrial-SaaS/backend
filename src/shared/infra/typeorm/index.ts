@@ -26,6 +26,7 @@ async function getConnection() {
   console.log('[BANCO DE DADOS 🎲] Tentando conectar.');
   try {
     await appDataSource.initialize();
+    appDataSource.runMigrations();
   } catch (err) {
     console.error(err);
   }
