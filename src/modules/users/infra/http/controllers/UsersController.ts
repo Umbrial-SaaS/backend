@@ -7,6 +7,7 @@ import AuthenticateUserService, {
 } from '@modules/users/services/AuthenticateUserService';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z, number } from 'zod';
+import console from 'console';
 import ShowUserService, {
   ShowUserServiceReq,
 } from '../../../services/ShowUserService';
@@ -31,7 +32,9 @@ export default class UsersController {
       roles: z.array(number()),
     });
     const body = schema.parse(req.body);
+
     const createUserService = container.resolve(CreateUserService);
+
     const user = await createUserService.execute(body);
 
     return res.send(classToClass(user));

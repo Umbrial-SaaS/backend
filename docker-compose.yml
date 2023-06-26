@@ -1,15 +1,16 @@
-version: '3.8'
+version: '3'
 services:
-  db:
-    image: postgres:14.1-alpine
+  postgres:
+    image: postgres
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      POSTGRES_USER: umbrial
+      POSTGRES_PASSWORD: umbrial
+      POSTGRES_DB: umbrial
     ports:
-      - '5432:5432'
-    volumes: 
-      - db:/var/lib/postgresql/data
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 volumes:
-  db:
-    driver: local
+  postgres_data:

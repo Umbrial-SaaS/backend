@@ -52,7 +52,7 @@ class AuthenticateUserService {
         'email_or_phone_needed',
       );
     }
-    let user: User | undefined;
+    let user: User | null = null;
 
     if (email) {
       user = await this.usersRepository.findByEmail(email, [
