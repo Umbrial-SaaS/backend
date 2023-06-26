@@ -1,3 +1,5 @@
+/* eslint-disable global-require */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/prefer-default-export */
 import '@config/env';
@@ -12,7 +14,6 @@ import os from 'os';
 import authPlugin from './auth';
 
 const server = Fastify({});
-server.register(require('cors')());
 
 server.register(authPlugin); // Registrar o plugin de autenticação
 server.register(userRoutes, {

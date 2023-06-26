@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@fastify/cors": "^7.0.0",
+    "@fastify/express": "^2.3.0",
     "@fastify/jwt": "^7.0.0",
     "@hapi/joi": "^17.1.1",
     "@types/numeral": "^2.0.1",
