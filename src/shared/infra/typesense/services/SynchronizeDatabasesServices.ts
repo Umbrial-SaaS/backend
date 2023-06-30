@@ -4,8 +4,8 @@
 /* eslint-disable no-return-assign */
 import { injectable, inject } from 'tsyringe';
 
-import IProductsRepository from '@modules/products/repositories/IProductsRepository';
-import IProductsORMRepository from '@modules/products/repositories/IProductsORMRepository';
+import IProductsRepository from '@modules/v1products/repositories/IProductsRepository';
+import IProductsORMRepository from '@modules/v1products/repositories/IProductsORMRepository';
 
 @injectable()
 class SynchronizeDatabasesServices {

@@ -1,4 +1,4 @@
-import ISplitRules from '@modules/signatures/dtos/ISplitRules';
+import ISplitRules from '@modules/v1signatures/dtos/ISplitRules';
 
 export default interface IResCreateTransactionDTO {
   object: 'transaction';

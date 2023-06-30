@@ -2,15 +2,17 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/prefer-default-export */
-import '@config/env';
+
 import 'reflect-metadata';
 import Fastify from 'fastify';
 import '@shared/infra/typeorm';
 import '@shared/container';
-import userRoutes from '@modules/users/infra/http/routes/users.routes';
+import userRoutes from '@modules/v1/users/infra/http/routes/users.routes';
 import process from 'process';
 import AppError from '@shared/errors/AppError';
 import os from 'os';
+import fastifyJwt from '@fastify/jwt';
+import { env } from '@config/env';
 import authPlugin from './auth';
 
 const server = Fastify({});
@@ -18,6 +20,9 @@ const server = Fastify({});
 server.register(authPlugin); // Registrar o plugin de autenticação
 server.register(userRoutes, {
   prefix: 'users',
+});
+server.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
 });
 
 server.get('/health', (req, reply) => {

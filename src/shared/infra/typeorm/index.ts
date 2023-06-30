@@ -1,5 +1,5 @@
+import { env } from '@config/env';
 import { join } from 'path';
-import { env } from 'process';
 import { DataSource } from 'typeorm';
 
 const appDataSource = new DataSource({
@@ -19,7 +19,7 @@ const appDataSource = new DataSource({
       `*.${env.JS_OR_TS}`,
     ),
   ],
-  migrations: ['./src/shared/infra/typeorm/migrations/*.js'],
+  migrations: [`./src/shared/infra/typeorm/migrations/*.${env.JS_OR_TS}`],
 });
 
 async function getConnection() {
@@ -30,10 +30,10 @@ async function getConnection() {
     console.log(['[BANCO DE DADOS 🎲]: Rodando migrations...']);
     appDataSource.runMigrations();
     console.log(['[BANCO DE DADOS 🎲]: Migrations executadas!']);
+    console.log('[BANCO DE DADOS 🎲]: Conectado com sucesso.');
   } catch (err) {
     console.error(err);
   }
-  console.log('[BANCO DE DADOS 🎲]: Conectado com sucesso.');
 }
 
 getConnection();

@@ -1,7 +1,7 @@
 /* eslint-disable no-return-assign */
 import { injectable, inject } from 'tsyringe';
 
-import IProductsRepository from '@modules/products/repositories/IProductsRepository';
+import IProductsRepository from '@modules/v1products/repositories/IProductsRepository';
 
 @injectable()
 class IndexCollectionsService {

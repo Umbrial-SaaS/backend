@@ -6,9 +6,9 @@ import { inject, injectable } from 'tsyringe';
 
 import { Agenda } from 'agenda';
 
-import IProviderWorkRemindersRepository from '@modules/providers/repositories/IProviderWorkRemindersRepository';
+import IProviderWorkRemindersRepository from '@modules/v1providers/repositories/IProviderWorkRemindersRepository';
 import { addDays, differenceInDays, subDays, subMinutes } from 'date-fns';
-import IServiceAppointmentsRepository from '@modules/serviceAppointments/repositories/IServiceAppointmentsRepository';
+import IServiceAppointmentsRepository from '@modules/v1serviceAppointments/repositories/IServiceAppointmentsRepository';
 import { appSocketServer } from '@shared/infra/http/server';
 import ESocketNotificationTypeEnum from '@shared/infra/socketIO/enums/ESocketNotificationTypeEnum';
 import IJobProvider from '../IJobProvider';

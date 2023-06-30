@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
 
-import AnimalSize from '@modules/pets/infra/typeorm/entities/AnimalSize';
+import AnimalSize from '@modules/v1pets/infra/typeorm/entities/AnimalSize';
 
 import sizeList from '../helpers/sizeList';
 

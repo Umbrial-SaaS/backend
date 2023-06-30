@@ -1,12 +1,12 @@
 import { container } from 'tsyringe';
 
-import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
+import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
+import UsersRepository from '@modules/v1/users/infra/typeorm/repositories/UsersRepository';
 import './providers';
-import IUserRolesRepository from '@modules/users/repositories/IUserRolesRepository';
-import UserRolesRepository from '@modules/users/infra/typeorm/repositories/UserRolesRepository';
-import IRefreshTokensRepository from '@modules/users/repositories/IRefreshTokensRepository';
-import RefreshTokensRepository from '@modules/users/infra/typeorm/repositories/RefreshTokensRepository';
+import IUserRolesRepository from '@modules/v1/users/repositories/IUserRolesRepository';
+import UserRolesRepository from '@modules/v1/users/infra/typeorm/repositories/UserRolesRepository';
+import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTokensRepository';
+import RefreshTokensRepository from '@modules/v1/users/infra/typeorm/repositories/RefreshTokensRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
 

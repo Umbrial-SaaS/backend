@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
 
-import SystemInfo from '@modules/systemInfos/infra/typeorm/entities/SystemInfo';
+import SystemInfo from '@modules/v1systemInfos/infra/typeorm/entities/SystemInfo';
 
 export default class CreateSystemInfos implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {

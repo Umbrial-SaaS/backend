@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
 
-import Banks from '@modules/banks/infra/typeorm/entities/Banks';
+import Banks from '@modules/v1banks/infra/typeorm/entities/Banks';
 
 export default class CreateInitialBankCodes implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<void> {

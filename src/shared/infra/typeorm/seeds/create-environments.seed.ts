@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Seeder, Factory } from 'typeorm-seeding';
 
-import Environment from '@modules/products/infra/typeorm/entities/Environment';
+import Environment from '@modules/v1products/infra/typeorm/entities/Environment';
 
 import environmentsList from '../helpers/environmentsList';
 
