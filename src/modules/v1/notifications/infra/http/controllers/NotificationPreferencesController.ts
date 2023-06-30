@@ -9,9 +9,7 @@ export default class NotificationPreferencesController {
     const updateNotificationPreferencesService = container.resolve(
       UpdateNotificationPreferencesService,
     );
-
     const userId = req.user.id;
-    console.table({ userId });
 
     const params = updateSchema.parse(req.body);
     const seller = await updateNotificationPreferencesService.execute({

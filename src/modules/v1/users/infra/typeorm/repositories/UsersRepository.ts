@@ -28,13 +28,12 @@ class UsersRepository implements IUsersRepository {
     return breeds;
   }
 
-  public async findById(
-    id: string,
-    relations?: string[],
-  ): Promise<User | null> {
+  public async findById(id: string, sasdas?: string[]): Promise<User | null> {
     return appDataSource.getRepository(User).findOne({
       where: { id },
-      relations,
+      relations: {
+        seller: true,
+      },
     });
   }
 

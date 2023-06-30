@@ -3,17 +3,18 @@ import { getRepository, Repository } from 'typeorm';
 import IFindUserDTO from '@modules/v1/users/dtos/IFindUserDTO';
 import clearJson from '@shared/functions/clearJson';
 
-import INotifcationPreferencesRepository from '@modules/v1/notifications/repositories/INotifcationPreferencesRepository';
 import { CreateNotificationPreferenceDTO } from '@modules/v1/notifications/dtos/CreateNotificationPreferenceDTO';
+import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotifcationPreferencesRepository';
+import appDataSource from '@shared/infra/typeorm';
 import NotificationPreference from '../entities/NotificationPreference';
 
-class NotifcationPreferencesRepository
-  implements INotifcationPreferencesRepository
+class NotificationPreferencesRepository
+  implements INotificationPreferencesRepository
 {
   private ormRepository: Repository<NotificationPreference>;
 
   constructor() {
-    this.ormRepository = getRepository(NotificationPreference);
+    this.ormRepository = appDataSource.getRepository(NotificationPreference);
   }
 
   public async index(): Promise<NotificationPreference[]> {
@@ -61,4 +62,4 @@ class NotifcationPreferencesRepository
   }
 }
 
-export default NotifcationPreferencesRepository;
+export default NotificationPreferencesRepository;

@@ -89,8 +89,11 @@ class AuthenticateUserService {
 
     const token = sign(
       {
-        roles: [],
+        roles: user.userRoles,
         deleted_at: user.deletedAt,
+        user: {
+          id: user.id,
+        },
       },
       secret,
       {

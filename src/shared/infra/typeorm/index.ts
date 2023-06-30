@@ -1,6 +1,6 @@
-import { env } from '@config/env';
 import { join } from 'path';
 import { DataSource } from 'typeorm';
+import { env } from '../../../config/env';
 
 const appDataSource = new DataSource({
   type: 'postgres',

@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   OneToMany,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 import User from '@modules/v1/users/infra/typeorm/entities/User';
 import NotificationPreference from '@modules/v1/notifications/infra/typeorm/entities/NotificationPreference';
@@ -26,7 +27,10 @@ export default class Seller {
   defaultCurrency?: string;
 
   @Column({ nullable: true })
-  defaultInstagramUrl: string;
+  defaultInstagramUrl?: string;
+
+  @Column()
+  userId: string;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -39,6 +43,7 @@ export default class Seller {
 
   // * Relations
   @OneToOne(() => User, user => user.seller)
+  @JoinColumn({ name: 'userId' })
   user: User;
 
   @OneToOne(

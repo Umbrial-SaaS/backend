@@ -7,8 +7,15 @@ import IUserRolesRepository from '@modules/v1/users/repositories/IUserRolesRepos
 import UserRolesRepository from '@modules/v1/users/infra/typeorm/repositories/UserRolesRepository';
 import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTokensRepository';
 import RefreshTokensRepository from '@modules/v1/users/infra/typeorm/repositories/RefreshTokensRepository';
+import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotifcationPreferencesRepository';
+import NotificationPreferencesRepository from '@modules/v1/notifications/infra/typeorm/repositories/NotificationPreferencesRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
+
+container.registerSingleton<INotificationPreferencesRepository>(
+  'NotificationPreferencesRepository',
+  NotificationPreferencesRepository,
+);
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',

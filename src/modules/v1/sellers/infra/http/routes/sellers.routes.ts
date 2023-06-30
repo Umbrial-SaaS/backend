@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { FastifyInstance } from 'fastify';
-import notificationPreferencesRoutes from '@modules/v1notifications/infra/http/routes/notificationPreferences.routes';
+import notificationPreferencesRoutes from '@modules/v1/notifications/infra/http/routes/notificationPreferences.routes';
 import SellersController from '../controllers/SellersController';
 
 const sellersController = new SellersController();

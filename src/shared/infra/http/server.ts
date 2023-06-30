@@ -13,16 +13,18 @@ import AppError from '@shared/errors/AppError';
 import os from 'os';
 import fastifyJwt from '@fastify/jwt';
 import { env } from '@config/env';
+import sellerRoutes from '@modules/v1/sellers/infra/http/routes/sellers.routes';
 import authPlugin from './auth';
 
 const server = Fastify({});
-
-server.register(authPlugin); // Registrar o plugin de autenticação
-server.register(userRoutes, {
-  prefix: 'users',
-});
 server.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+});
+server.register(userRoutes, {
+  prefix: 'v1/users',
+});
+server.register(sellerRoutes, {
+  prefix: 'v1/sellers',
 });
 
 server.get('/health', (req, reply) => {

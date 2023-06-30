@@ -5,13 +5,14 @@ import clearJson from '@shared/functions/clearJson';
 import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
 
 import { CreateSellerDTO } from '@modules/v1/sellers/dtos/CreateSellerDTO';
+import appDataSource from '@shared/infra/typeorm';
 import Seller from '../entities/Seller';
 
 class UsersRepository implements ISellersRepository {
   private ormRepository: Repository<Seller>;
 
   constructor() {
-    this.ormRepository = getRepository(Seller);
+    this.ormRepository = appDataSource.getRepository(Seller);
   }
 
   public async index(): Promise<Seller[]> {
@@ -24,28 +25,21 @@ class UsersRepository implements ISellersRepository {
   public async findById(
     id: string,
     relations?: string[],
-  ): Promise<Seller | undefined> {
-    return this.ormRepository.findOne({
-      where: { id },
-      relations,
-    });
+  ): Promise<Seller | null> {
+    return (
+      this.ormRepository.findOne({
+        where: { id },
+        relations,
+      }) || null
+    );
   }
 
-  public async findBy({
-    email,
-    phone,
-  }: IFindUserDTO): Promise<Seller | undefined> {
-    return this.ormRepository.findOne({
-      where: clearJson({ email, phone }),
-    });
-  }
-
-  public async findByName(name: string): Promise<Seller | undefined> {
-    const seller = await this.ormRepository.findOne({
-      where: { name },
-    });
-
-    return seller;
+  public async findBy({ email, phone }: IFindUserDTO): Promise<Seller | null> {
+    return (
+      this.ormRepository.findOne({
+        where: clearJson({ email, phone }),
+      }) || null
+    );
   }
 
   public create(seller: CreateSellerDTO): Seller {
