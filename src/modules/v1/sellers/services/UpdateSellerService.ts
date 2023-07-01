@@ -2,7 +2,7 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
-import Seller from '../infra/typeorm/entities/Seller';
+import Seller from '../infra/data/entities/Seller';
 import { UpdateSellerReqDTO } from '../dtos/UpdateSellerDTO';
 import ISellersRepository from '../repositories/ISellersRepository';
 

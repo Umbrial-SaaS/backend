@@ -3,7 +3,7 @@ import { v4 } from 'uuid';
 import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTokensRepository';
 import ICreateRefreshTokenDTO from '@modules/v1/users/dtos/ICreateRefreshTokenDTO';
 
-import RefreshToken from '../../infra/typeorm/entities/RefreshToken';
+import RefreshToken from '../../infra/data/entities/RefreshToken';
 
 class FakeRefreshTokensRepository implements IRefreshTokensRepository {
   private refreshToken: RefreshToken[] = [];

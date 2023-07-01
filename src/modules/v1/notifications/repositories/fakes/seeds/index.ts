@@ -1,4 +1,4 @@
-import NotificationPreference from '@modules/v1/notifications/infra/typeorm/entities/NotificationPreference';
+import NotificationPreference from '@modules/v1/notifications/infra/data/entities/NotificationPreference';
 import { fakeSellerId } from '@modules/v1/sellers/repositories/fakes/seeds';
 
 const fakeNotificationPreferenceId = 'asdas';

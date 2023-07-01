@@ -9,7 +9,7 @@ import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvide
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 
-import User from '../infra/typeorm/entities/User';
+import User from '../infra/data/entities/User';
 import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
 export type AuthenticateUserReq = {

@@ -1,14 +1,14 @@
 import { container } from 'tsyringe';
 
 import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
-import UsersRepository from '@modules/v1/users/infra/typeorm/repositories/UsersRepository';
+import UsersRepository from '@modules/v1/users/infra/data/repositories/UsersRepository';
 import './providers';
 import IUserRolesRepository from '@modules/v1/users/repositories/IUserRolesRepository';
-import UserRolesRepository from '@modules/v1/users/infra/typeorm/repositories/UserRolesRepository';
+import UserRolesRepository from '@modules/v1/users/infra/data/repositories/UserRolesRepository';
 import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTokensRepository';
-import RefreshTokensRepository from '@modules/v1/users/infra/typeorm/repositories/RefreshTokensRepository';
-import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotifcationPreferencesRepository';
-import NotificationPreferencesRepository from '@modules/v1/notifications/infra/typeorm/repositories/NotificationPreferencesRepository';
+import RefreshTokensRepository from '@modules/v1/users/infra/data/repositories/RefreshTokensRepository';
+import NotificationPreferencesRepository from '@modules/v1/notifications/infra/data/repositories/NotificationPreferencesRepository';
+import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotificationPreferencesRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
 

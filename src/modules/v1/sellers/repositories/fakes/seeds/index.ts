@@ -1,5 +1,5 @@
 import { fakeNotificationPreferences } from '@modules/v1/notifications/repositories/fakes/seeds';
-import Seller from '@modules/v1/sellers/infra/typeorm/entities/Seller';
+import Seller from '@modules/v1/sellers/infra/data/entities/Seller';
 import { fakeUserId } from '@modules/v1/users/repositories/fakes/seeds';
 
 const fakeSellerId = '29b4830d-a865-4d52-be63-b5816c48d11f';

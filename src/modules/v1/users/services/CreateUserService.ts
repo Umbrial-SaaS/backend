@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
-import User from '../infra/typeorm/entities/User';
+import User from '../infra/data/entities/User';
 import IUserRolesRepository from '../repositories/IUserRolesRepository';
 
 export type CreateUserServiceReq = {

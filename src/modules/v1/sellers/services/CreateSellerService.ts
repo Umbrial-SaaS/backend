@@ -4,7 +4,7 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
-import Seller from '../infra/typeorm/entities/Seller';
+import Seller from '../infra/data/entities/Seller';
 import { CreateSellerReqDTO } from '../dtos/CreateSellerDTO';
 import ISellersRepository from '../repositories/ISellersRepository';
 

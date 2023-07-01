@@ -2,7 +2,7 @@ import IFindUserDTO from '@modules/v1/users/dtos/IFindUserDTO';
 import IUsersRepository from '../IUsersRepository';
 import ICreateUserDTO from '../../dtos/ICreateUserDTO';
 
-import User from '../../infra/typeorm/entities/User';
+import User from '../../infra/data/entities/User';
 import { fakeUser } from './seeds';
 
 class FakeUsersRepository implements IUsersRepository {

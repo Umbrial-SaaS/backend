@@ -1,5 +1,5 @@
 import { CreateNotificationPreferenceDTO } from '@modules/v1/notifications/dtos/CreateNotificationPreferenceDTO';
-import NotificationPreference from '@modules/v1/notifications/infra/typeorm/entities/NotificationPreference';
+import NotificationPreference from '@modules/v1/notifications/infra/data/entities/NotificationPreference';
 import INotificationPreferencesRepository from '../INotifcationPreferencesRepository';
 import { fakeNotificationPreferences } from './seeds';
 

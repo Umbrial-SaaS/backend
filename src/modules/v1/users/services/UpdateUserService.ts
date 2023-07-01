@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 import bcrypt from 'bcrypt';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
-import User from '../infra/typeorm/entities/User';
+import User from '../infra/data/entities/User';
 
 export type UpdateUserServiceReq = {
   user_id: string;
