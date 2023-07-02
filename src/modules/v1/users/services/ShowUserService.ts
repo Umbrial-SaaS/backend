@@ -19,6 +19,7 @@ class CreateUserService {
     console.log('show user');
     const user = await this.usersRepository.findById(userId, ['userRoles']);
 
+    console.log({ user });
     if (!user) {
       throw new AppError('Usuário não encontrado.', 404, 'user_not_found');
     }

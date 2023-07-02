@@ -9,8 +9,15 @@ import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTok
 import RefreshTokensRepository from '@modules/v1/users/infra/data/repositories/RefreshTokensRepository';
 import NotificationPreferencesRepository from '@modules/v1/notifications/infra/data/repositories/NotificationPreferencesRepository';
 import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotificationPreferencesRepository';
+import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
+import SellersRepository from '@modules/v1/sellers/infra/data/repositories/SellersRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
+
+container.registerSingleton<ISellersRepository>(
+  'SellersRepository',
+  SellersRepository,
+);
 
 container.registerSingleton<INotificationPreferencesRepository>(
   'NotificationPreferencesRepository',

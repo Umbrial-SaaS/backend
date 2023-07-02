@@ -1,3 +1,5 @@
+import { CreateNotificationPreferenceDTO } from '@modules/v1/notifications/dtos/CreateNotificationPreferenceDTO';
+
 export type CreateSellerReqDTO = {
   defaultSupportEmail?: string;
 
@@ -7,7 +9,7 @@ export type CreateSellerReqDTO = {
 
   defaultInstagramUrl: string;
 
-  userId: string;
+  userId?: string;
 };
 
 export type CreateSellerDTO = {
@@ -21,5 +23,5 @@ export type CreateSellerDTO = {
 
   defaultInstagramUrl?: string;
 
-  userId: string;
+  notificationPreferences: CreateNotificationPreferenceDTO;
 };

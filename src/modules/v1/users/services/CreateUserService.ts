@@ -4,7 +4,6 @@ import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 import crypto from 'crypto';
 import bcrypt from 'bcrypt';
-import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/data/entities/User';
@@ -27,9 +26,6 @@ class CreateUserService {
 
     @inject('UserRolesRepository')
     private userRolesRepository: IUserRolesRepository,
-
-    @inject('SellersRepository')
-    private sellersRepository: ISellersRepository,
 
     @inject('IdGeneratorProvider')
     private idGeneratorProvider: IIdGeneratorProvider,
@@ -67,6 +63,24 @@ class CreateUserService {
       email,
       password,
       profile_photo,
+      seller: {
+        id: this.idGeneratorProvider.generate(),
+        defaultCurrency: 'BRL',
+        defaultSupportEmail: email,
+        defaultInstagramUrl: undefined,
+        defaultTwitterUrl: undefined,
+        notificationPreferences: {
+          id: this.idGeneratorProvider.generate(),
+          emailComments: true,
+          emailFreeDownloads: true,
+          emailPersonalizedProductAnnoucements: true,
+          emailPurchases: true,
+          emailRecurringPayments: true,
+          mobileFreeDownloads: true,
+          mobilePurchases: true,
+          mobileRecurringPayments: true,
+        },
+      },
     });
     user.userRoles = [];
 
@@ -79,17 +93,7 @@ class CreateUserService {
       user.userRoles.push(userRole);
     }
 
-    const seller = this.sellersRepository.create({
-      id: this.idGeneratorProvider.generate(),
-      userId: user.id,
-      defaultCurrency: 'BRL',
-      defaultSupportEmail: email,
-      defaultInstagramUrl: undefined,
-      defaultTwitterUrl: undefined,
-    });
-
     await this.usersRepository.save(user);
-    await this.sellersRepository.save(seller);
     return user;
   }
 }

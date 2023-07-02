@@ -28,7 +28,7 @@ export default class UsersController {
       phone: z.string(),
       email: z.string(),
       profile_photo: z.string().optional(),
-      password: z.string(),
+      password: z.string().min(8).max(20),
       roles: z.array(number()),
     });
     const body = schema.parse(req.body);

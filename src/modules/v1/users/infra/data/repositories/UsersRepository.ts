@@ -8,43 +8,43 @@ import User from '../entities/User';
 
 class UsersRepository implements IUsersRepository {
   async findByPhone(phone: string, relations?: string[]): Promise<User | null> {
-    return Object.assign(
-      new User(),
-      await prisma.user.findUnique({
-        where: { phone },
-      }),
-    );
+    const data = await prisma.user.findUnique({
+      where: { phone },
+    });
+
+    return data ? Object.assign(new User(), data) : null;
   }
 
   async findByEmail(email: string, relations?: string[]): Promise<User | null> {
-    return Object.assign(
-      new User(),
-      await prisma.user.findUnique({
-        where: { email },
-      }),
-    );
+    const data = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    return data ? Object.assign(new User(), data) : null;
   }
 
   public async findById(id: string, sasdas?: string[]): Promise<User | null> {
-    return Object.assign(
-      new User(),
-      await prisma.user.findUnique({
-        where: { id },
-      }),
-    );
+    const data = await prisma.user.findUnique({
+      where: { id },
+    });
+
+    return data ? Object.assign(new User(), data) : null;
   }
 
   public async findBy({ email, phone }: IFindUserDTO): Promise<User | null> {
-    return Object.assign(
-      new User(),
-      await prisma.user.findUnique({
-        where: clearJson({ email, phone }),
-      }),
-    );
+    const data = await prisma.user.findUnique({
+      where: clearJson({ email, phone }),
+    });
+
+    return data ? Object.assign(new User(), data) : null;
   }
 
   public create(user: ICreateProductDTO): User {
-    return Object.assign(new User(), user);
+    return Object.assign(new User(), {
+      ...user,
+      createdAt: user.createdAt || new Date(),
+      updatedAt: user.updatedAt || new Date(),
+    });
   }
 
   public async save(data: User): Promise<void> {
@@ -62,6 +62,42 @@ class UsersRepository implements IUsersRepository {
         createdAt: data.createdAt,
         updatedAt: data.updatedAt,
         deletedAt: data.deletedAt,
+        seller: {
+          create: {
+            id: data.seller.id,
+            createdAt: data.seller.createdAt,
+            updatedAt: data.seller.updatedAt,
+            defaultCurrency: data.seller.defaultCurrency,
+            defaultInstagramUrl: data.seller.defaultInstagramUrl,
+            defaultSupportEmail: data.seller.defaultSupportEmail,
+            defaultTwitterUrl: data.seller.defaultTwitterUrl,
+            deletedAt: data.seller.deletedAt,
+            notificationPreference: {
+              create: {
+                createdAt: data.seller.notificationPreferences.createdAt,
+                emailComments:
+                  data.seller.notificationPreferences.emailComments,
+                emailFreeDownloads:
+                  data.seller.notificationPreferences.emailFreeDownloads,
+                emailPersonalizedProductAnnoucements:
+                  data.seller.notificationPreferences
+                    .emailPersonalizedProductAnnoucements,
+                emailPurchases:
+                  data.seller.notificationPreferences.emailPurchases,
+                emailRecurringPayments:
+                  data.seller.notificationPreferences.emailRecurringPayments,
+                id: data.seller.notificationPreferences.id,
+                mobileFreeDownloads:
+                  data.seller.notificationPreferences.mobileFreeDownloads,
+                mobilePurchases:
+                  data.seller.notificationPreferences.mobilePurchases,
+                mobileRecurringPayments:
+                  data.seller.notificationPreferences.mobileRecurringPayments,
+                updatedAt: data.seller.notificationPreferences.updatedAt,
+              },
+            },
+          },
+        },
       },
     });
   }

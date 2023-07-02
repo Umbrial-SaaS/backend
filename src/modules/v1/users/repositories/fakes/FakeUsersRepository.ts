@@ -53,9 +53,8 @@ class FakeUsersRepository implements IUsersRepository {
     return user || null;
   }
 
-  public async save(user: User): Promise<User> {
+  public async save(user: User): Promise<void> {
     this.products.push(user);
-    return user || null;
   }
 
   public async delete(id: string): Promise<void> {

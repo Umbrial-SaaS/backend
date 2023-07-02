@@ -1,15 +1,26 @@
+import FakeSellersRepository from '@modules/v1/sellers/repositories/fakes/FakeSellersRepository';
+import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
+import FakeIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/fakes/FakeIdGeneratorProvider';
+import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 import AppError from '@shared/errors/AppError';
 
 import FakeUsersRepository from '../repositories/fakes/FakeUsersRepository';
+import IUserRolesRepository from '../repositories/IUserRolesRepository';
+import IUsersRepository from '../repositories/IUsersRepository';
 import CreateUserService from './CreateUserService';
 
 let fakeUsersRepository: FakeUsersRepository;
 
 let createUserService: CreateUserService;
-
+let fakeUserRolesRepository: IUserRolesRepository;
+let fakeSellersRepository: ISellersRepository;
+let fakeIdGeneratorProvider: IIdGeneratorProvider;
 describe('CreateUserService', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
+    fakeUserRolesRepository = new FakeUserRolesRepository();
+    fakeSellersRepository = new FakeSellersRepository();
+    fakeIdGeneratorProvider = new FakeIdGeneratorProvider();
 
     createUserService = new CreateUserService(fakeUsersRepository);
   });

@@ -45,6 +45,7 @@ class AuthenticateUserService {
     password,
     phone,
   }: AuthenticateUserReq): Promise<IResponse> {
+    console.table({ email, password });
     if (!email && !phone) {
       throw new AppError(
         'Telefone ou Email necessário.',
@@ -93,6 +94,7 @@ class AuthenticateUserService {
         deleted_at: user.deletedAt,
         user: {
           id: user.id,
+          name: user.name,
         },
       },
       secret,
@@ -111,6 +113,7 @@ class AuthenticateUserService {
       userId: user.id,
     });
 
+    console.log('OK');
     return {
       user,
       access_token: token,

@@ -42,9 +42,13 @@ class SellersRepository implements ISellersRepository {
         defaultTwitterUrl: data.defaultTwitterUrl,
         defaultCurrency: data.defaultCurrency,
         defaultInstagramUrl: data.defaultInstagramUrl,
-        userId: data.userId,
-        createdAt: data.createdAt,
-        updatedAt: data.updatedAt,
+        user: {
+          connect: {
+            id: data.userId,
+          },
+        },
+        createdAt: data.createdAt || new Date(),
+        updatedAt: data.updatedAt || new Date(),
         deletedAt: data.deletedAt,
       },
     });

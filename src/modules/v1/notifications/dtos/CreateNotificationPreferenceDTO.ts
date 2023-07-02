@@ -8,6 +8,4 @@ export type CreateNotificationPreferenceDTO = {
   mobilePurchases?: boolean;
   mobileRecurringPayments?: boolean;
   mobileFreeDownloads?: boolean;
-
-  sellerId: string;
 };

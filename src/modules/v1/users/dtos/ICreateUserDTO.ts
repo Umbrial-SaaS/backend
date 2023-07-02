@@ -1,3 +1,5 @@
+import { CreateSellerDTO } from '@modules/v1/sellers/dtos/CreateSellerDTO';
+
 export default interface ICreateUserDTO {
   id: string;
   name: string;
@@ -5,4 +7,9 @@ export default interface ICreateUserDTO {
   email?: string;
   profile_photo?: string;
   password?: string;
+
+  createdAt?: Date;
+  updatedAt?: Date;
+
+  seller?: CreateSellerDTO;
 }
