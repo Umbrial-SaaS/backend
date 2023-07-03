@@ -60,6 +60,7 @@ model Seller {
   userId String @unique
 
   notificationPreference NotificationPreference?
+  Product                Product[]
 }
 
 model RefreshToken {
@@ -137,4 +138,63 @@ model UserRole {
 model Font {
   id   String @id
   name String @unique
+}
+
+model Product {
+  id String @id
+
+  name String
+
+  description String
+
+  url String
+
+  coverUrl String
+
+  thumbnailUrl String
+
+  cta String
+
+  summary String
+
+  pricing String
+
+  currency String
+
+  minimumAmount Int
+
+  suggestedAmount String
+
+  flexPrice Boolean
+
+  salesLimit Int?
+
+  flexQuantity Int?
+
+  showSalesCount Boolean
+
+  uniqueKeyLicense Boolean
+
+  seller                   Seller                     @relation(fields: [sellerId], references: [id])
+  sellerId                 String
+  ProductCustomField       ProductCustomField[]
+  ProductAdditionalDetails ProductAdditionalDetails[]
+}
+
+model ProductCustomField {
+  id    String @id
+  type  String
+  label String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model ProductAdditionalDetails {
+  id        String @id
+  attribute String
+  value     String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
 }
