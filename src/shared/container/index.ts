@@ -11,8 +11,15 @@ import NotificationPreferencesRepository from '@modules/v1/notifications/infra/d
 import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotificationPreferencesRepository';
 import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
 import SellersRepository from '@modules/v1/sellers/infra/data/repositories/SellersRepository';
+import FontsRepository from '@modules/v1/fonts/infra/data/repositories/FontsRepository';
+import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
+
+container.registerSingleton<IFontsRepository>(
+  'FontsRepository',
+  FontsRepository,
+);
 
 container.registerSingleton<ISellersRepository>(
   'SellersRepository',

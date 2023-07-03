@@ -14,7 +14,7 @@ import fastifyCors from 'fastify-cors'; // Importe o pacote fastify-cors
 import { env } from '@config/env';
 import sellerRoutes from '@modules/v1/sellers/infra/http/routes/sellers.routes';
 import fastifyJwt from '@fastify/jwt';
-import authPlugin from './auth';
+import fontsRoutes from '@modules/v1/fonts/infra/http/routes/fonts.routes';
 
 const server = Fastify({});
 
@@ -30,6 +30,10 @@ server.register(userRoutes, {
 });
 server.register(sellerRoutes, {
   prefix: 'v1/sellers',
+});
+
+server.register(fontsRoutes, {
+  prefix: 'v1/fonts',
 });
 
 server.get('/health', (req, reply) => {

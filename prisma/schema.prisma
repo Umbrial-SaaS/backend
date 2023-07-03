@@ -133,3 +133,8 @@ model UserRole {
 
   user User @relation(fields: [userId], references: [id])
 }
+
+model Font {
+  id   String @id
+  name String @unique
+}
