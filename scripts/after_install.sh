@@ -1,5 +1,4 @@
 #!/bin/bash
-cd ..
-cd ..
+pwd
 cd /backend-umbriel
 sudo npm install
