@@ -2,12 +2,12 @@
 
 # Stop all servers and start the server as a daemon
 
- 
+
 cd ..
 cd ..
 cd ..
 cd ..
-cd /app/pandoris-backend
+cd /app/backend-umbriel
 
 sudo npm run build
-sudo pm2 restart all
+sudo pm2 start dist/shared/infra/http/server.js
