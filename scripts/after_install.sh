@@ -1,4 +1,5 @@
 #!/bin/bash
-pwd
-cd /backend-umbriel
+cd ..
+cd ..
+cd /app/pandoris-backend
 sudo npm install
