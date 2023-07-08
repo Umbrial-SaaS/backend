@@ -7,7 +7,7 @@ cd ..
 cd ..
 cd ..
 cd ..
-cd /app/pandoris-backend
+cd /home/ubuntu/backend-umbriel
 
 sudo npm run build
 sudo pm2 start dist/shared/infra/http/server.js
