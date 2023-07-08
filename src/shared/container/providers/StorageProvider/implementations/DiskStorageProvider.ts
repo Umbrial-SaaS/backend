@@ -2,24 +2,24 @@ import fs from 'fs';
 import path from 'path';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
-import IStorageProvider from '../models/IStorageProvider';
+import IStorageProvider, { IFile } from '../models/IStorageProvider';
 
 class DiskStorageProvider implements IStorageProvider {
-  public async saveFile(file: string): Promise<string> {
+  public async saveFile(file: IFile, folder?: string): Promise<string> {
     try {
       if (!fs.existsSync(uploadConfig.uploadsFolder)) {
         fs.mkdirSync(uploadConfig.uploadsFolder);
       }
 
       await fs.promises.rename(
-        path.resolve(uploadConfig.tmpFolder, file),
-        path.resolve(uploadConfig.uploadsFolder, file),
+        path.resolve(uploadConfig.tmpFolder, file.filename),
+        path.resolve(uploadConfig.uploadsFolder, file.filename),
       );
     } catch (err) {
       throw new AppError('Erro ao realizar upload');
     }
 
-    return file;
+    return file.filename;
   }
 
   public async deleteFile(file: string): Promise<void> {

@@ -11,14 +11,12 @@ interface ICreateProductsServiceReq {
     name: string;
     description: string;
     url: string;
-    coverUrl: string;
-    thumbnailUrl: string;
     cta: string;
     summary: string;
     pricing: number;
     currency: string;
-    minimumAmount: number;
-    suggestedAmount: number;
+    minimumAmount?: number;
+    suggestedAmount?: number;
     flexPrice: boolean;
     salesLimit?: number;
     flexQuantity?: number;
@@ -59,10 +57,10 @@ class CreateProductsService {
     if (product.pricing < 0) {
       throw new AppError('negative_price');
     }
-    if (product.minimumAmount < 0) {
+    if (product.minimumAmount && product.minimumAmount < 0) {
       throw new AppError('negative_mininum_amount');
     }
-    if (product.suggestedAmount < 0) {
+    if (product.suggestedAmount && product.suggestedAmount < 0) {
       throw new AppError('negative_suggested_amount');
     }
     if (product.salesLimit && product.salesLimit < 1) {

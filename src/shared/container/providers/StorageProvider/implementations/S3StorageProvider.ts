@@ -1,10 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import fs from 'fs';
 import path from 'path';
 import aws, { S3 } from 'aws-sdk';
 import uploadConfig from '@config/upload';
 import AppError from '@shared/errors/AppError';
 import { format } from 'date-fns';
-import IStorageProvider from '../models/IStorageProvider';
+import IStorageProvider, { IFile } from '../models/IStorageProvider';
 
 class S3StorageProvider implements IStorageProvider {
   private client: S3;
@@ -16,31 +17,25 @@ class S3StorageProvider implements IStorageProvider {
     });
   }
 
-  public async saveFile(file: string, folder?: string): Promise<string> {
-    const originalPath = path.resolve(uploadConfig.tmpFolder, file);
-
-    const ContentType = 'image';
-
-    if (!ContentType) {
-      throw new Error('File not found');
-    }
+  public async saveFile(file: IFile, folder?: string): Promise<string> {
+    const originalPath = path.resolve(uploadConfig.tmpFolder, file.filename);
 
     const fileContent = await fs.promises.readFile(originalPath);
 
-    file = `${format(new Date(), 'yyyy-MM-ddmmss')}${file}`;
-    console.log({ file });
+    file.filename = `${format(new Date(), 'yyyy-MM-ddmmss')}${file}`;
     if (folder) {
-      file = `${folder}/${file}`;
+      file.filename = `${folder}/${file}`;
     }
+    console.log({ file });
     console.log({ Bucket: uploadConfig.config.aws.bucket });
     try {
       await this.client
         .putObject({
           Bucket: uploadConfig.config.aws.bucket,
-          Key: file,
+          Key: file.filename,
           ACL: 'public-read',
           Body: fileContent,
-          ContentType,
+          ContentType: file.mimetype,
         })
         .promise();
     } catch (err) {
@@ -50,7 +45,7 @@ class S3StorageProvider implements IStorageProvider {
 
     await fs.promises.unlink(originalPath);
 
-    return file;
+    return file.filename;
   }
 
   public async deleteFile(file: string): Promise<void> {

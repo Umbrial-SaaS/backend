@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { FastifyInstance } from 'fastify';
 import { server } from '@shared/infra/http/server';
+import multer from 'multer';
 import UsersController from '../controllers/UsersController';
-
-// const upload = multer(uploadConfig.multer);
 
 const usersController = new UsersController();
 

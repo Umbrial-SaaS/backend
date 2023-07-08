@@ -1,8 +1,8 @@
 // import './StorageProvider';
-// import './MailTemplateProvider';
-// import './MailProvider';
 import './HashProvider';
 import './IdGeneratorProvider';
+// import './MailTemplateProvider';
+// import './MailProvider';
 // import './CodeGeneratorProvider';
 // import './PushNotificationProvider';
 // import './RepositoryUtilsProvider';

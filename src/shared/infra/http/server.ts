@@ -15,12 +15,22 @@ import { env } from '@config/env';
 import sellerRoutes from '@modules/v1/sellers/infra/http/routes/sellers.routes';
 import fastifyJwt from '@fastify/jwt';
 import fontsRoutes from '@modules/v1/fonts/infra/http/routes/fonts.routes';
+import multipart from '@fastify/multipart';
+import productsRoutes from '@modules/v1/products/infra/http/routes/products.routes';
+import multer from 'fastify-multer';
 
-const server = Fastify({});
+const { pipeline } = require('stream');
+const util = require('util');
+const fs = require('fs');
 
+const pump = util.promisify(pipeline);
+const server = Fastify({
+  logger: true,
+});
 server.register(fastifyCors, {
   origin: '*',
 });
+server.register(require('@fastify/multipart'));
 
 server.register(fastifyJwt, {
   secret: env.JWT_SECRET,
@@ -32,8 +42,36 @@ server.register(sellerRoutes, {
   prefix: 'v1/sellers',
 });
 
+server.post('/upload', async function (req, reply) {
+  // process a single file
+  // also, consider that if you allow to upload multiple files
+  // you must consume all files otherwise the promise will never fulfill
+  const data = await req.file();
+
+  console.log({ data });
+  console.log({ body: req.body });
+
+  // to accumulate the file in memory! Be careful!
+  //
+  // await data.toBuffer() // Buffer
+  //
+  // or
+
+  await pump(data.file, fs.createWriteStream(`uploads/${data.filename}`));
+
+  // be careful of permission issues on disk and not overwrite
+  // sensitive files that could cause security risks
+
+  // also, consider that if the file stream is not consumed, the promise will never fulfill
+
+  reply.send();
+});
+
 server.register(fontsRoutes, {
   prefix: 'v1/fonts',
+});
+server.register(productsRoutes, {
+  prefix: 'v1/products',
 });
 
 server.get('/health', (req, reply) => {

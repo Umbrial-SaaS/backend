@@ -13,8 +13,15 @@ import ISellersRepository from '@modules/v1/sellers/repositories/ISellersReposit
 import SellersRepository from '@modules/v1/sellers/infra/data/repositories/SellersRepository';
 import FontsRepository from '@modules/v1/fonts/infra/data/repositories/FontsRepository';
 import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
+import ProductsRepository from '@modules/v1/products/infra/data/repositories/ProductsRepository';
+import IProductsRepository from '@modules/v1/products/repositories/IProductsRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
+
+container.registerSingleton<IProductsRepository>(
+  'ProductsRepository',
+  ProductsRepository,
+);
 
 container.registerSingleton<IFontsRepository>(
   'FontsRepository',

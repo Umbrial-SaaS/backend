@@ -3,14 +3,14 @@ export type CreateProductDTO = {
   name: string;
   description: string;
   url: string;
-  coverUrl: string;
-  thumbnailUrl: string;
+  coverUrl?: string;
+  thumbnailUrl?: string;
   cta: string;
   summary: string;
   pricing: number;
   currency: string;
-  minimumAmount: number;
-  suggestedAmount: number;
+  minimumAmount?: number;
+  suggestedAmount?: number;
   flexPrice: boolean;
   salesLimit?: number;
   flexQuantity?: number;
