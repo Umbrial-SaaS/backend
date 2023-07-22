@@ -15,6 +15,8 @@ export default async function userRoutes(app: FastifyInstance) {
 
   app.post('/auth', usersController.auth);
 
+  app.post('/auth/google', usersController.googleAuth);
+
   // app.put(
   //   '/',
   //   ensureAuthenticated,

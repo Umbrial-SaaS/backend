@@ -7,16 +7,15 @@ import crypto from 'crypto';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 
 import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
+import { env } from '@config/env';
+import axios from 'axios';
 import IUsersRepository from '../repositories/IUsersRepository';
 
 import User from '../infra/data/entities/User';
 import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
-export type AuthenticateUserReq = {
-  accessKey: any;
-  email?: string;
-  phone?: string;
-  password?: string;
+export type GoogleAuthenticateUserReq = {
+  accessToken: string;
 };
 
 interface IResponse {
@@ -26,7 +25,7 @@ interface IResponse {
 }
 
 @injectable()
-class AuthenticateUserService {
+class GoogleAuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
@@ -42,51 +41,22 @@ class AuthenticateUserService {
   ) {}
 
   public async execute({
-    email,
-    password,
-    phone,
-  }: AuthenticateUserReq): Promise<IResponse> {
-    console.table({ email, password });
-    if (!email && !phone) {
-      throw new AppError(
-        'Telefone ou Email necessário.',
-        400,
-        'email_or_phone_needed',
-      );
-    }
-    let user: User | null = null;
-
-    if (email) {
-      user = await this.usersRepository.findByEmail(email, [
-        'userRoles',
-        'userRoles.role',
-      ]);
-    }
-    if (phone) {
-      user = await this.usersRepository.findByPhone(phone, [
-        'userRoles',
-        'userRoles.role',
-      ]);
-    }
-
-    if (!user) {
-      throw new AppError('Combinação de email/senha incorreta!', 401);
-    }
-
-    if (user.password) {
-      if (!password) {
-        throw new AppError('Senha necessária', 400, 'need_password');
-      }
-      const passwordMatched = await this.hashProvider.compareHash(
-        password,
-        user.password,
-      );
-
-      if (!passwordMatched) {
-        throw new AppError('Combinação de email/senha incorreta!', 401);
-      }
-    }
-
+    accessToken,
+  }: GoogleAuthenticateUserReq): Promise<any> {
+    console.table({ accessToken });
+    return 'Ok';
+    const { data } = await axios.post(
+      'https://accounts.google.com/o/oauth2/token',
+      {
+        code: accessToken,
+        client_id: env.GOOGLE_CLIENT_ID,
+        client_secret: env.GOOGLE_SECRET_KEY,
+        grant_type: 'authorization_code',
+        redirect_uri: 'http://localhost:3337/callback',
+      },
+    );
+    console.log({ data });
+    return data;
     const { secret, expiresIn } = authConfig.jwt;
 
     const token = sign(
@@ -123,4 +93,4 @@ class AuthenticateUserService {
   }
 }
 
-export default AuthenticateUserService;
+export default GoogleAuthenticateUserService;

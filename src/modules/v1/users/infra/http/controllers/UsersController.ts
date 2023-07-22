@@ -8,6 +8,9 @@ import AuthenticateUserService, {
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z, number } from 'zod';
 import console from 'console';
+import GoogleAuthenticateUserService, {
+  GoogleAuthenticateUserReq,
+} from '@modules/v1/users/services/GoogleAuthenticateUserService';
 import ShowUserService, {
   ShowUserServiceReq,
 } from '../../../services/ShowUserService';
@@ -46,6 +49,21 @@ export default class UsersController {
   ): Promise<FastifyReply> {
     const authenticateUserService = container.resolve(AuthenticateUserService);
     const data = await authenticateUserService.execute(req.body);
+
+    return res.send(classToClass(data));
+  }
+
+  // TODO: Separar isso
+  public async googleAuth(
+    req: FastifyRequest<{ Body: GoogleAuthenticateUserReq }>,
+    res: FastifyReply,
+  ): Promise<FastifyReply> {
+    const authenticateUserService = container.resolve(
+      GoogleAuthenticateUserService,
+    );
+    const data = await authenticateUserService.execute({
+      accessToken: req.body.accessToken,
+    });
 
     return res.send(classToClass(data));
   }
