@@ -13,6 +13,7 @@ import User from '../infra/data/entities/User';
 import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
 export type AuthenticateUserReq = {
+  accessKey: any;
   email?: string;
   phone?: string;
   password?: string;

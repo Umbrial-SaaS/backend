@@ -132,7 +132,7 @@ model UserRole {
 
   role Role @relation(fields: [roleId], references: [id])
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Font {
@@ -175,7 +175,7 @@ model Product {
 
   uniqueKeyLicense Boolean
 
-  seller                   Seller                     @relation(fields: [sellerId], references: [id])
+  seller                   Seller                     @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId                 String
   ProductCustomField       ProductCustomField[]
   ProductAdditionalDetails ProductAdditionalDetails[]
@@ -186,7 +186,7 @@ model ProductCustomField {
   type  String
   label String
 
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
 }
 
@@ -195,6 +195,6 @@ model ProductAdditionalDetails {
   attribute String
   value     String
 
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String
 }
