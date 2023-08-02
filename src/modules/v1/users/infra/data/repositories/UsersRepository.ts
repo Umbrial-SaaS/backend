@@ -1,10 +1,13 @@
 import IFindUserDTO from '@modules/v1/users/dtos/IFindUserDTO';
 import clearJson from '@shared/functions/clearJson';
 import prisma from '@shared/infra/prisma';
+import Seller from '@modules/v1/sellers/infra/data/entities/Seller';
+import { string } from 'zod';
 import IUsersRepository from '../../../repositories/IUsersRepository';
 import ICreateProductDTO from '../../../dtos/ICreateUserDTO';
 
 import User from '../entities/User';
+import UserRole from '../entities/UserRole';
 
 class UsersRepository implements IUsersRepository {
   async findByPhone(phone: string, relations?: string[]): Promise<User | null> {
@@ -104,6 +107,22 @@ class UsersRepository implements IUsersRepository {
 
   public async delete(id: string): Promise<void> {
     await prisma.user.delete({ where: { id } });
+  }
+
+  public async update(user: User): Promise<void> {
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        name: user.name,
+        phone: user.phone,
+        bio: user.bio,
+        email: user.email,
+        googleId: user.googleId,
+        facebookId: user.facebookId,
+        avatar: user.avatar,
+        password: user.password,
+      },
+    });
   }
 }
 
