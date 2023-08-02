@@ -37,7 +37,7 @@ class GoogleAuthenticateUserService {
 
     @inject('UserRolesRepository')
     private userRolesRepository: IUserRolesRepository,
-  ) {}
+  ) { }
 
   public async execute({
     accessToken,
@@ -134,7 +134,7 @@ class GoogleAuthenticateUserService {
       refreshToken: crypto.randomBytes(32).toString('hex'),
       userId: user.id,
     });
-
+    console.log({ user });
     return {
       user,
       access_token: token,
