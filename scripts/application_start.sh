@@ -7,8 +7,10 @@ cd ..
 cd ..
 cd ..
 cd ..
-cd /app/pandoris-backend
-
+cd /home/ubuntu/backend-umbriel
+git pull
+sudo npm install
+npx prisma migrate deploy
 sudo npm run build
 sudo pm2 delete all
 sudo pm2 start dist/shared/infra/http/server.js

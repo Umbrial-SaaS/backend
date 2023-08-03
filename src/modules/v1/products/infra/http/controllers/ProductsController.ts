@@ -31,6 +31,17 @@ export default class ProductsController {
     return res.send({ product: classToClass(product) });
   }
 
+  public async list(
+    req: FastifyRequest<{
+      Params: {
+        productId: string;
+      };
+    }>,
+    res: FastifyReply,
+  ): Promise<void> {
+    return res.send({ ok: false });
+  }
+
   public async updateFiles(
     req: FastifyRequest<{
       Params: {

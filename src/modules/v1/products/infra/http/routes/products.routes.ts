@@ -9,6 +9,8 @@ const productsController = new ProductsController();
 export default async function productsRoutes(app: any) {
   app.put('/', productsController.updateFiles);
 
+  app.get('/', productsController.list);
+
   app.patch(
     '/:productId/files',
     { preHandler: server.authenticate },
