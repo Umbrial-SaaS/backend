@@ -53,7 +53,6 @@ class GoogleAuthenticateUserService {
         redirect_uri: 'http://localhost:3000/callback',
       },
     );
-    console.log({ data });
 
     const googleAccessToken = data.access_token;
 
@@ -134,7 +133,6 @@ class GoogleAuthenticateUserService {
       refreshToken: crypto.randomBytes(32).toString('hex'),
       userId: user.id,
     });
-    console.log({ user });
     return {
       user,
       access_token: token,
