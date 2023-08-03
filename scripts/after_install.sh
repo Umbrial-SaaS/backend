@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ..
 cd ..
-cd /home/ubuntu/backend-umbriel
+cd /app/pandoris-backend
 sudo npm install
 npx prisma migrate deploy

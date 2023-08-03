@@ -7,11 +7,12 @@ cd ..
 cd ..
 cd ..
 cd ..
-cd /home/ubuntu/backend-umbriel
+cd /app/pandoris-backend
 
 sudo npm run build
 sudo pm2 delete all
 sudo pm2 start dist/shared/infra/http/server.js
+pm2 startup
 sudo pm2 save
 
 
