@@ -43,7 +43,6 @@ class GoogleAuthenticateUserService {
   public async execute({
     accessToken,
   }: GoogleAuthenticateUserReq): Promise<IResponse> {
-    console.table({ accessToken });
     const { data } = await axios.post(
       'https://accounts.google.com/o/oauth2/token',
       {
