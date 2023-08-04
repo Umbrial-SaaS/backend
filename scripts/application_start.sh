@@ -8,6 +8,7 @@ cd ..
 cd ..
 cd ..
 cd /home/ubuntu/backend-umbriel
+git config --global --add safe.directory /home/ubuntu/backend-umbriel
 git pull
 sudo npm install
 npx prisma migrate deploy

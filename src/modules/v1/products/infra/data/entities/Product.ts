@@ -34,4 +34,6 @@ export default class Product {
   showSalesCount: boolean;
 
   uniqueKeyLicense: boolean;
+
+  sellerId: string;
 }

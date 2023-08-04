@@ -16,6 +16,7 @@ import IUserRolesRepository from '../repositories/IUserRolesRepository';
 
 export type GoogleAuthenticateUserReq = {
   accessToken: string;
+  redirectUri: string
 };
 
 interface IResponse {
@@ -42,7 +43,9 @@ class GoogleAuthenticateUserService {
 
   public async execute({
     accessToken,
+    redirectUri
   }: GoogleAuthenticateUserReq): Promise<IResponse> {
+    console.table({ redirect_uri: redirectUri })
     const { data } = await axios.post(
       'https://accounts.google.com/o/oauth2/token',
       {
@@ -50,7 +53,7 @@ class GoogleAuthenticateUserService {
         client_id: env.GOOGLE_CLIENT_ID,
         client_secret: env.GOOGLE_SECRET_KEY,
         grant_type: 'authorization_code',
-        redirect_uri: 'http://localhost:3000/callback',
+        redirect_uri: redirectUri
       },
     );
 

@@ -7,7 +7,6 @@ import AuthenticateUserService, {
 } from '@modules/v1/users/services/AuthenticateUserService';
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { z, number } from 'zod';
-import console from 'console';
 import GoogleAuthenticateUserService, {
   GoogleAuthenticateUserReq,
 } from '@modules/v1/users/services/GoogleAuthenticateUserService';
@@ -63,6 +62,7 @@ export default class UsersController {
     );
     const data = await authenticateUserService.execute({
       accessToken: req.body.accessToken,
+      redirectUri: req.body.redirectUri,
     });
 
     return res.send(classToClass(data));

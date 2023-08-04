@@ -10,6 +10,7 @@ import fs from 'fs';
 import util from 'util';
 import { pipeline } from 'stream';
 import UpdateProductFilesService from '@modules/v1/products/services/UpdateProductFilesService';
+import ListProductsService from '@modules/v1/products/services/ListProductsService';
 import { createSchema } from '../routes/validations/products.validation';
 
 const pump = util.promisify(pipeline);
@@ -34,12 +35,24 @@ export default class ProductsController {
   public async list(
     req: FastifyRequest<{
       Params: {
-        productId: string;
+        sellerId: string;
+      };
+      Querystring: {
+        page: number;
+        pageSize: number;
       };
     }>,
     res: FastifyReply,
   ): Promise<void> {
-    return res.send({ ok: false });
+    const listProductsService = container.resolve(ListProductsService);
+
+    const product = await listProductsService.execute({
+      sellerId: req.params.sellerId,
+      page: req.query.page || 1,
+      pageSize: req.query.pageSize || 10,
+    });
+
+    return res.send({ product: classToClass(product) });
   }
 
   public async updateFiles(

@@ -18,11 +18,17 @@ class ProductsRepository implements IProductsRepository {
     this.ormRepository = prisma;
   }
 
-  async filterBy(filters: ListProductsDTO): Promise<Product[]> {
+  async filterBy(
+    filters: ListProductsDTO,
+    page: number,
+    pageSize: number,
+  ): Promise<Product[]> {
     const results = await this.ormRepository.product.findMany({
       where: {
         sellerId: filters.sellerId,
       },
+      take: pageSize, // Define a quantidade de itens que serão retornados por página
+      skip: (page - 1) * pageSize,
     });
 
     return results.map(product => Object.assign(new Product(), product));
@@ -52,6 +58,7 @@ class ProductsRepository implements IProductsRepository {
         flexQuantity: product.flexQuantity,
         showSalesCount: product.showSalesCount,
         uniqueKeyLicense: product.uniqueKeyLicense,
+        sellerId: product.sellerId,
       },
     });
   }
