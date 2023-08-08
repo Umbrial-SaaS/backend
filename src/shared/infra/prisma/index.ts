@@ -6,7 +6,5 @@ const execAsync = promisify(exec);
 
 const prisma = new PrismaClient();
 console.log('Migrations');
-execAsync('npx prisma db push', {
-  env: process.env,
-});
+
 export default prisma;

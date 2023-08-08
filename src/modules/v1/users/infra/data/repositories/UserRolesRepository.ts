@@ -1,39 +1,26 @@
 import ICreateUserRoleDTO from '@modules/v1/users/dtos/ICreateUserRoleDTO';
-import { PrismaClient, Prisma } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime';
-import prisma from '@shared/infra/prisma';
 import IUserRolesRepository from '../../../repositories/IUserRolesRepository';
 
 import UserRole from '../entities/UserRole';
+import { AppDataSource } from '@shared/infra/typeorm';
+import { Repository } from 'typeorm';
 
 class UserRolesRepository implements IUserRolesRepository {
-  private ormRepository: PrismaClient<
-    Prisma.PrismaClientOptions,
-    never,
-    Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined,
-    DefaultArgs
-  >;
+  private ormRepository: Repository<UserRole>
 
   constructor() {
-    this.ormRepository = prisma;
+    this.ormRepository = AppDataSource.getRepository(UserRole);
   }
-
   public create(user: ICreateUserRoleDTO): UserRole {
-    return Object.assign(new UserRole(), user);
+    return this.ormRepository.create(user)
   }
 
   public async save(data: UserRole): Promise<void> {
-    await this.ormRepository.userRole.create({
-      data: {
-        id: data.id,
-        roleId: data.roleId,
-        userId: data.userId,
-      },
-    });
+    await this.ormRepository.save(data);
   }
 
   public async delete(id: string): Promise<void> {
-    await this.ormRepository.userRole.delete({ where: { id } });
+    await this.ormRepository.delete(id);
   }
 }
 

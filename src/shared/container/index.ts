@@ -17,7 +17,13 @@ import ProductsRepository from '@modules/v1/products/infra/data/repositories/Pro
 import IProductsRepository from '@modules/v1/products/repositories/IProductsRepository';
 import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
 import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
+import RolesRepository from '@modules/v1/users/infra/data/repositories/RolesRepository';
+import IRolesRepository from '@modules/v1/users/repositories/IRolesRepository';
 
+container.registerSingleton<IRolesRepository>(
+  'RolesRepository',
+  RolesRepository,
+);
 container.registerSingleton<IProductsRepository>(
   'ProductsRepository',
   ProductsRepository,

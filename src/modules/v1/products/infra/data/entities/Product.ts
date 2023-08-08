@@ -1,39 +1,61 @@
-import Seller from '@modules/v1/sellers/infra/data/entities/Seller';
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
+@Entity('products')
 export default class Product {
+  @PrimaryColumn()
   id: string;
 
+  @Column({ default: false })
+  active: boolean;
+
+  @Column()
   name: string;
 
+  @Column()
   description: string;
 
+  @Column()
   url: string;
 
+  @Column()
   coverUrl: string;
 
+  @Column()
   thumbnailUrl: string;
 
+  @Column()
   cta: string;
 
+  @Column()
   summary: string;
 
+  @Column()
   pricing: number;
 
+  @Column()
   currency: string;
 
+  @Column()
   minimumAmount: number;
 
+  @Column({ nullable: true })
   suggestedAmount: number;
 
+  @Column()
   flexPrice: boolean;
 
-  salesLimit: number | null;
+  @Column({ nullable: true })
+  salesLimit?: number
 
-  flexQuantity: number | null;
+  @Column()
+  flexQuantity: boolean
 
+  @Column()
   showSalesCount: boolean;
 
+  @Column()
   uniqueKeyLicense: boolean;
 
+  @Column()
   sellerId: string;
 }

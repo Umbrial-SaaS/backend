@@ -1,21 +1,15 @@
-import prisma from '@shared/infra/prisma';
-import { PrismaClient, Prisma } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime';
 import IProductsRepository from '@modules/v1/products/repositories/IProductsRepository';
 import { CreateProductDTO } from '@modules/v1/products/dtos/CreateProductDTO';
 import { ListProductsDTO } from '@modules/v1/products/dtos/ListProductsDTO';
 import Product from '../entities/Product';
+import { AppDataSource } from '@shared/infra/typeorm';
+import { Repository } from 'typeorm';
 
 class ProductsRepository implements IProductsRepository {
-  private ormRepository: PrismaClient<
-    Prisma.PrismaClientOptions,
-    never,
-    Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined,
-    DefaultArgs
-  >;
+  private ormRepository: Repository<Product>
 
   constructor() {
-    this.ormRepository = prisma;
+    this.ormRepository = AppDataSource.getRepository(Product);
   }
 
   async filterBy(
@@ -23,7 +17,7 @@ class ProductsRepository implements IProductsRepository {
     page: number,
     pageSize: number,
   ): Promise<Product[]> {
-    const results = await this.ormRepository.product.findMany({
+    const results = await this.ormRepository.find({
       where: {
         sellerId: filters.sellerId,
       },
@@ -35,46 +29,23 @@ class ProductsRepository implements IProductsRepository {
   }
 
   create(product: CreateProductDTO): Product {
-    return Object.assign(new Product(), product);
+    return this.ormRepository.create(product)
   }
 
   async save(product: Product): Promise<void> {
-    await this.ormRepository.product.create({
-      data: {
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        url: product.url,
-        coverUrl: product.coverUrl,
-        thumbnailUrl: product.thumbnailUrl,
-        cta: product.cta,
-        summary: product.summary,
-        pricing: product.pricing,
-        currency: product.currency,
-        minimumAmount: product.minimumAmount,
-        suggestedAmount: product.suggestedAmount,
-        flexPrice: product.flexPrice,
-        salesLimit: product.salesLimit,
-        flexQuantity: product.flexQuantity,
-        showSalesCount: product.showSalesCount,
-        uniqueKeyLicense: product.uniqueKeyLicense,
-        sellerId: product.sellerId,
-      },
-    });
+    await this.ormRepository.save(product);
   }
 
   async index(): Promise<Product[]> {
-    const fonts = await this.ormRepository.product.findMany();
-    return fonts.map(font => Object.assign(new Product(), font));
+    return this.ormRepository.find();
   }
 
-  async findById(id: string): Promise<Product> {
-    return Object.assign(
-      new Product(),
-      await this.ormRepository.product.findUnique({
-        where: { id },
-      }),
-    );
+  async findById(id: string): Promise<Product | null> {
+    return this.ormRepository.findOne({
+      where: {
+        id
+      }
+    })
   }
 }
 

@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable global-require */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/prefer-default-export */
 import 'reflect-metadata';
-import Fastify from 'fastify';
+import Fastify, { fastify } from 'fastify';
 import '@shared/infra/prisma';
 import '@shared/container';
 import userRoutes from '@modules/v1/users/infra/http/routes/users.routes';
@@ -15,13 +16,15 @@ import { env } from '@config/env';
 import sellerRoutes from '@modules/v1/sellers/infra/http/routes/sellers.routes';
 import fastifyJwt from '@fastify/jwt';
 import fontsRoutes from '@modules/v1/fonts/infra/http/routes/fonts.routes';
-import multipart from '@fastify/multipart';
 import productsRoutes from '@modules/v1/products/infra/http/routes/products.routes';
-import multer from 'fastify-multer';
+import { ZodError } from 'zod';
+import { PrismaClientValidationError } from '@prisma/client/runtime';
 
-const { pipeline } = require('stream');
-const util = require('util');
-const fs = require('fs');
+import { pipeline } from 'stream';
+import util from 'util';
+import fs from 'fs';
+
+import '../typeorm';
 
 const pump = util.promisify(pipeline);
 const server = Fastify({
@@ -35,6 +38,7 @@ server.register(require('@fastify/multipart'));
 server.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 });
+
 server.register(userRoutes, {
   prefix: 'v1/users',
 });
@@ -112,6 +116,7 @@ server.get('/health', (req, reply) => {
 });
 
 server.setErrorHandler((error, _, reply) => {
+  console.error(error);
   if (error instanceof AppError) {
     return reply.status(error.statusCode).send({
       status: 'error',
@@ -120,8 +125,14 @@ server.setErrorHandler((error, _, reply) => {
     });
   }
 
-  console.error(error);
-
+  if (error instanceof ZodError) {
+    return reply.status(400).send({
+      issues: error.issues,
+    });
+  }
+  if (error instanceof PrismaClientValidationError) {
+    return reply.status(400).send(JSON.parse(error.message));
+  }
   return reply.status(500).send(error);
 });
 

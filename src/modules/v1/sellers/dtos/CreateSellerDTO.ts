@@ -9,7 +9,7 @@ export type CreateSellerReqDTO = {
 
   defaultInstagramUrl: string;
 
-  userId?: string;
+  userId: string;
 };
 
 export type CreateSellerDTO = {

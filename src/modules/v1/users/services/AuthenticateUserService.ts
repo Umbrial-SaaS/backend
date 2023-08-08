@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { injectable, inject } from 'tsyringe';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/auth';
@@ -39,14 +40,13 @@ class AuthenticateUserService {
 
     @inject('IdGeneratorProvider')
     private idGeneratorProvider: IIdGeneratorProvider,
-  ) {}
+  ) { }
 
   public async execute({
     email,
     password,
     phone,
   }: AuthenticateUserReq): Promise<IResponse> {
-    console.table({ email, password });
     if (!email && !phone) {
       throw new AppError(
         'Telefone ou Email necessário.',
@@ -93,7 +93,7 @@ class AuthenticateUserService {
       {
         roles: user.userRoles,
         deleted_at: user.deletedAt,
-        user: {
+        data: {
           id: user.id,
           name: user.name,
         },

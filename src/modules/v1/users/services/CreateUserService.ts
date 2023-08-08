@@ -3,11 +3,16 @@ import { injectable, inject } from 'tsyringe';
 
 import AppError from '@shared/errors/AppError';
 import crypto from 'crypto';
+import authConfig from '@config/auth';
+import refreshTokenConfig from '@config/refreshToken';
+import { sign } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
 import User from '../infra/data/entities/User';
 import IUserRolesRepository from '../repositories/IUserRolesRepository';
+import IRolesRepository from '../repositories/IRolesRepository';
+import IRefreshTokensRepository from '../repositories/IRefreshTokensRepository';
 
 export type CreateUserServiceReq = {
   name: string;
@@ -17,6 +22,12 @@ export type CreateUserServiceReq = {
   password?: string;
   roles: number[];
 };
+
+interface IResponse {
+  user: User;
+  access_token: string;
+  refresh_token: string;
+}
 
 @injectable()
 class CreateUserService {
@@ -29,7 +40,13 @@ class CreateUserService {
 
     @inject('IdGeneratorProvider')
     private idGeneratorProvider: IIdGeneratorProvider,
-  ) {}
+
+    @inject('RolesRepository')
+    private rolesRepository: IRolesRepository,
+
+    @inject('RefreshTokensRepository')
+    private refreshTokensRepository: IRefreshTokensRepository,
+  ) { }
 
   public async execute({
     name,
@@ -38,7 +55,7 @@ class CreateUserService {
     password,
     profile_photo,
     roles,
-  }: CreateUserServiceReq): Promise<User> {
+  }: CreateUserServiceReq): Promise<IResponse> {
     const phoneAlreadyUsed = await this.usersRepository.findByPhone(phone);
 
     if (phoneAlreadyUsed) {
@@ -85,6 +102,11 @@ class CreateUserService {
     user.userRoles = [];
 
     for (const roleId of roles) {
+      const role = await this.rolesRepository.findById(roleId);
+      if (!role) {
+        throw new AppError('role_not_found');
+      }
+
       const userRole = this.userRolesRepository.create({
         id: crypto.randomUUID(),
         roleId,
@@ -94,7 +116,38 @@ class CreateUserService {
     }
 
     await this.usersRepository.save(user);
-    return user;
+    const { secret, expiresIn } = authConfig.jwt;
+
+    const token = sign(
+      {
+        roles: user.userRoles,
+        deleted_at: user.deletedAt,
+        data: {
+          id: user.id,
+          name: user.name,
+        },
+      },
+      secret,
+      {
+        subject: user.id,
+        expiresIn,
+      },
+    );
+
+    const refreshToken = await this.refreshTokensRepository.create({
+      id: this.idGeneratorProvider.generate(),
+      accessToken: token,
+      expiresIn: refreshTokenConfig.refreshToken.expiresIn,
+      isActive: true,
+      refreshToken: crypto.randomBytes(32).toString('hex'),
+      userId: user.id,
+    });
+
+    return {
+      user,
+      access_token: token,
+      refresh_token: refreshToken.refreshToken,
+    };
   }
 }
 

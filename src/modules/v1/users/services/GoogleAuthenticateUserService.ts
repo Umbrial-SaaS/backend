@@ -119,7 +119,10 @@ class GoogleAuthenticateUserService {
       {
         roles: user.userRoles,
         deleted_at: user.deletedAt,
-        user,
+        data: {
+          id: user.id,
+          name: user.name,
+        },
       },
       secret,
       {

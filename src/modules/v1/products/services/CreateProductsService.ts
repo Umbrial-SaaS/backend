@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
 import AppError from '@shared/errors/AppError';
@@ -15,11 +16,11 @@ interface ICreateProductsServiceReq {
     summary: string;
     pricing: number;
     currency: string;
-    minimumAmount?: number;
-    suggestedAmount?: number;
+    minimumAmount?: number
+    suggestedAmount?: number
+    salesLimit?: number
+    flexQuantity: boolean
     flexPrice: boolean;
-    salesLimit?: number;
-    flexQuantity?: number;
     showSalesCount: boolean;
     uniqueKeyLicense: boolean;
     customFields: {
@@ -40,15 +41,19 @@ class CreateProductsService {
 
     @inject('IdGeneratorProvider')
     private idGeneratorProvider: IIdGeneratorProvider,
-  ) {}
+  ) { }
 
   public async execute({
     userId,
     product,
   }: ICreateProductsServiceReq): Promise<Product> {
-    const user = await this.usersRepository.findById(userId);
+    const user = await this.usersRepository.findById(userId, ['seller']);
+    console.log(user)
     if (user === null) {
       throw new AppError('user_not_found', 404);
+    }
+    if (!user.seller) {
+      throw new AppError('user_is_not_seller', 400);
     }
 
     if (product.pricing < 0) {
@@ -65,9 +70,6 @@ class CreateProductsService {
     }
     if (product.salesLimit && product.salesLimit < 1) {
       throw new AppError('invalid_sales_limit');
-    }
-    if (product.flexQuantity && product.flexQuantity < 1) {
-      throw new AppError('invalid_flex_quantity');
     }
 
     const productEntity = this.productsRepository.create({

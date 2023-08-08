@@ -3,10 +3,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { classToClass } from 'class-transformer';
 import { container } from 'tsyringe';
-import ListFontsService from '@modules/v1/fonts/services/ListFontsService';
 import ShowProductsService from '@modules/v1/products/services/ShowProductService';
 import CreateProductsService from '@modules/v1/products/services/CreateProductsService';
-import fs from 'fs';
 import util from 'util';
 import { pipeline } from 'stream';
 import UpdateProductFilesService from '@modules/v1/products/services/UpdateProductFilesService';
@@ -34,11 +32,9 @@ export default class ProductsController {
 
   public async list(
     req: FastifyRequest<{
-      Params: {
-        sellerId: string;
-      };
       Querystring: {
         page: number;
+        sellerId: string;
         pageSize: number;
       };
     }>,
@@ -47,12 +43,12 @@ export default class ProductsController {
     const listProductsService = container.resolve(ListProductsService);
 
     const product = await listProductsService.execute({
-      sellerId: req.params.sellerId,
+      sellerId: req.query.sellerId,
       page: req.query.page || 1,
       pageSize: req.query.pageSize || 10,
     });
 
-    return res.send({ product: classToClass(product) });
+    return res.send({ products: classToClass(product) });
   }
 
   public async updateFiles(
@@ -76,6 +72,17 @@ export default class ProductsController {
     const product = await updateProductFilesService.execute({
       id: productId,
       userId: req.user.id,
+    });
+    return res.send({ product: classToClass(product) });
+  }
+
+  public async create(req: FastifyRequest, res: FastifyReply): Promise<void> {
+    const createProductsService = container.resolve(CreateProductsService);
+
+    const productParams = createSchema.parse(req.body);
+    const product = await createProductsService.execute({
+      product: productParams,
+      userId: req.user.data.id,
     });
     return res.send({ product: classToClass(product) });
   }

@@ -13,7 +13,7 @@ export type CreateProductDTO = {
   suggestedAmount?: number;
   flexPrice: boolean;
   salesLimit?: number;
-  flexQuantity?: number;
+  flexQuantity: boolean;
   showSalesCount: boolean;
   uniqueKeyLicense: boolean;
 

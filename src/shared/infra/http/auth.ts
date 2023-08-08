@@ -10,6 +10,7 @@ import { verify } from 'jsonwebtoken';
 
 interface DecodedToken {
   username: string;
+  id: string;
 }
 
 const authPlugin: FastifyPluginCallback = (

@@ -34,7 +34,7 @@ model NotificationPreference {
   updatedAt DateTime?
 
   // * Relations
-  seller   Seller @relation(fields: [sellerId], references: [id])
+  seller   Seller @relation(fields: [sellerId], references: [id], onDelete: Cascade)
   sellerId String @unique
 }
 
@@ -56,7 +56,7 @@ model Seller {
   deletedAt DateTime?
 
   // * Relations
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String @unique
 
   notificationPreference NotificationPreference?
@@ -80,7 +80,7 @@ model RefreshToken {
 
   updatedAt DateTime?
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Role {
@@ -130,7 +130,7 @@ model UserRole {
 
   userId String
 
-  role Role @relation(fields: [roleId], references: [id])
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
