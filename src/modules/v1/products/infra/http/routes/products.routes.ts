@@ -16,7 +16,7 @@ export default async function productsRoutes(app: any) {
 
   app.patch(
     '/:productId/files',
-    { preHandler: server.authenticate },
+    { onRequest: [verifyJwt] },
     productsController.updateFiles,
   );
 }

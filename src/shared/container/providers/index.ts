@@ -1,4 +1,4 @@
-// import './StorageProvider';
+import './StorageProvider';
 import './HashProvider';
 import './IdGeneratorProvider';
 // import './MailTemplateProvider';

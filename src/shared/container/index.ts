@@ -59,7 +59,3 @@ container.registerSingleton<IRefreshTokensRepository>(
   RefreshTokensRepository,
 );
 
-container.registerSingleton<IStorageProvider>(
-  'StorageProvider',
-  DiskStorageProvider,
-);

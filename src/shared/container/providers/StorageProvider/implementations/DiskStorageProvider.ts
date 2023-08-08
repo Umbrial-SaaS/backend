@@ -16,7 +16,7 @@ class DiskStorageProvider implements IStorageProvider {
         path.resolve(uploadConfig.uploadsFolder, file.filename),
       );
     } catch (err) {
-      throw new AppError('Erro ao realizar upload');
+      throw new AppError('Erro ao realizar upload no disco');
     }
 
     return file.filename;

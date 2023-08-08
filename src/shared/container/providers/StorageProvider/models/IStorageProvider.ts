@@ -1,6 +1,8 @@
 export interface IFile {
   filename: string;
+  fieldname: string;
   mimetype: string;
+  file: any
 }
 
 export default interface IStorageProvider {

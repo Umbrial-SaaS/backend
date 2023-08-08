@@ -28,7 +28,7 @@ class UpdateProductFilesService {
 
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-  ) {}
+  ) { }
 
   public async execute({
     id,
@@ -37,6 +37,7 @@ class UpdateProductFilesService {
     cover,
     files,
   }: IUpdateProductFilesServiceReq): Promise<Product> {
+
     const product = await this.productsRepository.findById(id);
     if (!product) {
       throw new AppError('product_not_found', 404);
@@ -44,8 +45,6 @@ class UpdateProductFilesService {
 
     if (cover) {
       product.coverUrl = await this.storageProvider.saveFile(cover, 'products');
-      console.log('product.coverUrl');
-      console.table({ coverUrl: product.coverUrl });
     }
 
     if (thumbnail) {
@@ -53,9 +52,9 @@ class UpdateProductFilesService {
         thumbnail,
         'products',
       );
-      console.log('product.thumbnailUrl');
-      console.table({ thumbnailUrl: product.thumbnailUrl });
     }
+
+    await this.productsRepository.save(product)
 
     return product;
   }

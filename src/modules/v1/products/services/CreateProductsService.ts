@@ -48,7 +48,7 @@ class CreateProductsService {
     product,
   }: ICreateProductsServiceReq): Promise<Product> {
     const user = await this.usersRepository.findById(userId, ['seller']);
-    console.log(user)
+
     if (user === null) {
       throw new AppError('user_not_found', 404);
     }

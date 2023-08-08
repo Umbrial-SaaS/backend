@@ -11,7 +11,7 @@ import userRoutes from '@modules/v1/users/infra/http/routes/users.routes';
 import process from 'process';
 import AppError from '@shared/errors/AppError';
 import os from 'os';
-import fastifyCors from 'fastify-cors'; // Importe o pacote fastify-cors
+import fastifyCors from '@fastify/cors';
 import { env } from '@config/env';
 import sellerRoutes from '@modules/v1/sellers/infra/http/routes/sellers.routes';
 import fastifyJwt from '@fastify/jwt';
@@ -47,29 +47,23 @@ server.register(sellerRoutes, {
 });
 
 server.post('/upload', async function (req, reply) {
-  // process a single file
-  // also, consider that if you allow to upload multiple files
-  // you must consume all files otherwise the promise will never fulfill
-  const data = await req.file();
 
-  console.log({ data });
-  console.log({ body: req.body });
+  const parts = (req as any).parts()
 
-  // to accumulate the file in memory! Be careful!
-  //
-  // await data.toBuffer() // Buffer
-  //
-  // or
+  for await (const part of parts) {
+    if (part.file) {
+      console.log(part)
+      // upload and save the file
+      await pump(part.file, fs.createWriteStream(`./uploads/${part.filename}`))
 
-  await pump(data.file, fs.createWriteStream(`uploads/${data.filename}`));
+    } else {
+      // do something with the non-files parts
+    }
 
-  // be careful of permission issues on disk and not overwrite
-  // sensitive files that could cause security risks
+  }
 
-  // also, consider that if the file stream is not consumed, the promise will never fulfill
-
-  reply.send();
-});
+  return { message: 'files uploaded' }
+})
 
 server.register(fontsRoutes, {
   prefix: 'v1/fonts',

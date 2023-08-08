@@ -49,7 +49,7 @@ export default {
   config: {
     disk: {},
     aws: {
-      bucket: process.env.DIGITAL_OCEAN_BUCKET,
+      bucket: process.env.AWS_BUCKET_NAME,
     },
   },
 } as IUploadConfig;
