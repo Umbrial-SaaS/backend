@@ -14,6 +14,8 @@ import fs from 'fs'
 import console from 'console';
 import { IFile } from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 const pump = util.promisify(pipeline);
+
+import axios from 'axios'
 export default class ProductsController {
   public async show(
     req: FastifyRequest<{
@@ -100,11 +102,16 @@ export default class ProductsController {
   public async create(req: FastifyRequest, res: FastifyReply): Promise<void> {
     const createProductsService = container.resolve(CreateProductsService);
 
+    console.log({ body: req.body })
+
+    console.log({ user: req.user })
+
     const productParams = createSchema.parse(req.body);
     const product = await createProductsService.execute({
       product: productParams,
-      userId: req.user.data.id,
+      userId: req.user.sub
     });
+    console.table({ product })
     return res.send({ product: classToClass(product) });
   }
 }

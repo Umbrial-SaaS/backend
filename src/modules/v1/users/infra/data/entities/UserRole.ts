@@ -2,7 +2,7 @@ import 'reflect-metadata';
 
 import Role from './Role';
 import User from './User';
-import { Entity, PrimaryColumn, Column, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryColumn, Column, JoinColumn, OneToOne, ManyToOne, } from 'typeorm';
 
 @Entity('user_roles')
 class UserRole {
@@ -16,7 +16,7 @@ class UserRole {
   userId: string;
 
   // * Relations
-  @OneToOne(() => Role, (role) => role.userRoles, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Role, (role) => role.userRoles, { onDelete: 'CASCADE' })
   @JoinColumn({
     name: 'roleId'
   })

@@ -1,21 +1,15 @@
 import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
 
-import { CreateSellerDTO } from '@modules/v1/sellers/dtos/CreateSellerDTO';
-import prisma from '@shared/infra/prisma';
-import { PrismaClient, Prisma } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime';
+import { CreateSellerDTO } from '@modules/v1/sellers/dtos/CreateSellerDTO'
 import Seller from '../entities/Seller';
+import { AppDataSource } from '@shared/infra/typeorm';
+import { Repository } from 'typeorm';
 
 class SellersRepository implements ISellersRepository {
-  private ormRepository: PrismaClient<
-    Prisma.PrismaClientOptions,
-    never,
-    Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined,
-    DefaultArgs
-  >;
+  private ormRepository: Repository<Seller>
 
   constructor() {
-    this.ormRepository = prisma;
+    this.ormRepository = AppDataSource.getRepository(Seller);
   }
 
   public async findById(
@@ -24,7 +18,7 @@ class SellersRepository implements ISellersRepository {
   ): Promise<Seller | null> {
     return Object.assign(
       new Seller(),
-      await this.ormRepository.seller.findUnique({
+      await this.ormRepository.findOne({
         where: { id },
       }),
     );
@@ -35,27 +29,11 @@ class SellersRepository implements ISellersRepository {
   }
 
   public async save(data: Seller): Promise<void> {
-    await this.ormRepository.seller.create({
-      data: {
-        id: data.id,
-        defaultSupportEmail: data.defaultSupportEmail,
-        defaultTwitterUrl: data.defaultTwitterUrl,
-        defaultCurrency: data.defaultCurrency,
-        defaultInstagramUrl: data.defaultInstagramUrl,
-        user: {
-          connect: {
-            id: data.userId,
-          },
-        },
-        createdAt: data.createdAt || new Date(),
-        updatedAt: data.updatedAt || new Date(),
-        deletedAt: data.deletedAt,
-      },
-    });
+    await this.ormRepository.save(data);
   }
 
   public async delete(id: string): Promise<void> {
-    await this.ormRepository.seller.delete({ where: { id } });
+    await this.ormRepository.delete(id);
   }
 }
 

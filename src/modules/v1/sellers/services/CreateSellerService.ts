@@ -19,7 +19,7 @@ class CreateSellerService {
 
     @inject('IdGeneratorProvider')
     private idGeneratorProvider: IIdGeneratorProvider,
-  ) {}
+  ) { }
 
   public async execute({
     defaultInstagramUrl,
@@ -41,6 +41,7 @@ class CreateSellerService {
       defaultSupportEmail,
       defaultTwitterUrl,
       userId,
+      notificationPreferences: {}
     });
 
     await this.sellersRepository.save(seller);

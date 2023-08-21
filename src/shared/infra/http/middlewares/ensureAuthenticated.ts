@@ -10,7 +10,7 @@ export default async function verifyJwt(
   try {
     await request.jwtVerify();
   } catch (err) {
-    console.log(err);
+    console.log({ err });
     return reply.status(401).send({ message: 'Unauthorized.' });
   }
 }

@@ -1,6 +1,7 @@
-import { Font } from '@prisma/client';
-import IFontsRepository from '../IFontsRepository';
+
+import Font from '@modules/v1/fonts/infra/data/entities/Font';
 import { fakeFonts } from './seeds';
+import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
 
 class FakeFakeFontsRepository implements IFontsRepository {
   private data: Font[] = [fakeFonts];

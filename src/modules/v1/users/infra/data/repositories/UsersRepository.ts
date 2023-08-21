@@ -1,6 +1,5 @@
 import IFindUserDTO from '@modules/v1/users/dtos/IFindUserDTO';
 import clearJson from '@shared/functions/clearJson';
-import prisma from '@shared/infra/prisma';
 import IUsersRepository from '../../../repositories/IUsersRepository';
 import ICreateProductDTO from '../../../dtos/ICreateUserDTO';
 
@@ -60,9 +59,8 @@ class UsersRepository implements IUsersRepository {
   }
 
   public async update(user: User): Promise<void> {
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
+    await this.ormRepository.update(user.id,
+      {
         name: user.name,
         phone: user.phone,
         bio: user.bio,
@@ -71,8 +69,7 @@ class UsersRepository implements IUsersRepository {
         facebookId: user.facebookId,
         avatar: user.avatar,
         password: user.password,
-      },
-    });
+      });
   }
 }
 

@@ -10,20 +10,20 @@ interface ICreateProductsServiceReq {
   userId: string;
   product: {
     name: string;
-    description: string;
-    url: string;
-    cta: string;
-    summary: string;
-    pricing: number;
-    currency: string;
+    description?: string;
+    url?: string;
+    cta?: string;
+    summary?: string;
+    price: number;
+    currency?: string;
     minimumAmount?: number
     suggestedAmount?: number
     salesLimit?: number
-    flexQuantity: boolean
-    flexPrice: boolean;
-    showSalesCount: boolean;
-    uniqueKeyLicense: boolean;
-    customFields: {
+    flexQuantity?: boolean
+    flexPrice?: boolean;
+    showSalesCount?: boolean;
+    uniqueKeyLicense?: boolean;
+    customFields?: {
       type: string;
       label: string;
     }[];
@@ -47,8 +47,9 @@ class CreateProductsService {
     userId,
     product,
   }: ICreateProductsServiceReq): Promise<Product> {
+    console.table({ userId })
     const user = await this.usersRepository.findById(userId, ['seller']);
-
+    console.log({ user })
     if (user === null) {
       throw new AppError('user_not_found', 404);
     }
@@ -56,10 +57,10 @@ class CreateProductsService {
       throw new AppError('user_is_not_seller', 400);
     }
 
-    if (product.pricing < 0) {
+    if (product.price < 0) {
       throw new AppError('negative_price');
     }
-    if (product.pricing < 0) {
+    if (product.price < 0) {
       throw new AppError('negative_price');
     }
     if (product.minimumAmount && product.minimumAmount < 0) {
@@ -75,8 +76,9 @@ class CreateProductsService {
     const productEntity = this.productsRepository.create({
       id: this.idGeneratorProvider.generate(),
       ...product,
+      pricing: product.price,
       sellerId: user.seller.id,
-      customFields: product.customFields,
+      customFields: product.customFields || [],
     });
 
     await this.productsRepository.save(productEntity);

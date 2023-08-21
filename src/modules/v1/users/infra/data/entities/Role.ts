@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import UserRole from './UserRole';
-import { Entity, PrimaryColumn, Column, OneToOne } from 'typeorm';
+import { Entity, PrimaryColumn, Column, OneToOne, OneToMany } from 'typeorm';
 
 @Entity('roles')
 class Role {
@@ -10,7 +10,7 @@ class Role {
   @Column()
   name: string;
 
-  @OneToOne(() => UserRole, (userRole) => userRole.role)
+  @OneToMany(() => UserRole, (userRole) => userRole.role)
   userRoles: UserRole[];
 }
 

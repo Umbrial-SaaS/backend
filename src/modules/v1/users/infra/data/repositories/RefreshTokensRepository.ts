@@ -1,51 +1,45 @@
 import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTokensRepository';
 
 import ICreateRefreshTokenDTO from '@modules/v1/users/dtos/ICreateRefreshTokenDTO';
-import { PrismaClient, Prisma } from '@prisma/client';
-import { DefaultArgs } from '@prisma/client/runtime';
-import prisma from '@shared/infra/prisma';
-import AuthenticationToken from '../entities/RefreshToken';
+import RefreshToken from '../entities/RefreshToken';
+import { AppDataSource } from '@shared/infra/typeorm';
+import { Repository } from 'typeorm';
 
 class RefreshTokensRepository implements IRefreshTokensRepository {
-  private ormRepository: PrismaClient<
-    Prisma.PrismaClientOptions,
-    never,
-    Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined,
-    DefaultArgs
-  >;
+  private ormRepository: Repository<RefreshToken>
 
   constructor() {
-    this.ormRepository = prisma;
+    this.ormRepository = AppDataSource.getRepository(RefreshToken);
   }
 
-  public async findByUserId(id: string): Promise<AuthenticationToken | null> {
-    const token = await this.ormRepository.refreshToken.findUnique({
+  public async findByUserId(id: string): Promise<RefreshToken | null> {
+    const token = await this.ormRepository.findOne({
       where: { userId: id },
     });
-    return token ? Object.assign(new AuthenticationToken(), token) : null;
+    return token ? Object.assign(new RefreshToken(), token) : null;
   }
 
   public async findByRefreshToken(
     token: string,
-  ): Promise<AuthenticationToken | null> {
-    const foundToken = await this.ormRepository.refreshToken.findUnique({
+  ): Promise<RefreshToken | null> {
+    const foundToken = await this.ormRepository.findOne({
       where: { refreshToken: token },
     });
 
     return foundToken
-      ? Object.assign(new AuthenticationToken(), foundToken)
+      ? Object.assign(new RefreshToken(), foundToken)
       : null;
   }
 
   public async findByAccessToken(
     token: string,
-  ): Promise<AuthenticationToken | null> {
-    const foundToken = await this.ormRepository.refreshToken.findUnique({
+  ): Promise<RefreshToken | null> {
+    const foundToken = await this.ormRepository.findOne({
       where: { accessToken: token },
     });
 
     return foundToken
-      ? Object.assign(new AuthenticationToken(), foundToken)
+      ? Object.assign(new RefreshToken(), foundToken)
       : null;
   }
 
@@ -56,28 +50,18 @@ class RefreshTokensRepository implements IRefreshTokensRepository {
     isActive,
     refreshToken,
     userId,
-  }: ICreateRefreshTokenDTO): Promise<AuthenticationToken> {
-    const newToken = this.ormRepository.refreshToken.create({
-      data: {
-        id,
-        accessToken,
-        expiresIn,
-        isActive,
-        refreshToken,
-        userId,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    });
-
-    return Object.assign(new AuthenticationToken(), {
+  }: ICreateRefreshTokenDTO): Promise<RefreshToken> {
+    const newToken = this.ormRepository.create({
       id,
-      accessToken,
       expiresIn,
       isActive,
       refreshToken,
       userId,
+      createdAt: new Date(),
+      updatedAt: new Date(),
     });
+
+    return Object.assign(new RefreshToken(), newToken);
   }
 }
 

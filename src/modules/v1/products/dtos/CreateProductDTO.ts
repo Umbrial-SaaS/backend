@@ -1,21 +1,21 @@
 export type CreateProductDTO = {
   id: string;
   name: string;
-  description: string;
-  url: string;
+  description?: string;
+  url?: string;
   coverUrl?: string;
   thumbnailUrl?: string;
-  cta: string;
-  summary: string;
-  pricing: number;
-  currency: string;
+  cta?: string;
+  summary?: string;
+  pricing?: number;
+  currency?: string;
   minimumAmount?: number;
   suggestedAmount?: number;
-  flexPrice: boolean;
+  flexPrice?: boolean;
   salesLimit?: number;
-  flexQuantity: boolean;
-  showSalesCount: boolean;
-  uniqueKeyLicense: boolean;
+  flexQuantity?: boolean;
+  showSalesCount?: boolean;
+  uniqueKeyLicense?: boolean;
 
   sellerId: string;
 

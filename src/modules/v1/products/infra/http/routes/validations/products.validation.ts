@@ -3,23 +3,23 @@ import { z } from 'zod';
 
 export const createSchema = z.object({
   name: z.string(),
-  description: z.string(),
-  url: z.string(),
-  cta: z.string(),
-  summary: z.string(),
-  pricing: z.number(),
-  currency: z.string(),
+  price: z.number(),
+  description: z.string().optional(),
+  url: z.string().optional(),
+  cta: z.string().optional(),
+  summary: z.string().optional(),
+  currency: z.string().optional(),
   minimumAmount: z.number().optional().nullable(),
   suggestedAmount: z.number().optional().nullable(),
   salesLimit: z.number().optional().nullable(),
-  flexPrice: z.boolean(),
-  flexQuantity: z.boolean(),
-  showSalesCount: z.boolean(),
-  uniqueKeyLicense: z.boolean(),
+  flexPrice: z.boolean().optional(),
+  flexQuantity: z.boolean().optional(),
+  showSalesCount: z.boolean().optional(),
+  uniqueKeyLicense: z.boolean().optional(),
   customFields: z.array(
     z.object({
       type: z.string(),
       label: z.string(),
-    }),
-  ),
+    })
+  ).optional(),
 });

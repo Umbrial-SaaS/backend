@@ -72,6 +72,7 @@ class GoogleAuthenticateUserService {
       'userRoles.role',
     ]);
 
+    console.log({ user })
     if (!user) {
       user = this.usersRepository.create({
         id: this.idGeneratorProvider.generate(),
@@ -99,6 +100,7 @@ class GoogleAuthenticateUserService {
         userId: user.id,
       });
       await this.usersRepository.save(user);
+      // await this.userRolesRepository.save(userRole)
     }
     let shouldUpdate = false;
     if (user.name !== userData.name) {
@@ -139,6 +141,11 @@ class GoogleAuthenticateUserService {
       refreshToken: crypto.randomBytes(32).toString('hex'),
       userId: user.id,
     });
+    console.log({
+      user,
+      access_token: token,
+      refresh_token: refreshToken.refreshToken,
+    })
     return {
       user,
       access_token: token,

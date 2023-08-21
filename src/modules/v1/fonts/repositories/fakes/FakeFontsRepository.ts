@@ -1,4 +1,5 @@
-import { Font } from '@prisma/client';
+
+import Font from '../../infra/data/entities/Font';
 import IFontsRepository from '../IFontsRepository';
 import { fakeFonts } from './seeds';
 
