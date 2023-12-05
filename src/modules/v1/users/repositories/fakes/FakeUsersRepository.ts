@@ -16,11 +16,6 @@ class FakeUsersRepository implements IUsersRepository {
     throw new Error('Method not implemented.');
   }
 
-  async findByPhone(phone: string): Promise<User | null> {
-    const user = this.products.find(item => item.phone === phone);
-
-    return user || null;
-  }
 
   async findByEmail(email: string): Promise<User | null> {
     const user = this.products.find(item => item.email === email);
@@ -32,11 +27,6 @@ class FakeUsersRepository implements IUsersRepository {
     return this.products;
   }
 
-  public async findByName(name: string): Promise<User | null> {
-    const user = this.products.find(item => item.name === name);
-
-    return user || null;
-  }
 
   public async findById(id: string): Promise<User | null> {
     const user = this.products.find(item => item.id === id);
@@ -47,8 +37,6 @@ class FakeUsersRepository implements IUsersRepository {
   public create(data: ICreateUserDTO): User {
     const user = new User();
     Object.assign(user, data);
-
-    this.products.push(user);
 
     return user || null;
   }

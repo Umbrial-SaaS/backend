@@ -15,10 +15,35 @@ import FontsRepository from '@modules/v1/fonts/infra/data/repositories/FontsRepo
 import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
 import ProductsRepository from '@modules/v1/products/infra/data/repositories/ProductsRepository';
 import IProductsRepository from '@modules/v1/products/repositories/IProductsRepository';
-import DiskStorageProvider from './providers/StorageProvider/implementations/DiskStorageProvider';
-import IStorageProvider from './providers/StorageProvider/models/IStorageProvider';
 import RolesRepository from '@modules/v1/users/infra/data/repositories/RolesRepository';
 import IRolesRepository from '@modules/v1/users/repositories/IRolesRepository';
+import ICorporationsRepository from '@modules/v1/corporations/repositories/ICorporationsRepository';
+import IPersonsRepository from '@modules/v1/users/repositories/IPersonsRepository';
+import PersonsRepository from '@modules/v1/users/infra/data/repositories/PersonsRepository';
+import ICorporationServicesRepository from '@modules/v1/corporations/repositories/ICorporationServicesRepository';
+import ICorporationStaffStaffRepository from '@modules/v1/corporations/repositories/ICorporationStaffRepository';
+import CorporationServicesRepository from '@modules/v1/corporations/infra/data/repositories/CorporationServicesRepository';
+import CorporationStaffRepository from '@modules/v1/corporations/infra/data/repositories/CorporationStaffRepository';
+import CorporationsRepository from '@modules/v1/corporations/infra/data/repositories/CorporationsRepository';
+
+
+
+container.registerSingleton<ICorporationStaffStaffRepository>(
+  'CorporationStaffRepository',
+  CorporationStaffRepository,
+);
+container.registerSingleton<ICorporationServicesRepository>(
+  'CorporationServicesRepository',
+  CorporationServicesRepository,
+);
+container.registerSingleton<IPersonsRepository>(
+  'PersonsRepository',
+  PersonsRepository,
+);
+container.registerSingleton<ICorporationsRepository>(
+  'CorporationsRepository',
+  CorporationsRepository,
+);
 
 container.registerSingleton<IRolesRepository>(
   'RolesRepository',

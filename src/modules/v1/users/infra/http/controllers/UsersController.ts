@@ -26,12 +26,13 @@ export default class UsersController {
     res: FastifyReply,
   ): Promise<FastifyReply> {
     const schema = z.object({
-      name: z.string(),
-      phone: z.string(),
-      email: z.string(),
-      profile_photo: z.string().optional(),
+      personData: z.object({
+        firstName: z.string(),
+        lastName: z.string(),
+        phoneNumber: z.string(),
+      }),
+      email: z.string().email(),
       password: z.string().min(8).max(20),
-      roles: z.array(number()),
     });
     const body = schema.parse(req.body);
 

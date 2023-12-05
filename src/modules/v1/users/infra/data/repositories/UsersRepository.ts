@@ -4,7 +4,7 @@ import IUsersRepository from '../../../repositories/IUsersRepository';
 import ICreateProductDTO from '../../../dtos/ICreateUserDTO';
 
 import User from '../entities/User';
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 
 class UsersRepository implements IUsersRepository {
@@ -14,13 +14,6 @@ class UsersRepository implements IUsersRepository {
     this.ormRepository = AppDataSource.getRepository(User);
   }
 
-  async findByPhone(phone: string, relations?: string[]): Promise<User | null> {
-    return this.ormRepository.findOne({
-      where: {
-        phone
-      }
-    })
-  }
 
   async findByEmail(email: string, relations?: string[]): Promise<User | null> {
     return this.ormRepository.findOne({
@@ -56,20 +49,6 @@ class UsersRepository implements IUsersRepository {
 
   public async delete(id: string): Promise<void> {
     await this.ormRepository.delete(id)
-  }
-
-  public async update(user: User): Promise<void> {
-    await this.ormRepository.update(user.id,
-      {
-        name: user.name,
-        phone: user.phone,
-        bio: user.bio,
-        email: user.email,
-        googleId: user.googleId,
-        facebookId: user.facebookId,
-        avatar: user.avatar,
-        password: user.password,
-      });
   }
 }
 

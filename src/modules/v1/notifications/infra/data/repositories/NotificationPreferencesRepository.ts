@@ -3,7 +3,7 @@ import { CreateNotificationPreferenceDTO } from '@modules/v1/notifications/dtos/
 import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotificationPreferencesRepository';
 import NotificationPreference from '../entities/NotificationPreference';
 import { Repository } from 'typeorm';
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 
 class NotificationPreferencesRepository
   implements INotificationPreferencesRepository {

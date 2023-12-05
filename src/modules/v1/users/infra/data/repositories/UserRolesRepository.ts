@@ -2,7 +2,7 @@ import ICreateUserRoleDTO from '@modules/v1/users/dtos/ICreateUserRoleDTO';
 import IUserRolesRepository from '../../../repositories/IUserRolesRepository';
 
 import UserRole from '../entities/UserRole';
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 
 class UserRolesRepository implements IUserRolesRepository {

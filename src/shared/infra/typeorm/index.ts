@@ -1,5 +1,13 @@
+import Corporation from "@modules/v1/corporations/infra/data/entities/Corporation"
+import CorporationService from "@modules/v1/corporations/infra/data/entities/CorporationService"
+import CorporationService from "@modules/v1/corporations/infra/data/entities/CorporationService"
+import CorporationStaff from "@modules/v1/corporations/infra/data/entities/CorporationStaff"
 import Product from "@modules/v1/products/infra/data/entities/Product"
 import Seller from "@modules/v1/sellers/infra/data/entities/Seller"
+import Person from "@modules/v1/users/infra/data/entities/Person"
+import Person from "@modules/v1/users/infra/data/entities/Person"
+import RefreshToken from "@modules/v1/users/infra/data/entities/RefreshToken"
+import RefreshToken from "@modules/v1/users/infra/data/entities/RefreshToken"
 import Role from "@modules/v1/users/infra/data/entities/Role"
 import User from "@modules/v1/users/infra/data/entities/User"
 import UserRole from "@modules/v1/users/infra/data/entities/UserRole"
@@ -20,16 +28,23 @@ const AppDataSource = new DataSource({
     Seller,
     Product,
     UserRole,
-    Role
+    Role,
+    Corporation,
+    RefreshToken,
+    Person,
+    CorporationService,
+    CorporationStaff
   ],
-  synchronize: true,
-  logging: false,
+  migrations: ['./migrations/*.ts'],
+  synchronize: false,
+  logging: true,
 })
 
 AppDataSource.initialize()
   .then(() => {
+    AppDataSource.runMigrations()
     console.log('[DATABASE] Typeorm initiazed.')
   })
   .catch((error) => console.log(error))
 
-export { AppDataSource }
+export default AppDataSource 

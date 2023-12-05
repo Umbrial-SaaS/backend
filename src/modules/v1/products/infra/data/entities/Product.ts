@@ -1,6 +1,8 @@
 import { Expose } from "class-transformer";
-import { Column, Entity, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import uploadConfig from '@config/upload';
+import Corporation from "@modules/v1/corporations/infra/data/entities/Corporation";
+
 @Entity('products')
 export default class Product {
   @PrimaryColumn()
@@ -16,85 +18,58 @@ export default class Product {
   description: string;
 
   @Column()
-  url: string;
+  price: number;
 
   @Column()
-  coverUrl?: string;
-
-  @Column()
-  thumbnailUrl?: string;
-
-  @Column()
-  cta: string;
-
-  @Column()
-  summary: string;
-
-  @Column()
-  pricing: number;
+  periodicity: string;
 
   @Column()
   currency: string;
 
-  @Column()
-  minimumAmount: number;
+  @Column({ name: "is_subscription" })
+  isSubstription: boolean;
 
-  @Column({ nullable: true })
-  suggestedAmount: number;
+  @Column({ name: "corporation_id" })
+  corporationId: string;
 
-  @Column()
-  flexPrice: boolean;
+  // ? RelationsF
+  @ManyToOne(() => Corporation, (corporation) => corporation.products, { cascade: true, onDelete: 'CASCADE', })
+  @JoinColumn({ name: 'corporation_id' })
+  corporation: Corporation;
 
-  @Column({ nullable: true })
-  salesLimit?: number
+  // @Expose({ name: 'coverUrl' })
+  // getCoverUrl(): string | null {
+  //   console.log({ cover: this.coverUrl })
+  //   if (this.coverUrl) {
+  //     switch (uploadConfig.driver) {
+  //       case 'disk':
+  //         return `${process.env.APP_API_URL}/files/${this.coverUrl}`;
+  //       case 's3':
+  //         return `https://${uploadConfig.config.aws.bucket}.${process.env.S3_ENDPOINT}/${this.coverUrl}`;
+  //       default:
+  //         return null;
+  //     }
+  //   } else {
+  //     return null
+  //   }
+  // }
 
-  @Column()
-  flexQuantity: boolean
-
-  @Column()
-  showSalesCount: boolean;
-
-  @Column()
-  uniqueKeyLicense: boolean;
-
-  @Column()
-  sellerId: string;
-
-  @Expose({ name: 'coverUrl' })
-  getCoverUrl(): string | null {
-    console.log({ cover: this.coverUrl })
-    if (this.coverUrl) {
-      switch (uploadConfig.driver) {
-        case 'disk':
-          return `${process.env.APP_API_URL}/files/${this.coverUrl}`;
-        case 's3':
-          return `https://${uploadConfig.config.aws.bucket}.${process.env.S3_ENDPOINT}/${this.coverUrl}`;
-        default:
-          return null;
-      }
-    } else {
-      return null
-    }
-
-
-  }
-
-  @Expose({ name: 'thumbnailUrl' })
-  getThumbnailUrl(): string | null {
-    console.log({ cover: this.thumbnailUrl })
-    if (this.thumbnailUrl) {
-      switch (uploadConfig.driver) {
-        case 'disk':
-          return `${process.env.APP_API_URL}/files/${this.thumbnailUrl}`;
-        case 's3':
-          return `https://${uploadConfig.config.aws.bucket}.${process.env.S3_ENDPOINT}/${this.thumbnailUrl}`;
-        default:
-          return null;
-      }
-    } else {
-      return null
-    }
+  // @Expose({ name: 'thumbnailUrl' })
+  // getThumbnailUrl(): string | null {
+  //   console.log({ cover: this.thumbnailUrl })
+  //   if (this.thumbnailUrl) {
+  //     switch (uploadConfig.driver) {
+  //       case 'disk':
+  //         return `${process.env.APP_API_URL}/files/${this.thumbnailUrl}`;
+  //       case 's3':
+  //         return `https://${uploadConfig.config.aws.bucket}.${process.env.S3_ENDPOINT}/${this.thumbnailUrl}`;
+  //       default:
+  //         return null;
+  //     }
+  //   } else {
+  //     return null
+  //   }
 
 
-  }
+  // }
 }

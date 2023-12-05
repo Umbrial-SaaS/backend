@@ -10,7 +10,7 @@ class FakeRefreshTokensRepository implements IRefreshTokensRepository {
 
   public async findByUserId(id: string): Promise<RefreshToken | undefined> {
     const refeshToken = this.refreshToken.find(
-      findRefreshToken => findRefreshToken.user_id === id,
+      findRefreshToken => findRefreshToken.userId === id,
     );
 
     return refeshToken;
@@ -20,7 +20,7 @@ class FakeRefreshTokensRepository implements IRefreshTokensRepository {
     token: string,
   ): Promise<RefreshToken | undefined> {
     const refreshToken = this.refreshToken.find(
-      findRefreshToken => findRefreshToken.refresh_token === token,
+      findRefreshToken => findRefreshToken.refreshToken === token,
     );
 
     return refreshToken;
@@ -30,28 +30,28 @@ class FakeRefreshTokensRepository implements IRefreshTokensRepository {
     token: string,
   ): Promise<RefreshToken | undefined> {
     const refreshToken = this.refreshToken.find(
-      findRefreshToken => findRefreshToken.access_token === token,
+      findRefreshToken => findRefreshToken.accessToken === token,
     );
 
     return refreshToken;
   }
 
   public async create({
-    access_token,
-    expires_in,
-    is_active,
-    refresh_token,
-    user_id,
+    accessToken,
+    expiresIn,
+    isActive,
+    refreshToken,
+    userId,
   }: ICreateRefreshTokenDTO): Promise<RefreshToken> {
     const user = new RefreshToken();
 
     Object.assign(user, {
       id: v4(),
-      access_token,
-      expires_in,
-      is_active,
-      refresh_token,
-      user_id,
+      accessToken,
+      expiresIn,
+      isActive,
+      refreshToken,
+      userId,
       created_at: Date.now(),
     });
 

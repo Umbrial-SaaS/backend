@@ -1,6 +1,7 @@
-import './StorageProvider';
+// import './StorageProvider';
 import './HashProvider';
 import './IdGeneratorProvider';
+import './GalaxPayProvider';
 // import './MailTemplateProvider';
 // import './MailProvider';
 // import './CodeGeneratorProvider';

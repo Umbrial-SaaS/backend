@@ -17,6 +17,7 @@ import fastifyJwt from '@fastify/jwt';
 import fontsRoutes from '@modules/v1/fonts/infra/http/routes/fonts.routes';
 import productsRoutes from '@modules/v1/products/infra/http/routes/products.routes';
 import { ZodError } from 'zod';
+import routes from './routes'
 
 import { pipeline } from 'stream';
 import util from 'util';
@@ -37,12 +38,7 @@ server.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 });
 
-server.register(userRoutes, {
-  prefix: 'v1/users',
-});
-server.register(sellerRoutes, {
-  prefix: 'v1/sellers',
-});
+routes()
 
 server.post('/upload', async function (req, reply) {
 

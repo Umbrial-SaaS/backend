@@ -1,5 +1,5 @@
 import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 import Font from '../entities/Font';
 

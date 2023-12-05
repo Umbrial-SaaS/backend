@@ -1,4 +1,4 @@
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 import IRolesRepository from '../../../repositories/IRolesRepository';
 

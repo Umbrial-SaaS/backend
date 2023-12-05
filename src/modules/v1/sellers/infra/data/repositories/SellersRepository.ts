@@ -2,7 +2,7 @@ import ISellersRepository from '@modules/v1/sellers/repositories/ISellersReposit
 
 import { CreateSellerDTO } from '@modules/v1/sellers/dtos/CreateSellerDTO'
 import Seller from '../entities/Seller';
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 
 class SellersRepository implements ISellersRepository {

@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import FakeFontsRepository from '../repositories/fakes/FakeFontsRepository';
 
 import ListFontsService from './ListFontsService';

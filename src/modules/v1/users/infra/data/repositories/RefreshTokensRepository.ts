@@ -2,7 +2,7 @@ import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTok
 
 import ICreateRefreshTokenDTO from '@modules/v1/users/dtos/ICreateRefreshTokenDTO';
 import RefreshToken from '../entities/RefreshToken';
-import { AppDataSource } from '@shared/infra/typeorm';
+import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 
 class RefreshTokensRepository implements IRefreshTokensRepository {
@@ -12,35 +12,35 @@ class RefreshTokensRepository implements IRefreshTokensRepository {
     this.ormRepository = AppDataSource.getRepository(RefreshToken);
   }
 
-  public async findByUserId(id: string): Promise<RefreshToken | null> {
+  public async findByUserId(id: string): Promise<RefreshToken | undefined> {
     const token = await this.ormRepository.findOne({
       where: { userId: id },
     });
-    return token ? Object.assign(new RefreshToken(), token) : null;
+    return token ? Object.assign(new RefreshToken(), token) : undefined;
   }
 
   public async findByRefreshToken(
     token: string,
-  ): Promise<RefreshToken | null> {
+  ): Promise<RefreshToken | undefined> {
     const foundToken = await this.ormRepository.findOne({
       where: { refreshToken: token },
     });
 
     return foundToken
       ? Object.assign(new RefreshToken(), foundToken)
-      : null;
+      : undefined;
   }
 
   public async findByAccessToken(
     token: string,
-  ): Promise<RefreshToken | null> {
+  ): Promise<RefreshToken | undefined> {
     const foundToken = await this.ormRepository.findOne({
       where: { accessToken: token },
     });
 
     return foundToken
       ? Object.assign(new RefreshToken(), foundToken)
-      : null;
+      : undefined;
   }
 
   public async create({
