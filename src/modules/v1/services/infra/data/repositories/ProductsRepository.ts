@@ -1,7 +1,7 @@
 import IProductsRepository from '@modules/v1/products/repositories/IProductsRepository';
 import { CreateProductDTO } from '@modules/v1/products/dtos/CreateProductDTO';
 import { ListProductsDTO } from '@modules/v1/products/dtos/ListProductsDTO';
-import Product from '../entities/Product';
+import Product from '../entities/Service';
 import AppDataSource from '@shared/infra/typeorm';
 import { Repository } from 'typeorm';
 

@@ -12,7 +12,7 @@ import IServiceAppointmentsRepository from '@modules/v1serviceAppointments/repos
 import { appSocketServer } from '@shared/infra/http/server';
 import ESocketNotificationTypeEnum from '@shared/infra/socketIO/enums/ESocketNotificationTypeEnum';
 import IJobProvider from '../IJobProvider';
-import IPushNotificationProvider from '../../PushNotificationProvider/models/IPushNotificationProvider';
+import IPushNotificationProvider from '../../../src/shared/container/providers/PushNotificationProvider/models/IPushNotificationProvider';
 
 @injectable()
 class AgendaJobProvider implements IJobProvider {
