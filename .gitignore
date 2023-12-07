@@ -15,3 +15,5 @@ pandoris-firebase.json
 
 dist/*
 mongo-volume
+dist
+build

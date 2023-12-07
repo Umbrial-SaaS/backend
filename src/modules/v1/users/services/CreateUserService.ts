@@ -41,7 +41,7 @@ class CreateUserService {
     @inject('RefreshTokensRepository')
     private refreshTokensRepository: IRefreshTokensRepository,
 
-    @inject('IPersonsRepository')
+    @inject('PersonsRepository')
     private personsRepository: IPersonsRepository,
 
     @inject('HashProvider')
