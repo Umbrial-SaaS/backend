@@ -8,19 +8,19 @@ import CorporationStaff from "./CorporationStaff";
 
 @Entity('corporations')
 export default class Corporation {
-  @PrimaryColumn()
+  @PrimaryColumn("uuid")
   id: string;
 
-  @Column({ default: false })
+  @Column("boolean", { default: false })
   active: boolean;
 
-  @Column()
+  @Column("varchar",)
   name: string;
 
-  @Column()
+  @Column("varchar",)
   description: string;
 
-  @Column()
+  @Column("varchar",)
   instagram: string;
 
   // Relations

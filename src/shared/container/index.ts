@@ -9,8 +9,6 @@ import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTok
 import RefreshTokensRepository from '@modules/v1/users/infra/data/repositories/RefreshTokensRepository';
 import NotificationPreferencesRepository from '@modules/v1/notifications/infra/data/repositories/NotificationPreferencesRepository';
 import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotificationPreferencesRepository';
-import ISellersRepository from '@modules/v1/sellers/repositories/ISellersRepository';
-import SellersRepository from '@modules/v1/sellers/infra/data/repositories/SellersRepository';
 import FontsRepository from '@modules/v1/fonts/infra/data/repositories/FontsRepository';
 import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
 import ProductsRepository from '@modules/v1/products/infra/data/repositories/ProductsRepository';
@@ -59,10 +57,6 @@ container.registerSingleton<IFontsRepository>(
   FontsRepository,
 );
 
-container.registerSingleton<ISellersRepository>(
-  'SellersRepository',
-  SellersRepository,
-);
 
 container.registerSingleton<INotificationPreferencesRepository>(
   'NotificationPreferencesRepository',

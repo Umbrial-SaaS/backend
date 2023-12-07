@@ -12,7 +12,6 @@ import AppError from '@shared/errors/AppError';
 import os from 'os';
 import fastifyCors from '@fastify/cors';
 import { env } from '@config/env';
-import sellerRoutes from '@modules/v1/sellers/infra/http/routes/sellers.routes';
 import fastifyJwt from '@fastify/jwt';
 import fontsRoutes from '@modules/v1/fonts/infra/http/routes/fonts.routes';
 import productsRoutes from '@modules/v1/products/infra/http/routes/products.routes';

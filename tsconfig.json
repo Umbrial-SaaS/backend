@@ -4,7 +4,6 @@
     "module": "commonjs",
     "outDir": "./build",
     "rootDir": "./src",
-    "strict": true,
     "allowJs": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
@@ -22,6 +21,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "strict": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },

@@ -6,31 +6,31 @@ import Corporation from "@modules/v1/corporations/infra/data/entities/Corporatio
 
 @Entity('products')
 export default class Product {
-  @PrimaryColumn()
+  @PrimaryColumn("uuid")
   id: string;
 
-  @Column({ default: false })
+  @Column("boolean", { default: false })
   active: boolean;
 
-  @Column()
+  @Column("varchar")
   name: string;
 
-  @Column()
+  @Column("varchar")
   description: string;
 
-  @Column()
+  @Column("int")
   price: number;
 
-  @Column()
+  @Column("varchar")
   periodicity: string;
 
-  @Column()
+  @Column("varchar")
   currency: string;
 
-  @Column({ name: "is_subscription" })
+  @Column("boolean", { name: "is_subscription" })
   isSubstription: boolean;
 
-  @Column({ name: "corporation_id" })
+  @Column("varchar", { name: "corporation_id" })
   corporationId: string;
 
   // ? RelationsF

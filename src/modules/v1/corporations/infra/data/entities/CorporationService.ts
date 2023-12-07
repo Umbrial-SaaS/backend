@@ -7,22 +7,22 @@ import Corporation from "./Corporation";
 
 @Entity('corporations')
 export default class CorporationService {
-  @PrimaryColumn()
+  @PrimaryColumn("uuid")
   id: string;
 
-  @Column()
+  @Column("boolean")
   active: boolean;
 
-  @Column()
+  @Column("varchar")
   name: string;
 
-  @Column()
+  @Column("varchar",)
   price: string;
 
-  @Column()
+  @Column("varchar",)
   duration: string;
 
-  @Column({ name: 'corporation_id' })
+  @Column("varchar", { name: 'corporation_id' })
   corporationId: string;
 
   // Relations

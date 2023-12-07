@@ -8,19 +8,19 @@ import User from "@modules/v1/users/infra/data/entities/User";
 
 @Entity('corporations')
 export default class CorporationStaff {
-  @PrimaryColumn()
+  @PrimaryColumn("uuid")
   id: string;
 
-  @Column()
+  @Column("boolean",)
   active: boolean;
 
-  @Column()
+  @Column("int",)
   role: number;
 
-  @Column({ name: 'user_id' })
+  @Column("varchar", { name: 'user_id' })
   userId: string;
 
-  @Column({ name: 'corporation_id' })
+  @Column("varchar", { name: 'corporation_id' })
   corporationId: string;
 
   // Relations

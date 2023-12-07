@@ -1,5 +1,4 @@
 import NotificationPreference from '@modules/v1/notifications/infra/data/entities/NotificationPreference';
-import { fakeSellerId } from '@modules/v1/sellers/repositories/fakes/seeds';
 
 const fakeNotificationPreferenceId = 'asdas';
 
@@ -17,7 +16,6 @@ Object.assign(fakeNotificationPreferences, {
   mobileFreeDownloads: false,
   createdAt: new Date(),
   updatedAt: new Date(),
-  sellerId: fakeSellerId,
 });
 
 export { fakeNotificationPreferences, fakeNotificationPreferenceId };

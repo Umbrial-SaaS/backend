@@ -6,13 +6,13 @@ import { Entity, PrimaryColumn, Column, JoinColumn, OneToOne, ManyToOne, } from 
 
 @Entity('user_roles')
 class UserRole {
-  @PrimaryColumn()
+  @PrimaryColumn("varchar")
   id: string;
 
-  @Column()
+  @Column("int")
   roleId: number;
 
-  @Column()
+  @Column("varchar")
   userId: string;
 
   // * Relations

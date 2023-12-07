@@ -4,22 +4,22 @@ import User from './User';
 
 @Entity('refresh_tokens')
 class RefreshToken {
-  @PrimaryColumn()
+  @PrimaryColumn("varchar",)
   id: string;
 
-  @Column()
+  @Column("varchar",)
   accessToken: string;
 
-  @Column()
+  @Column("varchar",)
   refreshToken: string;
 
-  @Column()
+  @Column("varchar",)
   userId: string;
 
-  @Column()
+  @Column("int",)
   expiresIn: number;
 
-  @Column()
+  @Column("boolean",)
   isActive: boolean;
 
   @CreateDateColumn()

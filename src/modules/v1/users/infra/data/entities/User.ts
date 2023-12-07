@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 import { Exclude, Expose } from 'class-transformer';
 
-import uploadConfig from '@config/upload';
-import Seller from '@modules/v1/sellers/infra/data/entities/Seller';
 import UserRole from './UserRole';
 import RefreshToken from './RefreshToken';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
@@ -11,14 +9,14 @@ import CorporationStaff from '@modules/v1/corporations/infra/data/entities/Corpo
 
 @Entity('users')
 class User {
-  @PrimaryColumn()
+  @PrimaryColumn("varchar")
   id: string;
 
-  @Column()
+  @Column("varchar")
   email: string;
 
   @Exclude()
-  @Column()
+  @Column("varchar",)
   password: string;
 
   @CreateDateColumn()
@@ -31,7 +29,7 @@ class User {
   deletedAt?: Date;
 
   // ?  Relations 
-  @Column({ name: 'person_id' })
+  @Column("varchar", { name: 'person_id' })
   personId: string;
 
   @OneToOne(() => Person, (person) => person.user)
@@ -39,9 +37,6 @@ class User {
 
   @OneToOne(() => UserRole, (userRole) => userRole.user)
   userRoles: UserRole[];
-
-  @OneToOne(() => Seller, (seller) => seller.user)
-  seller: Seller;
 
   @OneToOne(() => User, (user) => user.person)
   user: User;

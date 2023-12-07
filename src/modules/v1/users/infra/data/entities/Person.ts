@@ -2,7 +2,6 @@ import 'reflect-metadata';
 import { Exclude, Expose } from 'class-transformer';
 
 import uploadConfig from '@config/upload';
-import Seller from '@modules/v1/sellers/infra/data/entities/Seller';
 import UserRole from './UserRole';
 import RefreshToken from './RefreshToken';
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
@@ -10,19 +9,19 @@ import User from './User';
 
 @Entity('persons')
 class Person {
-  @PrimaryColumn()
+  @PrimaryColumn("uuid")
   id: string;
 
-  @Column({ name: 'first_name' })
+  @Column("varchar", { name: 'first_name' })
   firstName: string;
 
-  @Column({ name: 'last_name' })
+  @Column("varchar", { name: 'last_name' })
   lastName: string;
 
-  @Column({ name: 'phone_number' })
+  @Column("varchar", { name: 'phone_number' })
   phoneNumber: string;
 
-  @Column()
+  @Column("varchar")
   avatar: string;
 
   @CreateDateColumn()
@@ -37,9 +36,6 @@ class Person {
   // Relations
   @OneToOne(() => UserRole, (userRole) => userRole.user, { cascade: true, onDelete: 'CASCADE' })
   userRoles: UserRole[];
-
-  @OneToOne(() => Seller, (seller) => seller.user, { cascade: true, onDelete: 'CASCADE' })
-  seller: Seller;
 
   @OneToOne(() => User, (user) => user.person)
   user: User;

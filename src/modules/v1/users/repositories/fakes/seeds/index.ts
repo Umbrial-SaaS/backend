@@ -1,4 +1,4 @@
-import { fakeSeller } from '@modules/v1/sellers/repositories/fakes/seeds';
+
 import User from '@modules/v1/users/infra/data/entities/User';
 
 const fakeUserId = '6b92c866-16d6-11ee-be56-0242ac120002';
@@ -12,7 +12,6 @@ Object.assign(fakeUser, {
   bio: 'Backend Developer',
   name: 'Thiago Watanabe',
   phone: '+1 (567) 266-0814',
-  seller: fakeSeller,
 });
 
 export { fakeUser, fakeUserId };

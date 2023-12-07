@@ -4,10 +4,10 @@ import { Entity, PrimaryColumn, Column, OneToOne, OneToMany } from 'typeorm';
 
 @Entity('roles')
 class Role {
-  @PrimaryColumn()
+  @PrimaryColumn("int")
   id: number;
 
-  @Column()
+  @Column("varchar")
   name: string;
 
   @OneToMany(() => UserRole, (userRole) => userRole.role)

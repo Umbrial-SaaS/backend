@@ -2,7 +2,6 @@ import Corporation from "@modules/v1/corporations/infra/data/entities/Corporatio
 import CorporationService from "@modules/v1/corporations/infra/data/entities/CorporationService"
 import CorporationStaff from "@modules/v1/corporations/infra/data/entities/CorporationStaff"
 import Product from "@modules/v1/products/infra/data/entities/Product"
-import Seller from "@modules/v1/sellers/infra/data/entities/Seller"
 import Person from "@modules/v1/users/infra/data/entities/Person"
 import RefreshToken from "@modules/v1/users/infra/data/entities/RefreshToken"
 import Role from "@modules/v1/users/infra/data/entities/Role"
@@ -20,7 +19,6 @@ const AppDataSource = new DataSource({
   database: "local",
   entities: [
     User,
-    Seller,
     Product,
     UserRole,
     Role,

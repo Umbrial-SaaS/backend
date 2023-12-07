@@ -1,5 +1,4 @@
 import 'reflect-metadata'
-import Seller from '@modules/v1/sellers/infra/data/entities/Seller';
 
 export default class NotificationPreference {
   id: string;
@@ -26,6 +25,4 @@ export default class NotificationPreference {
 
   sellerId: string;
 
-  // * Relations
-  seller: Seller;
 }
