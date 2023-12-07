@@ -121,10 +121,11 @@ server.setErrorHandler((error, _, reply) => {
 });
 
 server.listen({
+  host: '0.0.0.0',
   port: Number(process.env.PORT) || 3337,
 });
 console.log(
-  `[SERVIDOR] Servidor iniciado em .${Number(process.env.PORT) || 3337}`,
+  `[SERVIDOR] Servidor iniciado em ${Number(process.env.PORT) || 3337}`,
 );
 
 export { server };
