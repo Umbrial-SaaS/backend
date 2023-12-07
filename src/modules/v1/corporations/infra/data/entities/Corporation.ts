@@ -1,5 +1,6 @@
 // import { Expose } from "class-transformer";
 // import uploadConfig from '@config/upload';
+import 'reflect-metadata'
 import Product from "@modules/v1/products/infra/data/entities/Product";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import CorporationService from "./CorporationService";

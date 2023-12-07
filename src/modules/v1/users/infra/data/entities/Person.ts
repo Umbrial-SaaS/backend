@@ -1,5 +1,5 @@
-import { Exclude, Expose } from 'class-transformer';
 import 'reflect-metadata';
+import { Exclude, Expose } from 'class-transformer';
 
 import uploadConfig from '@config/upload';
 import Seller from '@modules/v1/sellers/infra/data/entities/Seller';

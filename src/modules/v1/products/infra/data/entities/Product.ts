@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import { Expose } from "class-transformer";
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import uploadConfig from '@config/upload';
