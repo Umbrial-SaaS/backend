@@ -5,6 +5,7 @@ import Product from "@modules/v1/products/infra/data/entities/Product";
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
 import CorporationService from "./CorporationService";
 import CorporationStaff from "./CorporationStaff";
+import CorporationCustomer from './CorporationCustomer';
 
 @Entity('corporations')
 export default class Corporation {
@@ -29,6 +30,9 @@ export default class Corporation {
 
   @OneToMany(() => CorporationService, (service) => service.corporation)
   services: CorporationService[];
+
+  @OneToMany(() => CorporationCustomer, (corporationCustomer) => corporationCustomer.corporation)
+  customers: CorporationCustomer[];
 
   @OneToMany(() => CorporationStaff, (corporationStaff) => corporationStaff.corporation)
   corporationStaff: CorporationStaff[];

@@ -4,8 +4,9 @@ import { Exclude, Expose } from 'class-transformer';
 import uploadConfig from '@config/upload';
 import UserRole from './UserRole';
 import RefreshToken from './RefreshToken';
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from 'typeorm';
 import User from './User';
+import CorporationCustomer from '@modules/v1/corporations/infra/data/entities/CorporationCustomer';
 
 @Entity('persons')
 class Person {
@@ -22,6 +23,9 @@ class Person {
   phoneNumber: string;
 
   @Column("varchar")
+  instagram?: string;
+
+  @Column("varchar")
   avatar: string;
 
   @CreateDateColumn()
@@ -36,6 +40,9 @@ class Person {
   // Relations
   @OneToOne(() => UserRole, (userRole) => userRole.user, { cascade: true, onDelete: 'CASCADE' })
   userRoles: UserRole[];
+
+  @OneToMany(() => CorporationCustomer, (corporationCustomers) => corporationCustomers.person, { cascade: true, onDelete: 'CASCADE' })
+  corporationCustomers: CorporationCustomer[];
 
   @OneToOne(() => User, (user) => user.person)
   user: User;
