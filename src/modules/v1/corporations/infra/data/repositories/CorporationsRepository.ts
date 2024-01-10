@@ -28,7 +28,24 @@ class CorporationsRepository implements ICorporationsRepository {
       where: {
         id
       },
-      relations
+      relations: {
+
+      }
+    })
+  }
+  async showById(id: string): Promise<Corporation | null> {
+    return this.ormRepository.findOne({
+      where: {
+        id
+      },
+      relations: {
+        corporationStaff: {
+          user: {
+            person: true
+          }
+        },
+        products: true
+      }
     })
   }
 }

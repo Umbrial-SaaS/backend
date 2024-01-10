@@ -17,7 +17,7 @@ class ShowCorporationService {
   public async execute({
     corporationId,
   }: IShowCorporationServiceReq): Promise<Corporation> {
-    const corporation = await this.corporationsRepository.findById(corporationId, ['products']);
+    const corporation = await this.corporationsRepository.showById(corporationId);
     if (!corporation) {
       throw new AppError('corporation_not_found', 404);
     }

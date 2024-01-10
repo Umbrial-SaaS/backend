@@ -1,7 +1,9 @@
 import Corporation from "@modules/v1/corporations/infra/data/entities/Corporation"
+import CorporationCustomer from "@modules/v1/corporations/infra/data/entities/CorporationCustomer"
 import CorporationService from "@modules/v1/corporations/infra/data/entities/CorporationService"
 import CorporationStaff from "@modules/v1/corporations/infra/data/entities/CorporationStaff"
 import Product from "@modules/v1/products/infra/data/entities/Product"
+import Service from "@modules/v1/services/infra/data/entities/Service"
 import Person from "@modules/v1/users/infra/data/entities/Person"
 import RefreshToken from "@modules/v1/users/infra/data/entities/RefreshToken"
 import Role from "@modules/v1/users/infra/data/entities/Role"
@@ -26,10 +28,12 @@ const AppDataSource = new DataSource({
     RefreshToken,
     Person,
     CorporationService,
-    CorporationStaff
+    CorporationStaff,
+    CorporationCustomer,
+    Service
   ],
   migrations: ['./migrations/*.ts'],
-  synchronize: false,
+  synchronize: true,
   logging: true,
 })
 

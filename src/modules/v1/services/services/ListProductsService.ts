@@ -1,35 +1,20 @@
 /* eslint-disable prettier/prettier */
 import { injectable, inject } from 'tsyringe';
-import Product from '../infra/data/entities/Product';
-import IProductsRepository from '../repositories/IProductsRepository';
-
-interface IListProductsServiceReq {
-  sellerId: string;
-
-  page: number;
-  pageSize: number;
-}
+import Service from '../infra/data/entities/Service';
+import IServicesRepository from '../repositories/IServicesRepository';
 
 @injectable()
-class ListProductsService {
+class ListServicesService {
   constructor(
-    @inject('ProductsRepository')
-    private productsRepository: IProductsRepository,
+    @inject('ServicesRepository')
+    private servicesRepository: IServicesRepository,
   ) { }
 
-  public async execute({
-    sellerId,
-    page,
-    pageSize,
-  }: IListProductsServiceReq): Promise<Product[]> {
-    const products = await this.productsRepository.filterBy(
-      { sellerId },
-      page,
-      pageSize,
-    );
+  public async execute(): Promise<Service[]> {
+    const services = await this.servicesRepository.index();
 
-    return products;
+    return services;
   }
 }
 
-export default ListProductsService;
+export default ListServicesService;

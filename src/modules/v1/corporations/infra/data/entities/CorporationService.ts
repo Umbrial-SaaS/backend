@@ -2,8 +2,9 @@
 // import uploadConfig from '@config/upload';
 import 'reflect-metadata'
 import Product from "@modules/v1/products/infra/data/entities/Product";
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import Corporation from "./Corporation";
+import Service from '@modules/v1/services/infra/data/entities/Service';
 
 @Entity('corporations')
 export default class CorporationService {
@@ -25,9 +26,17 @@ export default class CorporationService {
   @Column("varchar", { name: 'corporation_id' })
   corporationId: string;
 
+  @Column("varchar", { name: 'service_id' })
+  serviceId: string;
+
   // Relations
   @ManyToOne(() => Corporation, (corporation) => corporation.services)
+  @JoinColumn({ name: 'corporation_id' })
   corporation: Corporation
+
+  @ManyToOne(() => Service, (service) => service.corporationServices)
+  @JoinColumn({ name: 'service_id' })
+  service: Service
 
   // @Expose({ name: 'coverUrl' })
   // getCoverUrl(): string | null {

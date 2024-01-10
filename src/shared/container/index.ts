@@ -23,8 +23,13 @@ import ICorporationStaffStaffRepository from '@modules/v1/corporations/repositor
 import CorporationServicesRepository from '@modules/v1/corporations/infra/data/repositories/CorporationServicesRepository';
 import CorporationStaffRepository from '@modules/v1/corporations/infra/data/repositories/CorporationStaffRepository';
 import CorporationsRepository from '@modules/v1/corporations/infra/data/repositories/CorporationsRepository';
+import ServicesRepository from '@modules/v1/services/infra/data/repositories/ServicesRepository';
+import IServicesRepository from '@modules/v1/services/repositories/IServicesRepository';
 
-
+container.registerSingleton<IServicesRepository>(
+  'ServicesRepository',
+  ServicesRepository,
+);
 
 container.registerSingleton<ICorporationStaffStaffRepository>(
   'CorporationStaffRepository',

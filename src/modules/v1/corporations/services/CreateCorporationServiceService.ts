@@ -6,6 +6,7 @@ import { injectable, inject } from 'tsyringe';
 import Corporation from '../infra/data/entities/Corporation';
 import ICorporationStaffStaffRepository from '../repositories/ICorporationStaffRepository';
 import ICorporationServicesRepository from '../repositories/ICorporationServicesRepository';
+import CorporationService from '../infra/data/entities/CorporationService';
 
 interface ICreateCorporationServiceReq {
   userId: string;
@@ -40,7 +41,7 @@ class CreateCorporationServiceService {
     userId,
     corporationId,
     service
-  }: ICreateCorporationServiceReq): Promise<Corporation> {
+  }: ICreateCorporationServiceReq): Promise<CorporationService> {
     const user = await this.usersRepository.findById(userId);
     if (user === null) {
       throw new AppError('user_not_found', 404);
