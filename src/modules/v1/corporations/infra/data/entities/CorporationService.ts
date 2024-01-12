@@ -6,16 +6,13 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from 
 import Corporation from "./Corporation";
 import Service from '@modules/v1/services/infra/data/entities/Service';
 
-@Entity('corporations')
+@Entity('corporation_services')
 export default class CorporationService {
   @PrimaryColumn("uuid")
   id: string;
 
   @Column("boolean")
   active: boolean;
-
-  @Column("varchar")
-  name: string;
 
   @Column("varchar",)
   price: string;

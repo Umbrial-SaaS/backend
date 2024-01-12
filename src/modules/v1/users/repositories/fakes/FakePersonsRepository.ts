@@ -10,13 +10,15 @@ class FakePersonsRepository implements IPersonsRepository {
     const user = new Person();
     Object.assign(user, data);
 
-    this.persons.push(user);
-
     return user || null;
   }
 
   public async save(user: Person): Promise<void> {
     this.persons.push(user);
+  }
+
+  async findByPhone(phone: string): Promise<Person | null> {
+    return this.persons.find(person => person.phoneNumber === phone) || null
   }
 }
 

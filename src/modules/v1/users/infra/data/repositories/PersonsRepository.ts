@@ -25,6 +25,14 @@ class PersonsRepository implements IPersonsRepository {
     })
   }
 
+  public async findByPhone(phone: string): Promise<Person | undefined> {
+    return this.ormRepository.findOne({
+      where: {
+        phoneNumber: phone,
+      }
+    })
+  }
+
   public async findBy({ email, phone }: IFindUserDTO): Promise<Person | null> {
     return this.ormRepository.findOne({
       where: clearJson({ email, phone }),

@@ -1,7 +1,10 @@
+import Appointment from "@modules/v1/appointments/infra/data/entities/Appointment"
+import AppointmentService from "@modules/v1/appointments/infra/data/entities/AppoitmentService"
 import Corporation from "@modules/v1/corporations/infra/data/entities/Corporation"
 import CorporationCustomer from "@modules/v1/corporations/infra/data/entities/CorporationCustomer"
 import CorporationService from "@modules/v1/corporations/infra/data/entities/CorporationService"
 import CorporationStaff from "@modules/v1/corporations/infra/data/entities/CorporationStaff"
+import CorporationStaffService from "@modules/v1/corporations/infra/data/entities/CorporationStaffService"
 import Product from "@modules/v1/products/infra/data/entities/Product"
 import Service from "@modules/v1/services/infra/data/entities/Service"
 import Person from "@modules/v1/users/infra/data/entities/Person"
@@ -30,7 +33,10 @@ const AppDataSource = new DataSource({
     CorporationService,
     CorporationStaff,
     CorporationCustomer,
-    Service
+    Service,
+    AppointmentService,
+    Appointment,
+    CorporationStaffService
   ],
   migrations: ['./migrations/*.ts'],
   synchronize: true,

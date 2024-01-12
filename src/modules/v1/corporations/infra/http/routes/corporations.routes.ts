@@ -1,10 +1,7 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import { server } from '@shared/infra/http/server';
-import multer from 'multer';
 import verifyJwt from '@shared/infra/http/middlewares/ensureAuthenticated';
 import CorporationsController from '../controllers/CorporationsController';
 import productsRoutes from '@modules/v1/products/infra/http/routes/products.routes';
+import appointmentsRoutes from '@modules/v1/appointments/infra/http/routes/appointments.routes';
 
 const corporationsController = new CorporationsController();
 
@@ -20,6 +17,10 @@ export default async function corporationsRoutes(app: any) {
 
   app.register(productsRoutes, {
     prefix: '/:corporationId/products',
+  });
+
+  app.register(appointmentsRoutes, {
+    prefix: '/:corporationId/staff/:corporationStaffId/appointments',
   });
 
   app.patch(

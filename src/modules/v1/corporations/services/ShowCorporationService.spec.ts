@@ -16,7 +16,7 @@ describe('ShowCorporationService', () => {
 
   it('1. Should list the corporations.', async () => {
     // ? Arrange    
-    const spyIndex = jest.spyOn(fakeCorporationsRepository, 'findById')
+    const spyIndex = jest.spyOn(fakeCorporationsRepository, 'showById')
 
     // ? Act
     await listCorporationService.execute({

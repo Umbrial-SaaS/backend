@@ -4,10 +4,16 @@ import { CreateCorporationDTO } from '../../dtos/CreateCorporationDTO';
 import { fakeCorporation } from './seeds';
 
 class FakeCorporationsRepository implements ICorporationsRepository {
+
   private corporations: Corporation[] = [fakeCorporation];
 
   public async findById(id: string, relations?: string[]): Promise<Corporation | null> {
     return this.corporations.find(corporation => corporation.id === id) || null;
+  }
+
+  async showById(id: string): Promise<Corporation | null> {
+    const corporation = this.corporations.find(corporation => corporation.id === id) || null;
+    return corporation
   }
 
   public async index(): Promise<Corporation[]> {

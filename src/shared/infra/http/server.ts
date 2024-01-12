@@ -4,9 +4,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/prefer-default-export */
 import 'reflect-metadata';
-import Fastify, { fastify } from 'fastify';
+import Fastify from 'fastify';
 import '@shared/container';
-import userRoutes from '@modules/v1/users/infra/http/routes/users.routes';
 import process from 'process';
 import AppError from '@shared/errors/AppError';
 import os from 'os';

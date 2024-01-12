@@ -11,7 +11,6 @@ Object.assign(fakeUser, {
   avatar: '/photo.png',
   bio: 'Backend Developer',
   name: 'Thiago Watanabe',
-  phone: '+1 (567) 266-0814',
 });
 
 export { fakeUser, fakeUserId };

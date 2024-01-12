@@ -6,30 +6,25 @@ import User from '../../infra/data/entities/User';
 import { fakeUser } from './seeds';
 
 class FakeUsersRepository implements IUsersRepository {
-  private products: User[] = [fakeUser];
+  private users: User[] = [fakeUser];
 
   insert(data: User): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
-  findBy({ email, phone }: IFindUserDTO): Promise<User | null> {
-    throw new Error('Method not implemented.');
-  }
-
-
   async findByEmail(email: string): Promise<User | null> {
-    const user = this.products.find(item => item.email === email);
+    const user = this.users.find(item => item.email === email);
 
     return user || null;
   }
 
   public async index(): Promise<User[]> {
-    return this.products;
+    return this.users;
   }
 
 
   public async findById(id: string): Promise<User | null> {
-    const user = this.products.find(item => item.id === id);
+    const user = this.users.find(item => item.id === id);
 
     return user || null;
   }
@@ -42,13 +37,13 @@ class FakeUsersRepository implements IUsersRepository {
   }
 
   public async save(user: User): Promise<void> {
-    this.products.push(user);
+    this.users.push(user);
   }
 
   public async delete(id: string): Promise<void> {
-    const userIndex = this.products.findIndex(item => item.id === id);
+    const userIndex = this.users.findIndex(item => item.id === id);
 
-    this.products.splice(userIndex, 1);
+    this.users.splice(userIndex, 1);
   }
 }
 

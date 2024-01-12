@@ -15,11 +15,11 @@ describe('ListFontsService', () => {
 
   it('1. Should be able to create a new user without: email, password and profile_photo.', async () => {
     // ? Arrange
-
+    const indexSpy = jest.spyOn(fakeFontsRepository, 'index')
     // ? Act
     await listFontsService.execute();
 
     // ? Assert
-    expect(fakeFontsRepository.index).toBeCalled();
+    expect(indexSpy).toBeCalled();
   });
 });

@@ -1,14 +1,11 @@
 import { container } from 'tsyringe';
 
-import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/v1/users/infra/data/repositories/UsersRepository';
 import './providers';
 import IUserRolesRepository from '@modules/v1/users/repositories/IUserRolesRepository';
 import UserRolesRepository from '@modules/v1/users/infra/data/repositories/UserRolesRepository';
 import IRefreshTokensRepository from '@modules/v1/users/repositories/IRefreshTokensRepository';
 import RefreshTokensRepository from '@modules/v1/users/infra/data/repositories/RefreshTokensRepository';
-import NotificationPreferencesRepository from '@modules/v1/notifications/infra/data/repositories/NotificationPreferencesRepository';
-import INotificationPreferencesRepository from '@modules/v1/notifications/repositories/INotificationPreferencesRepository';
 import FontsRepository from '@modules/v1/fonts/infra/data/repositories/FontsRepository';
 import IFontsRepository from '@modules/v1/fonts/repositories/IFontsRepository';
 import ProductsRepository from '@modules/v1/products/infra/data/repositories/ProductsRepository';
@@ -25,6 +22,15 @@ import CorporationStaffRepository from '@modules/v1/corporations/infra/data/repo
 import CorporationsRepository from '@modules/v1/corporations/infra/data/repositories/CorporationsRepository';
 import ServicesRepository from '@modules/v1/services/infra/data/repositories/ServicesRepository';
 import IServicesRepository from '@modules/v1/services/repositories/IServicesRepository';
+import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
+import AppointmentsRepository from '@modules/v1/appointments/infra/data/repositories/AppointmentsRepository';
+import IAppointmentsRepository from '@modules/v1/appointments/repositories/IAppointmentsRepository';
+
+
+container.registerSingleton<IAppointmentsRepository>(
+  'AppointmentsRepository',
+  AppointmentsRepository,
+);
 
 container.registerSingleton<IServicesRepository>(
   'ServicesRepository',
@@ -62,11 +68,6 @@ container.registerSingleton<IFontsRepository>(
   FontsRepository,
 );
 
-
-container.registerSingleton<INotificationPreferencesRepository>(
-  'NotificationPreferencesRepository',
-  NotificationPreferencesRepository,
-);
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',

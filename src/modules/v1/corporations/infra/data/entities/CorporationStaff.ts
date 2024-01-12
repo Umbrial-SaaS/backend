@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import Corporation from "./Corporation";
 import User from "@modules/v1/users/infra/data/entities/User";
+import CorporationStaffService from './CorporationStaffService';
 
 @Entity('corporation_staff')
 export default class CorporationStaff {
@@ -28,4 +29,7 @@ export default class CorporationStaff {
   @ManyToOne(() => User, (user) => user.corporationStaff)
   @JoinColumn({ name: "user_id" })
   user: User
+
+  @OneToMany(() => CorporationStaffService, (corporationStaffService) => corporationStaffService.corporationStaff)
+  services: CorporationStaffService[];
 }

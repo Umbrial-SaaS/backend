@@ -67,10 +67,11 @@ class CreateUserService {
       phoneNumber: personData.phoneNumber,
     })
 
-    // const phoneAlreadyUsed = await this.usersRepository.findByPhone(person.phoneNumber);
-    // if (phoneAlreadyUsed) {
-    //   throw new AppError('Telefone já registrado.', 409, 'phone_already_used');
-    // }
+    const phoneAlreadyUsed = await this.personsRepository.findByPhone(person.phoneNumber);
+    console.table({ phoneAlreadyUsed })
+    if (phoneAlreadyUsed) {
+      throw new AppError('Telefone já registrado.', 409, 'phone_already_used');
+    }
 
     const user = this.usersRepository.create({
       id: crypto.randomUUID(),
