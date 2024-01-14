@@ -1,9 +1,8 @@
-export type CreateCorporationServiceDTO = {
+export type CreateCorporationStaffServiceDTO = {
   id: string;
   active: boolean;
-  name: string;
   price: string;
   duration: string;
+  corporationStaffId: string;
   serviceId: string;
-  corporationId: string;
 };

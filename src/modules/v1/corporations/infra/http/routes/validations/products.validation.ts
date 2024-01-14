@@ -6,4 +6,4 @@ export const createSchema = z.object({
   name: z.string(),
   description: z.string(),
   instagram: z.string(),
-});
+}); 

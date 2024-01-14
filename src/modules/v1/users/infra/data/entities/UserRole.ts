@@ -9,10 +9,10 @@ class UserRole {
   @PrimaryColumn("varchar")
   id: string;
 
-  @Column("int")
+  @Column("int", { name: 'role_id' })
   roleId: number;
 
-  @Column("varchar")
+  @Column("varchar", { name: 'user_id' })
   userId: string;
 
   // * Relations

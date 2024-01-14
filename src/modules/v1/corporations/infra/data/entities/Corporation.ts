@@ -22,10 +22,7 @@ export default class Corporation {
   @Column("varchar",)
   instagram: string;
 
-  // Relations
-  @OneToMany(() => Product, (product) => product.corporation, { onDelete: 'CASCADE' })
-  products: Product[];
-
+  // Relations  
   @OneToMany(() => CorporationService, (service) => service.corporation)
   services: CorporationService[];
 

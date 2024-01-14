@@ -19,7 +19,7 @@ class User {
   @Column("varchar",)
   password: string;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ default: 'now()' })
   createdAt: Date;
 
   @UpdateDateColumn()

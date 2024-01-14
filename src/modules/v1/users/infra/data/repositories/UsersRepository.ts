@@ -39,7 +39,7 @@ class UsersRepository implements IUsersRepository {
   }
 
   public create(user: ICreateProductDTO): User {
-    return this.ormRepository.create(user)
+    return this.ormRepository.create({ ...user, createdAt: new Date(), updatedAt: new Date() })
   }
 
   public async save(data: User): Promise<void> {

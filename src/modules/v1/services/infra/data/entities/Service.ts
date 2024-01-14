@@ -5,7 +5,7 @@ import AppointmentService from "@modules/v1/appointments/infra/data/entities/App
 @Entity('services')
 export default class Service {
   @PrimaryColumn()
-  id: string;
+  id: number;
 
   @Column({ default: false })
   active: boolean;

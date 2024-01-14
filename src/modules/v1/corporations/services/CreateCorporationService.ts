@@ -6,6 +6,7 @@ import { injectable, inject } from 'tsyringe';
 import Corporation from '../infra/data/entities/Corporation';
 import ICorporationsRepository from '../repositories/ICorporationsRepository';
 import ICorporationStaffStaffRepository from '../repositories/ICorporationStaffRepository';
+import ICorporationServicesRepository from '../repositories/ICorporationServicesRepository';
 
 interface ICreateCorporationServiceReq {
   userId: string;
@@ -31,6 +32,9 @@ class CreateCorporationService {
 
     @inject('CorporationStaffRepository')
     private corporationStaffRepository: ICorporationStaffStaffRepository,
+  
+    @inject('CorporationServicesRepository')
+    private corporationServicesRepository: ICorporationServicesRepository,
   ) { }
 
   public async execute({

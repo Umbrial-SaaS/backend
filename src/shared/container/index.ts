@@ -25,7 +25,13 @@ import IServicesRepository from '@modules/v1/services/repositories/IServicesRepo
 import IUsersRepository from '@modules/v1/users/repositories/IUsersRepository';
 import AppointmentsRepository from '@modules/v1/appointments/infra/data/repositories/AppointmentsRepository';
 import IAppointmentsRepository from '@modules/v1/appointments/repositories/IAppointmentsRepository';
+import ICorporationStaffServicesRepository from '@modules/v1/corporations/repositories/ICorporationStaffServicesRepository';
+import CorporationStaffServicesRepository from '@modules/v1/corporations/infra/data/repositories/CorporationStaffServicesRepository';
 
+container.registerSingleton<ICorporationStaffServicesRepository>(
+  'CorporationStaffServicesRepository',
+  CorporationStaffServicesRepository,
+);
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',

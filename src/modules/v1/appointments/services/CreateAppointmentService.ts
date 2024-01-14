@@ -40,6 +40,13 @@ class CreateAppointmentService {
     userId,
     services
   }: ICreateAppointmentServiceReq): Promise<Appointment> {
+    console.log({
+      corporationStaffId,
+      corporationId,
+      timestamp,
+      userId,
+      services
+    })
     const corporation = await this.corporationsRepository.showById(corporationId)
     if (!corporation) {
       throw new AppError('corporation_not_found', 404)

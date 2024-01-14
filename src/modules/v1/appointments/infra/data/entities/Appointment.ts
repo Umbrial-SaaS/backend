@@ -20,7 +20,7 @@ export default class Appointment {
   @Column("integer")
   price: number;
 
-  @Column("datetime")
+  @Column("timestamp")
   timestamp: Date;
 
   // services

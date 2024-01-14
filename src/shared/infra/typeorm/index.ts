@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import Appointment from "@modules/v1/appointments/infra/data/entities/Appointment"
 import AppointmentService from "@modules/v1/appointments/infra/data/entities/AppoitmentService"
 import Corporation from "@modules/v1/corporations/infra/data/entities/Corporation"
@@ -14,14 +15,21 @@ import User from "@modules/v1/users/infra/data/entities/User"
 import UserRole from "@modules/v1/users/infra/data/entities/UserRole"
 import "reflect-metadata"
 import { DataSource } from "typeorm"
-
+import path from 'path'
+console.table({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: String(process.env.DB_PASSWORD),
+  database: process.env.DB_DATABASE,
+})
 const AppDataSource = new DataSource({
-  type: "mysql",
-  host: "umbrialmysql.cwydlqme5ewg.us-east-1.rds.amazonaws.com",
-  port: 3306,
-  username: "umbrial",
-  password: "u7v$8N8e",
-  database: "local",
+  type: 'postgres',
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  username: process.env.DB_USERNAME,
+  password: String(process.env.DB_PASSWORD),
+  database: process.env.DB_DATABASE,
   entities: [
     User,
     Product,
@@ -38,9 +46,9 @@ const AppDataSource = new DataSource({
     Appointment,
     CorporationStaffService
   ],
-  migrations: ['./migrations/*.ts'],
-  synchronize: true,
-  logging: true,
+  migrations: [path.join(__dirname, 'migrations', '*.{ts,js}')],
+  synchronize: false,
+  logging: false,
 })
 
 AppDataSource.initialize()

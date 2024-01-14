@@ -40,7 +40,7 @@ class PersonsRepository implements IPersonsRepository {
   }
 
   public create(user: ICreatePersonDTO): Person {
-    return this.ormRepository.create(user)
+    return this.ormRepository.create({ ...user, createdAt: new Date(), updatedAt: new Date() })
   }
 
   public async save(data: Person): Promise<void> {

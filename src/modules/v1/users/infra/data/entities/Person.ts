@@ -26,7 +26,7 @@ class Person {
   instagram?: string;
 
   @Column("varchar")
-  avatar: string;
+  avatar?: string;
 
   @CreateDateColumn()
   createdAt: Date;

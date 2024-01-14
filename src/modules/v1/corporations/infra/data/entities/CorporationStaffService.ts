@@ -7,7 +7,7 @@ import Corporation from "./Corporation";
 import Service from '@modules/v1/services/infra/data/entities/Service';
 import CorporationStaff from './CorporationStaff';
 
-@Entity('corporation__staff_services')
+@Entity('corporation_staff_services')
 export default class CorporationStaffService {
   @PrimaryColumn("uuid")
   id: string;
@@ -21,7 +21,7 @@ export default class CorporationStaffService {
   @Column("varchar")
   duration: string;
 
-  @Column("varchar", { name: 'corporation__staff_id' })
+  @Column("varchar", { name: 'corporation_staff_id' })
   corporationStaffId: string;
 
   @Column("varchar", { name: 'service_id' })

@@ -98,12 +98,19 @@ export default class CorporationsController {
     return res.send({ product: classToClass(product) });
   }
 
-  public async create(req: FastifyRequest, res: FastifyReply): Promise<void> {
+  public async create(req: FastifyRequest<{
+    Body: {
+      active: boolean;
+      name: string;
+      description: string;
+      instagram: string;
+    }
+  }>, res: FastifyReply): Promise<void> {
     const createCorporationService = container.resolve(CreateCorporationService);
 
-    const corporationParams = createSchema.parse(req.body);
+    createSchema.parse(req.body);
     const corporation = await createCorporationService.execute({
-      corporationData: corporationParams,
+      corporationData: req.body,
       userId: req.user.sub
     });
     return res.send({ corporation: classToClass(corporation) });

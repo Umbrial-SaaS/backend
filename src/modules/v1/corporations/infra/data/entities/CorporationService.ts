@@ -34,42 +34,4 @@ export default class CorporationService {
   @ManyToOne(() => Service, (service) => service.corporationServices)
   @JoinColumn({ name: 'service_id' })
   service: Service
-
-  // @Expose({ name: 'coverUrl' })
-  // getCoverUrl(): string | null {
-  //   console.log({ cover: this.coverUrl })
-  //   if (this.coverUrl) {
-  //     switch (uploadConfig.driver) {
-  //       case 'disk':
-  //         return `${process.env.APP_API_URL}/files/${this.coverUrl}`;
-  //       case 's3':
-  //         return `https://${uploadConfig.config.aws.bucket}.${process.env.S3_ENDPOINT}/${this.coverUrl}`;
-  //       default:
-  //         return null;
-  //     }
-  //   } else {
-  //     return null
-  //   }
-
-
-  // }
-
-  // @Expose({ name: 'thumbnailUrl' })
-  // getThumbnailUrl(): string | null {
-  //   console.log({ cover: this.thumbnailUrl })
-  //   if (this.thumbnailUrl) {
-  //     switch (uploadConfig.driver) {
-  //       case 'disk':
-  //         return `${process.env.APP_API_URL}/files/${this.thumbnailUrl}`;
-  //       case 's3':
-  //         return `https://${uploadConfig.config.aws.bucket}.${process.env.S3_ENDPOINT}/${this.thumbnailUrl}`;
-  //       default:
-  //         return null;
-  //     }
-  //   } else {
-  //     return null
-  //   }
-
-
-  // }
 }

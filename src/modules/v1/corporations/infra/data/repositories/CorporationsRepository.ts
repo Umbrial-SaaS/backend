@@ -44,7 +44,10 @@ class CorporationsRepository implements ICorporationsRepository {
             person: true
           }
         },
-        products: true
+        services: {
+          service: true
+        },
+        customers: true
       }
     })
   }
