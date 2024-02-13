@@ -24,8 +24,8 @@ export default class CorporationStaffService {
   @Column("varchar", { name: 'corporation_staff_id' })
   corporationStaffId: string;
 
-  @Column("varchar", { name: 'service_id' })
-  serviceId: string;
+  @Column("int", { name: 'service_id' })
+  serviceId: number;
 
   // Relations
   @ManyToOne(() => CorporationStaff, (corporationStaff) => corporationStaff.services)

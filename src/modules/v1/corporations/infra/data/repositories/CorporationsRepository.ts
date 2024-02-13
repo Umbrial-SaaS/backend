@@ -40,6 +40,9 @@ class CorporationsRepository implements ICorporationsRepository {
       },
       relations: {
         corporationStaff: {
+          services: {
+            service: true
+          },
           user: {
             person: true
           }

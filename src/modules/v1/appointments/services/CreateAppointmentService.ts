@@ -5,6 +5,7 @@ import ICorporationsRepository from '@modules/v1/corporations/repositories/ICorp
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 import IIdGeneratorProvider from '@shared/container/providers/IdGeneratorProvider/models/IIdGeneratorProvider';
+import console from 'console';
 
 export interface ICreateAppointmentServiceReq {
   userId: string;
@@ -14,8 +15,7 @@ export interface ICreateAppointmentServiceReq {
   timestamp: Date
 
   services: {
-    serviceId: string
-    price?: number
+    serviceId: number
     quantity: number
   }[]
 }
@@ -52,6 +52,7 @@ class CreateAppointmentService {
       throw new AppError('corporation_not_found', 404)
     }
     const isTheUserAStaffMember = corporation.corporationStaff.find(corporationStaff => corporationStaff.userId === userId)
+
     if (!isTheUserAStaffMember) {
       throw new AppError('the_user_is_not_a_staff_member', 403)
     }
@@ -62,14 +63,17 @@ class CreateAppointmentService {
     }
     let price = 0
     for await (const service of services) {
-      const thisStaffMemberProvidesThisService = corporationStaffMember.services.find(staffService => staffService.id === service.serviceId)
+      const thisStaffMemberProvidesThisService = corporationStaffMember.services.find(staffService => staffService.serviceId === service.serviceId)
+      console.log({ servicesss: corporationStaffMember.services })
       if (!thisStaffMemberProvidesThisService) {
         throw new AppError('this_staff_member_doenst_provides_this_service')
       }
       if (thisStaffMemberProvidesThisService.active === false) {
         throw new AppError('this_staff_member_doenst_provides_this_service_now')
       }
-      service.price ?? (price = +service.price)
+
+      console.table({ tableasdasd: thisStaffMemberProvidesThisService.service })
+      price = thisStaffMemberProvidesThisService.service.price
 
       // const appointmentsByThisDay = await this.appointmentsRepository.findByCorporationStaffDay(
       //   corporationStaffId,
@@ -87,8 +91,7 @@ class CreateAppointmentService {
       // TODO: Não pode agendar serviços em datas fora do horario da barbearia;
       // TODO: Verificar sobre feriados;
 
-      // * OK: Não agendar serviços que o prestador nao faça;
-
+      // * OK: Não agendar serviços que o prestador nao faça; 
 
       const appointment = this.appointmentsRepository.create({
         id: this.idGeneratorProvider.generate(),

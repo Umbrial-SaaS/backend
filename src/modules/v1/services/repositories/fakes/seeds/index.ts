@@ -1,12 +1,16 @@
-import Font from '@modules/v1/fonts/infra/data/entities/Font';
+import Service from "@modules/v1/services/infra/data/entities/Service";
 
-const fakeFontId = 'asdasdasdasdasdasdas';
+const fakeServiceId = 1
 
-const fakeFonts = new Font();
+const fakeService = new Service();
 
-Object.assign(fakeFonts, {
-  id: fakeFontId,
-  name: 'Montserrat',
+Object.assign(fakeService, {
+  id: fakeServiceId,
+
+  active: true,
+  name: 'Degradê',
+  description: 'Corte degradê',
+  price: 2500
 });
 
-export { fakeFonts, fakeFontId };
+export { fakeService, fakeServiceId };

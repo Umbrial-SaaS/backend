@@ -8,7 +8,7 @@ export default class AppointmentsController {
     Body: {
       timestamp: Date,
       services: {
-        serviceId: string,
+        serviceId: number,
         quantity: number
       }[],
     },
@@ -19,7 +19,7 @@ export default class AppointmentsController {
   }>, res: FastifyReply): Promise<void> {
     const createAppointmentService = container.resolve(CreateAppointmentService);
 
-    const Appointments = await createAppointmentService.execute({
+    const appointment = await createAppointmentService.execute({
       userId: req.user.data.id,
       corporationId: req.params.corporationId,
       corporationStaffId: req.params.corporationStaffId,
@@ -27,6 +27,6 @@ export default class AppointmentsController {
       timestamp: req.body.timestamp
     });
 
-    return res.send({ appointments: classToClass(Appointments) });
+    return res.send({ appointment: classToClass(appointment) });
   }
 }
